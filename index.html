@@ -57,19 +57,53 @@
             height: 100%;
             border: 0;
         }
+        #search {
+            width: 90%;
+            padding: 5px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .collapsible {
+            background-color: #e0f7fa;
+            color: black;
+            cursor: pointer;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+        }
+        .active, .collapsible:hover {
+            background-color: #b3e5fc; /* 更浅的浅蓝色 */
+            color: black; /* 黑色字体 */
+        }
+        .content {
+            padding: 0 18px;
+            display: none;
+            overflow: hidden;
+            background-color: #e0f7fa; /* 修改为浅蓝色 */
+        }
     </style>
 </head>
 <body>
-        <div class="main">
+    <div class="main">
         <div class="left" id="menu">
-            分数运算<br> 
-            <a href="javascript:void(0);" class="menu-item" onclick="showContent('A01运算01分数加法.html')">A01运算01分数加法</a><br>
+            <input type="text" id="search" placeholder="搜索目录..." onkeyup="filterMenu()">
+            
+            <button class="collapsible">分数运算</button>
+            <div class="content">
+           <a href="javascript:void(0);" class="menu-item" onclick="showContent('A01运算01分数加法.html')">A01运算01分数加法</a><br>
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('A01运算02分数减法.html')">A01运算02分数减法</a><br>
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('A01运算03分数乘法.html')">A01运算03分数乘法</a><br>
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('A01运算04分数除法.html')">A01运算04分数除法</a><br>
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('A01运算05分数加整数.html')">A01运算05分数加整数</a><br>
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('A01运算06分数混合.html')">A01运算06分数混合</a><br><br>
-            乘法公式<br>
+            </div>
+
+            <button class="collapsible">乘法公式</button>
+            <div class="content">
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('B01乘法公式整式乘法01.html')">B01乘法公式整式乘法01</a><br>
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('B02乘法公式整式乘法02.html')">B02乘法公式整式乘法02</a><br>
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('B03乘法公式整式乘法03.html')">B03乘法公式整式乘法03</a><br>
@@ -77,15 +111,10 @@
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('B05乘法公式05因式分解01.html')">B05乘法公式因式分解01</a><br>
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('B06乘法公式06因式分解02.html')">B06乘法公式因式分解02</a><br>
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('B07乘法公式07因式分解03.html')">B07乘法公式因式分解03</a><br><br>
-            线性代数<br>
-            <a href="javascript:void(0);" class="menu-item" onclick="showContent('C01线性代数01行列式.html')">C01线性代数行列式</a><br>
-            <a href="javascript:void(0);" class="menu-item" onclick="showContent('C02线性代数02向量点乘内积.html')">C02线性代数向量点乘内积</a><br>
-            <a href="javascript:void(0);" class="menu-item" onclick="showContent('C03线性代数03向量叉乘外积.html')">C03线性代数向量叉乘外积</a><br>
-            <a href="javascript:void(0);" class="menu-item" onclick="showContent('C04线性代数04内外积与正切.html')">C04线性代数内外积与正切</a><br>
-            <a href="javascript:void(0);" class="menu-item" onclick="showContent('C05线性代数05内积与投影长.html')">C05线性代数内积与投影长</a><br>
-            <a href="javascript:void(0);" class="menu-item" onclick="showContent('复数乘法填空.html')">C06线性代数复数乘法</a><br>
-            <br>
-            函数微积分<br>
+            </div>
+
+            <button class="collapsible">线性代数</button>
+            <div class="content">
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('D01微积分根式运算01.html')">D01微积分根式运算01</a><br>
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('D02微积分根式运算02.html')">D02微积分根式运算02</a><br>
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('D03微积分根式运算03.html')">D03微积分根式运算03</a><br>
@@ -98,9 +127,26 @@
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('D10函数02切线与求导.html')">D10函数02切线与求导</a><br>
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('D11函数03二次函数切线方程.html')">D11函数03二次函数切线</a><br>
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('二次函数切线填空.html')">D12函数04二次函数切线填空</a><br>
-            <br>
+            </div>
 
-            方程组<br>
+            <button class="collapsible">函数微积分</button>
+            <div class="content">
+            <a href="javascript:void(0);" class="menu-item" onclick="showContent('D01微积分根式运算01.html')">D01微积分根式运算01</a><br>
+            <a href="javascript:void(0);" class="menu-item" onclick="showContent('D02微积分根式运算02.html')">D02微积分根式运算02</a><br>
+            <a href="javascript:void(0);" class="menu-item" onclick="showContent('D03微积分根式运算03.html')">D03微积分根式运算03</a><br>
+            <a href="javascript:void(0);" class="menu-item" onclick="showContent('D04坐标系01两点距离.html')">D04坐标系01两点距离</a><br>
+            <a href="javascript:void(0);" class="menu-item" onclick="showContent('D05坐标系02斜率.html')">D05坐标系02斜率</a><br>
+            <a href="javascript:void(0);" class="menu-item" onclick="showContent('D06坐标系03直线解析式.html')">D06坐标系03直线解析式</a><br>
+            <a href="javascript:void(0);" class="menu-item" onclick="showContent('D07坐标系04点到直线距离.html')">D07坐标系04点到直线距离</a><br>
+            <a href="javascript:void(0);" class="menu-item" onclick="showContent('D08坐标系05定比分点.html')">D08坐标系05定比分点</a><br>
+            <a href="javascript:void(0);" class="menu-item" onclick="showContent('D09函数01二次最值.html')">D09函数01二次最值</a><br>
+            <a href="javascript:void(0);" class="menu-item" onclick="showContent('D10函数02切线与求导.html')">D10函数02切线与求导</a><br>
+            <a href="javascript:void(0);" class="menu-item" onclick="showContent('D11函数03二次函数切线方程.html')">D11函数03二次函数切线</a><br>
+            <a href="javascript:void(0);" class="menu-item" onclick="showContent('二次函数切线填空.html')">D12函数04二次函数切线填空</a><br>
+            </div>
+
+            <button class="collapsible">方程组</button>
+            <div class="content">
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('二元一次方程组填空01.html')">E01二元一次方程组填空01</a><br>
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('二元一次方程组填空02.html')">E02二元一次方程组填空02</a><br>
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('二元一次方程组填空03.html')">E03二元一次方程组填空03</a><br>
@@ -110,14 +156,10 @@
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('二元一次方程组填空07.html')">E07二元一次方程组填空07</a><br>
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('分数二元一次方程组.html')">E08二元一次方程组填空08</a><br>
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('二元一次方程组填空09.html')">E09方程组应用题填空09</a><br>
+            </div>
 
-
-            <br>
-
-
-
-            几何<br>
-
+            <button class="collapsible">几何</button>
+            <div class="content">
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('F01认识沙漏.html')">F01认识沙漏</a><br>
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('F02梯形中的沙漏.html')">F02梯形中的沙漏</a><br>
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('F03平行线中的沙漏.html')">F03平行线中的沙漏</a><br>
@@ -128,21 +170,17 @@
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('F08燕尾模型一外一内比的应用上.html')">F08燕尾模型一外一内比的应用上</a><br>
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('F09燕尾模型一外一内比的应用下')">F09燕尾模型一外一内比的应用下</a><br>
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('F10燕尾模型两内比的应用.html')">F10燕尾模型两内比的应用</a><br>
-            <a href="javascript:void(0);" class="menu-item" onclick="showContent('F11鸟头模型.html')">F11鸟头模型</a><br>
+            <a href="javascript:void(0);" class="menu-item" onclick="showContent('F11鸟头模型.html')">F11鸟头模型</a><br>  <br>
+            </div>
 
-
-
-
-
-
-
-
-
-            <br>
+            <button class="collapsible">杂项</button>
+            <div class="content">
+         
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('https://jiushu520.github.io/jiushu/')">玖数学运算</a><br>
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('https://jiushu520.github.io/differentiation/')">求导游戏</a><br>
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('egame.html')">等式练习测试</a><br>
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('https://www.onlinegdb.com/online_c++_compiler')">在线编程</a><br>
+           </div>
         </div>
         <div class="center" id="content">
             <iframe src="二元一次方程组填空01.html" frameborder="0"></iframe>
@@ -151,6 +189,64 @@
     <script>
         function showContent(url) {
             document.getElementById('content').innerHTML = `<iframe src="${url}" frameborder="0"></iframe>`;
+        }
+
+        function filterMenu() {
+            let input = document.getElementById('search');
+            let filter = input.value.toLowerCase();
+            let menu = document.getElementById('menu');
+            let items = menu.getElementsByClassName('menu-item');
+            let sections = menu.getElementsByClassName('content');
+            let buttons = menu.getElementsByClassName('collapsible');
+
+            for (let i = 0; i < items.length; i++) {
+                let item = items[i];
+                if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                    item.style.display = '';
+                    item.closest('.content').style.display = 'block';
+                    item.closest('.content').previousElementSibling.classList.add('active');
+                } else {
+                    item.style.display = 'none';
+                }
+            }
+
+            for (let i = 0; i < sections.length; i++) {
+                let section = sections[i];
+                let items = section.getElementsByClassName('menu-item');
+                let hasVisibleItems = false;
+                for (let j = 0; j < items.length; j++) {
+                    if (items[j].style.display !== 'none') {
+                        hasVisibleItems = true;
+                        break;
+                    }
+                }
+                if (!hasVisibleItems) {
+                    section.style.display = 'none';
+                    section.previousElementSibling.classList.remove('active');
+                }
+            }
+
+            for (let i = 0; i < buttons.length; i++) {
+                let button = buttons[i];
+                if (button.nextElementSibling.style.display === 'block') {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            }
+        }
+
+        let coll = document.getElementsByClassName('collapsible');
+        for (let i = 0; i < coll.length; i++) {
+            coll[i].addEventListener('click', function() {
+                this.classList.toggle('active');
+                let content = this.nextElementSibling;
+                if (content.style.display === 'block') {
+                    content.style.display = 'none';
+                } else {
+                    content.style.display = 'block';
+                }
+            });
         }
     </script>
 </body>
