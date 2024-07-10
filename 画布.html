@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 Canvas Drawing</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            background-color: #FFFFE0; /* 设置背景为淡黄色 */
+            display: block;
+            margin: 20px auto;
+        }
+        .tool-bar {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .tool-bar button {
+            margin: 0 10px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        /* 使用自定义光标 */
+        .custom-cursor {
+            cursor: url('data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjMwIiB3aWR0aD0iMzAiIHZpZXdCb3g9IjAgMCAzMCAzMCIgdmVyc2lvbj0iMSIgd2lsbHRyYXZlbG9wZW5fZjT9y4ewIjIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxnPjxjaXJjbGUgcj0iMTUiIGN4PSIxNSIgY3k9IjE1IiBzdHlsZT0iZmlsbDpjYXI7IiAvPjwvZz48L3N2Zz4='), auto;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">玖数草稿</h1>
+    <div class="tool-bar">
+        <button id="pen">画笔</button>
+        <button id="eraser">橡皮擦</button>
+        <button id="clear">清除</button>
+    </div>
+    <canvas id="drawingCanvas" width="675" height="900"></canvas>
+    <script>
+        const canvas = document.getElementById('drawingCanvas');
+        const ctx = canvas.getContext('2d');
+        let drawing = false;
+        let erasing = false;
+        let mode = 'pen'; // 新增模式变量，初始为画笔模式
+
+        document.getElementById('pen').addEventListener('click', () => {
+            mode = 'pen';
+            erasing = false;
+            canvas.classList.remove('custom-cursor');
+        });
+
+        document.getElementById('eraser').addEventListener('click', () => {
+            mode = 'eraser';
+            erasing = true;
+            canvas.classList.add('custom-cursor');
+        });
+
+        document.getElementById('clear').addEventListener('click', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        });
+
+        // 处理鼠标事件
+        canvas.addEventListener('mousedown', (event) => {
+            drawing = true;
+            if (event.button === 2) { // 右键按下
+                erasing = true;
+                canvas.classList.add('custom-cursor'); // 添加自定义光标样式
+            } else if (mode === 'pen') {
+                erasing = false;
+                canvas.classList.remove('custom-cursor'); // 移除自定义光标样式
+            }
+            draw(event);
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            drawing = false;
+            erasing = mode === 'eraser'; // 恢复工具栏的橡皮擦模式
+            ctx.beginPath(); // 开始一个新的路径，避免线条连在一起
+            canvas.classList.remove('custom-cursor'); // 移除自定义光标样式
+        });
+
+        canvas.addEventListener('mousemove', draw);
+
+        canvas.addEventListener('contextmenu', (event) => {
+            event.preventDefault(); // 禁止默认的右键菜单
+        });
+
+        // 处理触控事件
+        canvas.addEventListener('touchstart', (event) => {
+            drawing = true;
+            drawTouch(event); // 初始化绘制
+        });
+
+        canvas.addEventListener('touchend', () => {
+            drawing = false;
+            ctx.beginPath(); // 开始一个新的路径，避免线条连在一起
+        });
+
+        canvas.addEventListener('touchmove', drawTouch);
+
+        function draw(event) {
+            if (!drawing) return;
+            
+            ctx.lineWidth = erasing ? 30 : 5;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = erasing ? 'white' : 'black';
+            ctx.globalCompositeOperation = erasing ? 'destination-out' : 'source-over';
+
+            ctx.lineTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(event.clientX - canvas.offsetLeft, event.clientY - canvas.offsetTop);
+        }
+
+        function drawTouch(event) {
+            if (!drawing) return;
+            const touch = event.touches[0];
+            const mouseEvent = new MouseEvent('mousemove', {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            draw(mouseEvent);
+            event.preventDefault(); // 禁止默认的触控行为（例如滚动）
+        }
+    </script>
+</body>
+</html>
