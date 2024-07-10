@@ -80,7 +80,7 @@
         <div id="equation"></div>
         <div id="options" style="display: none;"></div>
         <div id="single-answer-container" style="display: none;">
-            <input type="text" id="answer-input" placeholder="正数与0在行首不用加正号" onkeyup="handleKeyUp(event)">
+            <input type="text" id="answer-input" placeholder="输入你的答案" onkeyup="handleKeyUp(event)">
         </div>
         <div id="dual-answer-container" style="display: none;">
                 x=<input type="text" id="answer-input-x" placeholder="x的值" onkeyup="handleKeyUp(event, 'answer-input-y')">
@@ -116,6 +116,8 @@
     </div>
     <script>
         const 有理数运算07分数绝对值乘方混合运算 = [
+
+
 
 
 {equation: "\\[ \\begin{array}{c} -7-|-6+1|× \\frac{1}{0.125}=\\end{array} \\]", correctOption: {single: "-47"}},
@@ -327,7 +329,7 @@
     
     ];
 
-        let state = {
+          let state = {
             currentQuestionBank: null,
             currentEquationSystem: null,
             score: 0,
@@ -421,7 +423,7 @@ const showTemporaryMessage = (message, duration) => {
             const { equation, img, correctOption, incorrectOptions } = question;
 
             let equationHTML = equation;
-            if (img && img.trim()) equationHTML += `<br><img src="{img}" alt="题目图片">`;
+            if (img && img.trim()) equationHTML += `<br><img src="${img}" alt="题目图片">`;
 
             if (correctOption.single || correctOption.dual) {
                 state.currentEquationSystem = { equationSystem: equationHTML, correctOption };
@@ -463,8 +465,8 @@ const showTemporaryMessage = (message, duration) => {
             if (state.currentEquationSystem.options) {
                 const labels = ['A', 'B', 'C', 'D'];
                 return state.currentEquationSystem.options.map((option, index) =>
-                    `<div class="option" onclick="checkAnswer({index}, '{option.replace(/\\/g, '\\\\')}')">
-                        <span>{labels[index]}. \\({option}\\)</span>
+                    `<div class="option" onclick="checkAnswer(${index}, '${option.replace(/\\/g, '\\\\')}')">
+                        <span>${labels[index]}. \\(${option}\\)</span>
                     </div>`
                 ).join('');
             }
@@ -505,8 +507,8 @@ const showTemporaryMessage = (message, duration) => {
             } else if (state.currentEquationSystem.correctOption.dual) {
                 const userAnswerX = document.getElementById('answer-input-x').value.trim();
                 const userAnswerY = document.getElementById('answer-input-y').value.trim();
-                correctAnswer = `x={state.currentEquationSystem.correctOption.dual.x}, y={state.currentEquationSystem.correctOption.dual.y}`;
-                userAnswer = `x={userAnswerX}, y={userAnswerY}`;
+                correctAnswer = `x=${state.currentEquationSystem.correctOption.dual.x}, y=${state.currentEquationSystem.correctOption.dual.y}`;
+                userAnswer = `x=${userAnswerX}, y=${userAnswerY}`;
                 isCorrect = userAnswerX === state.currentEquationSystem.correctOption.dual.x && userAnswerY === state.currentEquationSystem.correctOption.dual.y;
             } else {
                 isCorrect = selectedIndex === state.currentEquationSystem.correctIndex;
@@ -524,10 +526,10 @@ const showTemporaryMessage = (message, duration) => {
         const addResultRow = (equation, userAnswer, correctAnswer, isCorrect) => {
             let resultRow = document.createElement('tr');
             resultRow.innerHTML = `
-                <td>{equation}</td>
-                <td>\\({userAnswer}\\)</td>
-                <td>\\({correctAnswer}\\)</td>
-                <td style="color: {isCorrect ? 'green' : 'red'};">{isCorrect ? '正确' : '错误'}</td>
+                <td>${equation}</td>
+                <td>\\(${userAnswer}\\)</td>
+                <td>\\(${correctAnswer}\\)</td>
+                <td style="color: ${isCorrect ? 'green' : 'red'};">${isCorrect ? '正确' : '错误'}</td>
             `;
             document.querySelector('#result-table tbody').insertBefore(resultRow, document.querySelector('#result-table tbody').firstChild);
         };
@@ -549,7 +551,7 @@ const showTemporaryMessage = (message, duration) => {
 
         const updateRoundsScoreboard = () => {
             const roundsScoresText = state.roundsScores.map((round, index) =>
-                `第{index + 1}轮 ({round.topic}): {round.score}分共{round.totalQuestions}题`
+                `第${index + 1}轮 (${round.topic}): ${round.score}分共${round.totalQuestions}题`
             ).join('<br>');
             document.getElementById('rounds-scoreboard').innerHTML = roundsScoresText;
         };
