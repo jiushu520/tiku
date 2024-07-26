@@ -215,7 +215,7 @@
 
 
 function generateLevel5Question() {
-    let bases = [10, 6];
+    let bases = [10, 6, 15]; // 添加底数15
     base = bases[Math.floor(Math.random() * bases.length)];
     correctAnswer = Math.floor(Math.random() * 6) + 1; // 1到6之间的正整数
 
@@ -226,6 +226,8 @@ function generateLevel5Question() {
     if (factor2 % 1 === 0) {
         if (base === 10) {
             return `\\(\\lg(${factor1}) + \\lg(${factor2}) = ?\\)`;
+        } else if (base === 15) {
+            return `\\(\\log_{15}(${factor1}) + \\log_{15}(${factor2}) = ?\\)`;
         } else {
             return `\\(\\log_{${base}}(${factor1}) + \\log_{${base}}(${factor2}) = ?\\)`;
         }
@@ -234,6 +236,8 @@ function generateLevel5Question() {
         let numerator = Math.pow(base, correctAnswer);
         if (base === 10) {
             return `\\(\\lg(${factor1}) + \\lg\\left(\\frac{${numerator}}{${factor1}}\\right) = ?\\)`;
+        } else if (base === 15) {
+            return `\\(\\log_{15}(${factor1}) + \\log_{15}\\left(\\frac{${numerator}}{${factor1}}\\right) = ?\\)`;
         } else {
             return `\\(\\log_{${base}}(${factor1}) + \\log_{${base}}\\left(\\frac{${numerator}}{${factor1}}\\right) = ?\\)`;
         }
