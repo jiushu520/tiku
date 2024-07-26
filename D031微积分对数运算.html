@@ -136,7 +136,7 @@
                 case 4:
                     return generateLevel4Question();
                 case 5:
-                    return generateNewQuestion();
+                    return generateLevel5Question();
             }
         }
 
@@ -213,23 +213,34 @@
             return question;
         }
 
-        function generateNewQuestion() {
-            let bases = [10, 6];
-            base = bases[Math.floor(Math.random() * bases.length)];
-            correctAnswer = Math.floor(Math.random() * 6) + 1; // 1到6之间的正整数
 
-            let factor1 = Math.floor(Math.random() * 5) + 1; // 1到5之间的整数
-            let factor2 = Math.pow(base, correctAnswer) / factor1; // 确保 factor1 * factor2 = base^correctAnswer
+function generateLevel5Question() {
+    let bases = [10, 6];
+    base = bases[Math.floor(Math.random() * bases.length)];
+    correctAnswer = Math.floor(Math.random() * 6) + 1; // 1到6之间的正整数
 
-            // 检查 factor2 是否为整数
-            if (factor2 % 1 === 0) {
-                return `\\(\\log_{${base}}(${factor1}) + \\log_{${base}}(${factor2}) = ?\\)`;
-            } else {
-                // 使用分数表示 factor2
-                let numerator = Math.pow(base, correctAnswer);
-                return `\\(\\log_{${base}}(${factor1}) + \\log_{${base}}\\left(\\frac{${numerator}}{${factor1}}\\right) = ?\\)`;
-            }
+    let factor1 = Math.floor(Math.random() * 5) + 1; // 1到5之间的整数
+    let factor2 = Math.pow(base, correctAnswer) / factor1; // 确保 factor1 * factor2 = base^correctAnswer
+
+    // 检查 factor2 是否为整数
+    if (factor2 % 1 === 0) {
+        if (base === 10) {
+            return `\\(\\lg(${factor1}) + \\lg(${factor2}) = ?\\)`;
+        } else {
+            return `\\(\\log_{${base}}(${factor1}) + \\log_{${base}}(${factor2}) = ?\\)`;
         }
+    } else {
+        // 使用分数表示 factor2
+        let numerator = Math.pow(base, correctAnswer);
+        if (base === 10) {
+            return `\\(\\lg(${factor1}) + \\lg\\left(\\frac{${numerator}}{${factor1}}\\right) = ?\\)`;
+        } else {
+            return `\\(\\log_{${base}}(${factor1}) + \\log_{${base}}\\left(\\frac{${numerator}}{${factor1}}\\right) = ?\\)`;
+        }
+    }
+}
+
+
 
         function newQuestion() {
             const questionElement = document.getElementById('question');
