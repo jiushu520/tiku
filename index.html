@@ -10,45 +10,35 @@
             flex-direction: column;
             height: 100vh;
             margin: 0;
-            background-color: #e0f7fa; /* 浅蓝色背景 */
+            background-color: #e0f7fa;
+        }
+        .top, .left, .center {
+            border: 1px solid #000;
+            box-sizing: border-box;
         }
         .top {
-            border: 1px solid #000;
-            padding: 5px; /* 减小padding以减少高度 */
-            box-sizing: border-box;
+            padding: 5px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 50px; /* 设置一个固定的高度 */
+            height: 50px;
         }
         .main {
             display: flex;
             flex-grow: 1;
-            height: 80px; /* 设置一个固定的高度 */
-        }
-        .left, .center {
-            border: 1px solid #000;
-            padding: 10px;
-            box-sizing: border-box;
         }
         .left {
-            flex: 1.2; /* 左侧部分占总宽度的 1/6 */
+            flex: 1.2;
             overflow-y: auto;
         }
         .center {
-            flex: 4; /* 中间部分占总宽度的 2/3 */
-            transition: flex 0.3s; /* 增加过渡效果 */
+            flex: 4;
+            transition: flex 0.3s;
         }
-        .menu-item {
+        .menu-item, .menu-link {
             cursor: pointer;
             margin: 10px 0;
             padding: 5px;
-            text-decoration: none; /* 去除下划线 */
-            color: black; /* 文字颜色 */
-        }
-        .menu-link {
-            margin-left: 10px;
-            cursor: pointer;
             text-decoration: none;
             color: black;
         }
@@ -66,7 +56,7 @@
         }
         .collapsible {
             background-color: #e0f7fa;
-            color: blue; /* 蓝色字体 */
+            color: blue;
             cursor: pointer;
             padding: 10px;
             width: 100%;
@@ -76,14 +66,14 @@
             font-size: 15px;
         }
         .active, .collapsible:hover {
-            background-color: #b3e5fc; /* 更浅的浅蓝色 */
-            color: blue; /* 蓝色字体 */
+            background-color: #b3e5fc;
+            color: blue;
         }
         .content {
             padding: 0 18px;
             display: none;
             overflow: hidden;
-            background-color: #e0f7fa; /* 修改为浅蓝色 */
+            background-color: #e0f7fa;
         }
     </style>
 </head>
@@ -91,9 +81,6 @@
     <div class="main">
         <div class="left" id="menu">
             <input type="text" id="search" placeholder="搜索目录..." onkeyup="filterMenu()">
-
-
-
 <button class="collapsible">2024暑假课程</button>
             
             <div class="content">
@@ -564,6 +551,7 @@
         <div class="center" id="content">
             <iframe src="https://shimo.im/docs/gO3odYvGvRfzMZqD" frameborder="0"></iframe>
         </div>
+
     </div>
     <script>
         function showContent(url) {
@@ -571,62 +559,35 @@
         }
 
         function filterMenu() {
-            let input = document.getElementById('search');
-            let filter = input.value.toLowerCase();
-            let menu = document.getElementById('menu');
-            let items = menu.getElementsByClassName('menu-item');
-            let sections = menu.getElementsByClassName('content');
-            let buttons = menu.getElementsByClassName('collapsible');
+            const input = document.getElementById('search');
+            const filter = input.value.toLowerCase();
+            const menu = document.getElementById('menu');
+            const items = menu.getElementsByClassName('menu-item');
+            const sections = menu.getElementsByClassName('content');
+            const buttons = menu.getElementsByClassName('collapsible');
 
-            for (let i = 0; i < items.length; i++) {
-                let item = items[i];
-                if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
-                    item.style.display = '';
-                    item.closest('.content').style.display = 'block';
-                    item.closest('.content').previousElementSibling.classList.add('active');
-                } else {
-                    item.style.display = 'none';
-                }
-            }
+            Array.from(items).forEach(item => {
+                const itemText = item.innerHTML.toLowerCase();
+                const content = item.closest('.content');
+                item.style.display = itemText.indexOf(filter) > -1 ? '' : 'none';
+                if (content) content.style.display = item.style.display === '' ? 'block' : 'none';
+            });
 
-            for (let i = 0; i < sections.length; i++) {
-                let section = sections[i];
-                let items = section.getElementsByClassName('menu-item');
-                let hasVisibleItems = false;
-                for (let j = 0; j < items.length; j++) {
-                    if (items[j].style.display !== 'none') {
-                        hasVisibleItems = true;
-                        break;
-                    }
-                }
-                if (!hasVisibleItems) {
-                    section.style.display = 'none';
-                    section.previousElementSibling.classList.remove('active');
-                }
-            }
-
-            for (let i = 0; i < buttons.length; i++) {
-                let button = buttons[i];
-                if (button.nextElementSibling.style.display === 'block') {
-                    button.classList.add('active');
-                } else {
-                    button.classList.remove('active');
-                }
-            }
-        }
-
-        let coll = document.getElementsByClassName('collapsible');
-        for (let i = 0; i < coll.length; i++) {
-            coll[i].addEventListener('click', function() {
-                this.classList.toggle('active');
-                let content = this.nextElementSibling;
-                if (content.style.display === 'block') {
-                    content.style.display = 'none';
-                } else {
-                    content.style.display = 'block';
-                }
+            Array.from(sections).forEach(section => {
+                const visibleItems = Array.from(section.getElementsByClassName('menu-item')).some(item => item.style.display !== 'none');
+                section.style.display = visibleItems ? 'block' : 'none';
+                const button = section.previousElementSibling;
+                if (button) button.classList.toggle('active', visibleItems);
             });
         }
+
+        document.querySelectorAll('.collapsible').forEach(button => {
+            button.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const content = this.nextElementSibling;
+                content.style.display = content.style.display === 'block' ? 'none' : 'block';
+            });
+        });
     </script>
 </body>
 </html>
