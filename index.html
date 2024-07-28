@@ -26,6 +26,7 @@
         .main {
             display: flex;
             flex-grow: 1;
+            height: calc(100vh - 50px); /* 减去顶部高度 */
         }
         .left {
             flex: 1.2;
@@ -34,6 +35,7 @@
         .center {
             flex: 4;
             transition: flex 0.3s;
+            overflow: hidden; /* 防止内容溢出 */
         }
         .menu-item, .menu-link {
             cursor: pointer;
