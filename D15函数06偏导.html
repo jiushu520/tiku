@@ -240,25 +240,25 @@
         function generateLevel5Question() {
             const questions = [
                 { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^2y + xy^2 + 3x^2) \\)`, answer: '2x + 2y' },
-                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (xy^2 + yx^3) \\)`, answer: 'y^2 + 3x^2y' },
-                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^2y^2 + y^3x) \\)`, answer: '2xy + 3y^2' },
-                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^3y + y^2x) \\)`, answer: '3x^2y + 2yx' },
-                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (xy^2 + y^2x^2) \\)`, answer: '2y + 2yx' },
-                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^4y + y^3x) \\)`, answer: '4x^3y + 3y^2' },
-                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^2y^3 + y^2x^2) \\)`, answer: '3xy^2 + 2yx' },
-                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^3y^2 + yx^3) \\)`, answer: '3x^2y^2 + x' },
-                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (xy^3 + y^2x) \\)`, answer: '3y^2 + 2yx' },
-                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^2y + yx^2) \\)`, answer: '2x + 2y' },
-                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^2y^2 + y^2x) \\)`, answer: '2xy + 2y' },
-                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^2y^2 + yx^4) \\)`, answer: '2xy + 4x^3' },
-                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^3y + yx^3) \\)`, answer: '3x^2y + x' },
+                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (xy^2 + yx^3) \\)`, answer: '3x^2 + 2y' },
+                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^2y^2 + y^3x) \\)`, answer: '4xy + 3y^2' },
+                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^3y + y^2x) \\)`, answer: '3x^2 + 2y' },
+                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (xy^2 + y^2x^2) \\)`, answer: '4xy + 2y' },
+                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^4y + y^3x) \\)`, answer: '4x^3 + 3y^2' },
+                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^2y^3 + y^2x^2) \\)`, answer: '6xy^2 + 4xy' },
+                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^3y^2 + yx^3) \\)`, answer: '6x^2y + 3x^2' },
+                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (xy^3 + y^2x) \\)`, answer: '3y^2 + 2y' },
+                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^2y + yx^2) \\)`, answer: '4x' },
+                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^2y^2 + y^2x) \\)`, answer: '4xy + 2y' },
+                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^2y^2 + yx^4) \\)`, answer: '4x^3+4xy ' },
+                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^3y + yx^3) \\)`, answer: '6x^2' },
                 { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (xy^3 + yx^4) \\)`, answer: '3y^2 + 4x^3' },
                 { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^2y + y^2x) \\)`, answer: '2x + 2y' },
-                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (xy + yx^2) \\)`, answer: 'y + 2x' },
-                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^2y^2 + y^3x) \\)`, answer: '2xy + 3y^2' },
+                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (xy + yx^2) \\)`, answer: '2x+1' },
+                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^2y^2 + y^3x) \\)`, answer: '4xy + 3y^2' },
                 { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^4y + yx^2) \\)`, answer: '4x^3 + 2x' },
-                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^3y + y^2x) \\)`, answer: '3x^2 + 2yx' },
-                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^3y + yx) \\)`, answer: '3x^2 + y' }
+                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^3y + y^2x) \\)`, answer: '3x^2 + 2y' },
+                { question: `\\( \\frac{\\partial^2}{\\partial x \\partial y} (x^3y + yx) \\)`, answer: '3x^2 + 1' }
             ];
             const selected = questions[Math.floor(Math.random() * questions.length)];
             correctAnswer = selected.answer;
