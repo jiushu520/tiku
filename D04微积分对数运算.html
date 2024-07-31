@@ -10,9 +10,8 @@
         body {
             margin: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
             font-family: Arial, sans-serif;
         }
 
@@ -20,8 +19,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             text-align: center;
+            margin-top: 20px;
         }
 
         .difficulty-buttons {
@@ -67,8 +66,11 @@
         }
 
         #result {
-            margin-top: 10px;
-            font-size: 18px;
+            display: inline;
+            color: inherit; /* 确保颜色与父元素一致 */
+            font-size: inherit; /* 确保字体大小与父元素一致 */
+            margin: 0;
+            padding: 0;
         }
 
         #score {
@@ -76,24 +78,36 @@
             font-size: 18px;
         }
 
-        .history-item {
-            margin-top: 10px;
-            font-size: 16px;
-        }
+table {
+    margin-top: 20px;
+    border-collapse: collapse;
+    table-layout: auto; /* 使表格布局根据内容自动调整 */
+}
 
-        .history-item.correct {
-            color: green;
-        }
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+}
 
-        .history-item.incorrect {
-            color: red;
-        }
+th {
+    background-color: #f4f4f4;
+}
+
+.correct {
+    color: green;
+}
+
+.incorrect {
+    color: red;
+}
+
     </style>
 </head>
 <body>
     <div class="game-container">
         <h1>玖数学测训系统</h1>
-      <h3>D04微积分对数运算</h3>
+        <h3>D04微积分对数运算</h3>
 
         <div class="difficulty-buttons">
             <button onclick="setDifficulty(1)" id="level1">级别 1</button>
@@ -108,7 +122,19 @@
 
         <div id="result"></div>
         <div id="score">正确: 0 | 错误: 0</div>
-        <div id="history"></div>
+        <table>
+            <thead>
+                <tr>
+                    <th>题目</th>
+                    <th>级别</th>
+                    <th>你的答案</th>
+                    <th>正确答案</th>
+                    <th>结果</th>
+                </tr>
+            </thead>
+            <tbody id="history">
+            </tbody>
+        </table>
     </div>
 
     <script>
@@ -119,6 +145,8 @@
         let correctCount = 0;
         let incorrectCount = 0;
         let currentDifficulty = 1;
+
+        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5"];
 
         function setDifficulty(level) {
             currentDifficulty = level;
@@ -189,11 +217,16 @@
                 correctAnswer2 = Math.floor(Math.random() * 7) - 3; // 第二个对数的结果在-3到3之间
             } while (operation === '/' && correctAnswer2 === 0); // 确保除法时除数不为0
 
+            // 确保除法结果为整数
+            if (operation === '/') {
+                correctAnswer1 = correctAnswer2 * (Math.floor(Math.random() * 3) + 1); // 使 correctAnswer1 是 correctAnswer2 的倍数
+            }
+
             let logValue1 = (correctAnswer1 >= 0) ? ((baseDenominator1 === 1 || correctAnswer1 === 0) ? 1 : `\\frac{1}{${Math.pow(baseDenominator1, correctAnswer1)}}`) : Math.pow(baseDenominator1, -correctAnswer1);
             let logValue2 = (correctAnswer2 >= 0) ? ((baseDenominator2 === 1 || correctAnswer2 === 0) ? 1 : `\\frac{1}{${Math.pow(baseDenominator2, correctAnswer2)}}`) : Math.pow(baseDenominator2, -correctAnswer2);
 
             let question;
-            switch(operation) {
+            switch (operation) {
                 case '+':
                     question = `\\(\\log_{${base1}}(${logValue1}) + \\log_{${base2}}(${logValue2}) = ?\\)`;
                     correctAnswer = correctAnswer1 + correctAnswer2;
@@ -215,38 +248,35 @@
             return question;
         }
 
+        function generateLevel5Question() {
+            let bases = [10, 6, 15]; // 添加底数15
+            base = bases[Math.floor(Math.random() * bases.length)];
+            correctAnswer = Math.floor(Math.random() * 6) + 1; // 1到6之间的正整数
 
-function generateLevel5Question() {
-    let bases = [10, 6, 15]; // 添加底数15
-    base = bases[Math.floor(Math.random() * bases.length)];
-    correctAnswer = Math.floor(Math.random() * 6) + 1; // 1到6之间的正整数
+            let factor1 = Math.floor(Math.random() * 5) + 1; // 1到5之间的整数
+            let factor2 = Math.pow(base, correctAnswer) / factor1; // 确保 factor1 * factor2 = base^correctAnswer
 
-    let factor1 = Math.floor(Math.random() * 5) + 1; // 1到5之间的整数
-    let factor2 = Math.pow(base, correctAnswer) / factor1; // 确保 factor1 * factor2 = base^correctAnswer
-
-    // 检查 factor2 是否为整数
-    if (factor2 % 1 === 0) {
-        if (base === 10) {
-            return `\\(\\lg(${factor1}) + \\lg(${factor2}) = ?\\)`;
-        } else if (base === 15) {
-            return `\\(\\log_{15}(${factor1}) + \\log_{15}(${factor2}) = ?\\)`;
-        } else {
-            return `\\(\\log_{${base}}(${factor1}) + \\log_{${base}}(${factor2}) = ?\\)`;
+            // 检查 factor2 是否为整数
+            if (factor2 % 1 === 0) {
+                if (base === 10) {
+                    return `\\(\\lg(${factor1}) + \\lg(${factor2}) = ?\\)`;
+                } else if (base === 15) {
+                    return `\\(\\log_{15}(${factor1}) + \\log_{15}(${factor2}) = ?\\)`;
+                } else {
+                    return `\\(\\log_{${base}}(${factor1}) + \\log_{${base}}(${factor2}) = ?\\)`;
+                }
+            } else {
+                // 使用分数表示 factor2
+                let numerator = Math.pow(base, correctAnswer);
+                if (base === 10) {
+                    return `\\(\\lg(${factor1}) + \\lg\\left(\\frac{${numerator}}{${factor1}}\\right) = ?\\)`;
+                } else if (base === 15) {
+                    return `\\(\\log_{15}(${factor1}) + \\log_{15}\\left(\\frac{${numerator}}{${factor1}}\\right) = ?\\)`;
+                } else {
+                    return `\\(\\log_{${base}}(${factor1}) + \\log_{${base}}\\left(\\frac{${numerator}}{${factor1}}\\right) = ?\\)`;
+                }
+            }
         }
-    } else {
-        // 使用分数表示 factor2
-        let numerator = Math.pow(base, correctAnswer);
-        if (base === 10) {
-            return `\\(\\lg(${factor1}) + \\lg\\left(\\frac{${numerator}}{${factor1}}\\right) = ?\\)`;
-        } else if (base === 15) {
-            return `\\(\\log_{15}(${factor1}) + \\log_{15}\\left(\\frac{${numerator}}{${factor1}}\\right) = ?\\)`;
-        } else {
-            return `\\(\\log_{${base}}(${factor1}) + \\log_{${base}}\\left(\\frac{${numerator}}{${factor1}}\\right) = ?\\)`;
-        }
-    }
-}
-
-
 
         function newQuestion() {
             const questionElement = document.getElementById('question');
@@ -274,7 +304,7 @@ function generateLevel5Question() {
                 isCorrect = false;
                 incorrectCount++;
             }
-            resultElement.innerHTML = resultText;
+
 
             updateScore();
             addToHistory(currentQuestion, userAnswer, correctAnswer, isCorrect);
@@ -283,19 +313,23 @@ function generateLevel5Question() {
 
         function addToHistory(question, userAnswer, correctAnswer, isCorrect) {
             const historyElement = document.getElementById('history');
-            const historyItem = document.createElement('div');
-            historyItem.className = 'history-item';
-            historyItem.innerHTML = `
-                ${question} 你的答案: ${userAnswer}, 正确答案: ${correctAnswer}
+            const historyRow = document.createElement('tr');
+            historyRow.className = isCorrect ? 'correct' : 'incorrect';
+            historyRow.innerHTML = `
+                <td>${question}</td>
+                <td>${difficultyNames[currentDifficulty - 1]}</td>
+                <td>${userAnswer}</td>
+                <td>${correctAnswer}</td>
+                <td>${isCorrect ? '正确' : '错误'}</td>
             `;
-            historyItem.classList.add(isCorrect ? 'correct' : 'incorrect');
-            historyElement.insertBefore(historyItem, historyElement.firstChild);
-            MathJax.typeset([historyItem]);
+            historyElement.insertBefore(historyRow, historyElement.firstChild);
+            MathJax.typeset([historyRow]);
         }
 
         function updateScore() {
             const scoreElement = document.getElementById('score');
-            scoreElement.innerHTML = `正确: ${correctCount} | 错误: ${incorrectCount}`;
+            scoreElement.innerHTML = `正确: ${correctCount} | 错误: ${incorrectCount} |  总计: ${correctCount+incorrectCount} |正确率: ${Math.floor((correctCount / (correctCount + incorrectCount)) * 100)}%`;
+
         }
 
         document.getElementById('answer').addEventListener('keypress', function(event) {
