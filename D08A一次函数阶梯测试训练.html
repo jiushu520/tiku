@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一次函数阶梯测试训练</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .difficulty-buttons {
+            margin-bottom: 20px;
+        }
+
+        .difficulty-buttons button {
+            margin: 0 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+        }
+
+        .difficulty-buttons button.active {
+            background-color: #45a049;
+            color: white;
+        }
+
+        #answer {
+            padding: 10px;
+            font-size: 16px;
+            width: 200px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            display: inline;
+            color: inherit; /* 确保颜色与父元素一致 */
+            font-size: inherit; /* 确保字体大小与父元素一致 */
+            margin: 0;
+            padding: 0;
+        }
+
+        #score {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            table-layout: auto; /* 使表格布局根据内容自动调整 */
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .incorrect {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>玖数学测训系统</h1>
+        <h3>一次函数阶梯测试训练</h3>
+
+        <div class="difficulty-buttons" id="difficultyButtons"></div>
+        <div id="question"></div><br>
+        <input type="number" id="answer" placeholder="输入你的答案"><br>
+        <button onclick="checkAnswer()">提交答案</button><br>
+
+        <div id="result"></div>
+        <div id="score">正确: 0 | 错误: 0</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>题目</th>
+                    <th>级别</th>
+                    <th>你的答案</th>
+                    <th>正确答案</th>
+                    <th>结果</th>
+                </tr>
+            </thead>
+            <tbody id="history"></tbody>
+        </table>
+    </div>
+
+    <script>
+        let correctAnswer;
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let currentDifficulty = 1;
+
+        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5", "综合测试"];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            generateDifficultyButtons();
+            setDifficulty(1);
+        });
+
+        function generateDifficultyButtons() {
+            const difficultyButtonsContainer = document.getElementById('difficultyButtons');
+            difficultyNames.forEach((name, index) => {
+                const button = document.createElement('button');
+                button.textContent = name;
+                button.id = `level${index + 1}`;
+                button.onclick = () => setDifficulty(index + 1);
+                difficultyButtonsContainer.appendChild(button);
+            });
+        }
+
+        function setDifficulty(level) {
+            currentDifficulty = level;
+            document.querySelectorAll('.difficulty-buttons button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`level${level}`).classList.add('active');
+            newQuestion();
+        }
+
+        function generateQuestion() {
+            switch(currentDifficulty) {
+                case 1: return generateLevel1Question();
+                case 2: return generateLevel2Question();
+                case 3: return generateLevel3Question();
+                case 4: return generateLevel4Question();
+                case 5: return generateLevel5Question();
+                case 6: return generateLevel6Question();
+                default: return "";
+            }
+        }
+
+        function generateLevel1Question() //求y值
+{
+            let k = Math.floor(Math.random() * 8) + 2;
+            let b = Math.floor(Math.random() * 11 - 5);
+            let textb = b === 0 ? "" : (b > 0 ? `+${b}` : `${b}`);
+            let x = Math.floor(Math.random() * 6);
+            correctAnswer = k * x + b;
+            return `\\(\\begin{array}{lll}y=${k}x${textb} ;&x=${x} ;& y= ?\\\\f(x)=${k}x${textb} ;&f(${x})= ?   \\end{array}\\)`;
+        }
+
+        function generateLevel2Question() {
+            let k = Math.floor(Math.random() * 8) + 2;
+            let b = Math.floor(Math.random() * 10 - 5);
+            let textb = b === 0 ? "" : (b > 0 ? `+${b}` : `${b}`);
+            let x = Math.floor(Math.random() * 6);
+            correctAnswer = x;
+            return `\\(\\begin{array}{lll}y=${k}x${textb} ;&y=${k * x + b} ;& x= ?\\\\f(x)=${k}x${textb} ;&f(？)=${k * x + b}   \\end{array}\\)`;
+        }
+
+        function generateLevel3Question() {
+            let n = Math.random() < 0.5 ? 1 : -1;
+            let nk = Math.floor(Math.random() * 8) + 1;
+            let k = n * nk;
+            let textk = k === 1 ? "" : (k === -1 ? "-" : `${k}`);
+            let b = Math.floor(Math.random() * 19) - 9;
+            let textb = b === 0 ? "" : (b > 0 ? `+${b}` : `${b}`);
+            let x = Math.floor(Math.random() * 11) - 5;
+            correctAnswer = k * x + b;
+            return `\\(\\begin{array}{lll}y=${textk}x${textb};& x= ${x};&y=? ;\\\\  f(x)=${textk}x${textb};&x= ${x};&f(${x})=?   \\end{array}\\)`;
+        }
+
+function generateLevel4Question() {
+    let xa = Math.floor(Math.random() * 11) - 5;
+    let ya = Math.floor(Math.random() * 11) - 5;
+    let offset = Math.floor(Math.random() * 10) + 1; // 生成1到10之间的随机数
+    let direction = Math.random() < 0.5 ? -1 : 1; // 随机选择正负方向
+    let xb = xa + offset * direction; // 确保 xb 不等于 xa
+    let k = Math.floor(Math.random() * 11) - 5;
+    let yb = ya + k * (xb - xa);
+    correctAnswer = k;
+    return `\\(\\begin{array}{lll}过点A(${xa},${ya}),B(${xb},${yb});\\\\直线的斜率k=?\\\\可以配数，可以画图算高宽比，\\\\ \\textup{ggb上可以输入slope(segment((${xa},${ya}),(${xb},${yb})) }\\end{array}\\)`;
+}
+
+        function generateLevel5Question() {
+            let xa = Math.floor(Math.random() * 11) - 5;
+            let ya = Math.floor(Math.random() * 11) - 5;
+            let xb = Math.floor(Math.random() * 11) - 5;
+            let b= Math.floor(Math.random() * 11) - 5;
+            let yb = ((xa * b - xb * ya) % 2 === 0) ? b : b + 1; 
+            let s = 0.5 * Math.abs(xa * yb - xb * ya);
+            correctAnswer = s;
+            return `\\(\\begin{array}{lll}直角坐标系中点O(0,0),A(${xa},${ya}),B(${xb},${yb});\\\\SΔOAB=?\\\\你可以用多少不同的方法来运算，\\\\铅垂？割补？点到线距离？三角函数？行列式？ \\end{array}\\)`;
+        }
+
+function generateLevel6Question() // 综合测试
+
+{
+    // 创建一个函数数组，每个元素都是一个生成题目的函数
+    const levelFunctions = [
+        generateLevel1Question,
+        generateLevel2Question,
+        generateLevel3Question,
+        generateLevel4Question,
+        generateLevel5Question
+    ];
+
+    // 随机选择一个函数
+    const randomIndex = Math.floor(Math.random() * levelFunctions.length);
+    const selectedFunction = levelFunctions[randomIndex];
+
+    // 调用被选中的函数并返回结果
+    return selectedFunction();
+}
+
+
+
+        function newQuestion() {
+            const questionElement = document.getElementById('question');
+            currentQuestion = generateQuestion();
+            questionElement.innerHTML = currentQuestion;
+            MathJax.typeset();
+            document.getElementById('answer').value = '';
+            document.getElementById('result').innerHTML = '';
+        }
+
+        function checkAnswer() {
+            const userAnswer = parseInt(document.getElementById('answer').value);
+            if (isNaN(userAnswer)) {
+                alert("请输入有效的数字");
+                return;
+            }
+
+            const resultElement = document.getElementById('result');
+            let resultText;
+            let isCorrect;
+
+            if (userAnswer === correctAnswer) {
+                resultText = '正确！';
+                resultElement.style.color = 'green';
+                isCorrect = true;
+                correctCount++;
+            } else {
+                resultText = `错误。正确答案是 ${correctAnswer}。`;
+                resultElement.style.color = 'red';
+                isCorrect = false;
+                incorrectCount++;
+            }
+
+            resultElement.innerHTML = resultText;
+            updateScore();
+            addToHistory(currentQuestion, userAnswer, correctAnswer, isCorrect);
+            setTimeout(newQuestion, 1500);
+        }
+
+        function addToHistory(question, userAnswer, correctAnswer, isCorrect) {
+            const historyElement = document.getElementById('history');
+            const historyRow = document.createElement('tr');
+            historyRow.className = isCorrect ? 'correct' : 'incorrect';
+            historyRow.innerHTML = `
+                <td>${question}</td>
+                <td>${difficultyNames[currentDifficulty - 1]}</td>
+                <td>${userAnswer}</td>
+                <td>${correctAnswer}</td>
+                <td>${isCorrect ? '正确' : '错误'}</td>
+            `;
+            historyElement.insertBefore(historyRow, historyElement.firstChild);
+            MathJax.typeset([historyRow]);
+        }
+
+        function updateScore() {
+            const scoreElement = document.getElementById('score');
+            const total = correctCount + incorrectCount;
+            const accuracy = total === 0 ? 0 : Math.floor((correctCount / total) * 100);
+            scoreElement.innerHTML = `正确: ${correctCount} | 错误: ${incorrectCount} | 总计: ${total} | 正确率: ${accuracy}%`;
+        }
+
+        document.getElementById('answer').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+    </script>
+</body>
+</html>
