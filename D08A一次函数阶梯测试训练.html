@@ -135,7 +135,7 @@
         let incorrectCount = 0;
         let currentDifficulty = 1;
 
-        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5", "综合测试"];
+        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5","级别 6", "综合测试"];
 
         document.addEventListener("DOMContentLoaded", () => {
             generateDifficultyButtons();
@@ -167,7 +167,8 @@
                 case 3: return generateLevel3Question();
                 case 4: return generateLevel4Question();
                 case 5: return generateLevel5Question();
-                case com: return generateLevelcomQuestion();
+                case 6: return generateLevel6Question();
+                case 7: return generateLevelcomQuestion();
                 default: return "";
             }
         }
@@ -182,7 +183,8 @@
             return `\\(\\begin{array}{lll}y=${k}x${textb} ;&x=${x} ;& y= ?\\\\f(x)=${k}x${textb} ;&f(${x})= ?   \\end{array}\\)`;
         }
 
-        function generateLevel2Question() {
+        function generateLevel2Question() 
+{
             let k = Math.floor(Math.random() * 8) + 2;
             let b = Math.floor(Math.random() * 10 - 5);
             let textb = b === 0 ? "" : (b > 0 ? `+${b}` : `${b}`);
@@ -225,6 +227,54 @@ function generateLevel4Question() {
             correctAnswer = s;
             return `\\(\\begin{array}{lll}直角坐标系中点O(0,0),A(${xa},${ya}),B(${xb},${yb});\\\\SΔOAB=?\\\\你可以用多少不同的方法来运算，\\\\铅垂？割补？点到线距离？三角函数？行列式？ \\end{array}\\)`;
         }
+
+
+function generateLevel6Question() {
+    // 定义勾股数对
+    const pairs = [
+        {a: 5, b: 12},
+        {a: -5, b: 12},
+        {a: 5, b: -12},
+        {a: -5, b: -12},
+        {a: 3, b: 4},
+        {a: -3, b: 4},
+        {a: 4, b: 3},
+        {a: -4, b: -3},
+    ];
+
+    // 随机选择一个勾股数对
+    let pair = pairs[Math.floor(Math.random() * pairs.length)];
+    let a = pair.a;
+    let b = pair.b;
+
+    // 格式化b的显示
+    let textb = b === 0 ? "" : (b > 0 ? `+${b}` : `${b}`);    
+
+    // 随机生成n, xm, ym
+    let n = Math.floor(Math.random() * 11) - 5;
+    let xm = Math.floor(Math.random() * 11) - 5;
+    let ym = Math.floor(Math.random() * 11) - 5;
+
+    // 计算c
+    let c = Math.pow((a*a + b*b), 0.5) * n - a * xm - b * ym;
+    let textc = c === 0 ? "" : (c > 0 ? `+${c}` : `${c}`);
+
+    // 正确答案是n的绝对值
+    correctAnswer = Math.abs(n);
+
+    // 返回问题文本
+    return `\\(\\begin{array}{lll}已知直线${a}x${textb}y${textc}=0 ;\\\\求点M(${xm},${ym})到直线的距离。\\\\比例，勾股，向量，复数，判别式，公式......\\\\多种方法到后面才能云淡风轻.\\end{array}\\)`;
+}
+
+
+
+
+
+
+
+
+
+
 
 function generateLevelcomQuestion() // 综合测试
 
