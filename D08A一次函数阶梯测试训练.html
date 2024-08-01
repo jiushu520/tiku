@@ -110,7 +110,7 @@
 
         <div class="difficulty-buttons" id="difficultyButtons"></div>
         <div id="question"></div><br>
-        <input type="number" id="answer" placeholder="输入你的答案"><br>
+        <input type="text" id="answer" placeholder="输入你的答案"><br>
         <button onclick="checkAnswer()">提交答案</button><br>
 
         <div id="result"></div>
@@ -135,7 +135,7 @@
         let incorrectCount = 0;
         let currentDifficulty = 1;
 
-        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5","级别 6", "综合测试"];
+        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5","级别 6", "级别 7","综合测试"];
 
         document.addEventListener("DOMContentLoaded", () => {
             generateDifficultyButtons();
@@ -168,13 +168,14 @@
                 case 4: return generateLevel4Question();
                 case 5: return generateLevel5Question();
                 case 6: return generateLevel6Question();
-                case 7: return generateLevelcomQuestion();
+                case 7: return generateLevel7Question();
+                case 8: return generateLevelcomQuestion();
                 default: return "";
             }
         }
 
         function generateLevel1Question() //求y值
-{
+        {
             let k = Math.floor(Math.random() * 8) + 2;
             let b = Math.floor(Math.random() * 11 - 5);
             let textb = b === 0 ? "" : (b > 0 ? `+${b}` : `${b}`);
@@ -184,7 +185,7 @@
         }
 
         function generateLevel2Question() 
-{
+        {
             let k = Math.floor(Math.random() * 8) + 2;
             let b = Math.floor(Math.random() * 10 - 5);
             let textb = b === 0 ? "" : (b > 0 ? `+${b}` : `${b}`);
@@ -205,17 +206,17 @@
             return `\\(\\begin{array}{lll}y=${textk}x${textb};& x= ${x};&y=? ;\\\\  f(x)=${textk}x${textb};&x= ${x};&f(${x})=?   \\end{array}\\)`;
         }
 
-function generateLevel4Question() {
-    let xa = Math.floor(Math.random() * 11) - 5;
-    let ya = Math.floor(Math.random() * 11) - 5;
-    let offset = Math.floor(Math.random() * 10) + 1; // 生成1到10之间的随机数
-    let direction = Math.random() < 0.5 ? -1 : 1; // 随机选择正负方向
-    let xb = xa + offset * direction; // 确保 xb 不等于 xa
-    let k = Math.floor(Math.random() * 11) - 5;
-    let yb = ya + k * (xb - xa);
-    correctAnswer = k;
-    return `\\(\\begin{array}{lll}过点A(${xa},${ya}),B(${xb},${yb});\\\\直线的斜率k=?\\\\可以配数，可以画图算高宽比，\\\\ \\textup{ggb上可以输入slope(segment((${xa},${ya}),(${xb},${yb})) }\\end{array}\\)`;
-}
+        function generateLevel4Question() {
+            let xa = Math.floor(Math.random() * 11) - 5;
+            let ya = Math.floor(Math.random() * 11) - 5;
+            let offset = Math.floor(Math.random() * 10) + 1; // 生成1到10之间的随机数
+            let direction = Math.random() < 0.5 ? -1 : 1; // 随机选择正负方向
+            let xb = xa + offset * direction; // 确保 xb 不等于 xa
+            let k = Math.floor(Math.random() * 11) - 5;
+            let yb = ya + k * (xb - xa);
+            correctAnswer = k;
+            return `\\(\\begin{array}{lll}过点A(${xa},${ya}),B(${xb},${yb});\\\\直线的斜率k=?\\\\可以配数，可以画图算高宽比，\\\\ \\textup{ggb上可以输入slope(segment((${xa},${ya}),(${xb},${yb})) }\\end{array}\\)`;
+        }
 
         function generateLevel5Question() {
             let xa = Math.floor(Math.random() * 11) - 5;
@@ -228,42 +229,66 @@ function generateLevel4Question() {
             return `\\(\\begin{array}{lll}直角坐标系中点O(0,0),A(${xa},${ya}),B(${xb},${yb});\\\\SΔOAB=?\\\\你可以用多少不同的方法来运算，\\\\铅垂？割补？点到线距离？三角函数？行列式？ \\end{array}\\)`;
         }
 
+        function generateLevel6Question() {
+            // 定义勾股数对
+            const pairs = [
+                {a: 5, b: 12},
+                {a: -5, b: 12},
+                {a: 5, b: -12},
+                {a: -5, b: -12},
+                {a: 3, b: 4},
+                {a: -3, b: 4},
+                {a: 4, b: 3},
+                {a: -4, b: -3},
+            ];
 
-function generateLevel6Question() {
-    // 定义勾股数对
-    const pairs = [
-        {a: 5, b: 12},
-        {a: -5, b: 12},
-        {a: 5, b: -12},
-        {a: -5, b: -12},
-        {a: 3, b: 4},
-        {a: -3, b: 4},
-        {a: 4, b: 3},
-        {a: -4, b: -3},
-    ];
+            // 随机选择一个勾股数对
+            let pair = pairs[Math.floor(Math.random() * pairs.length)];
+            let a = pair.a;
+            let b = pair.b;
 
-    // 随机选择一个勾股数对
-    let pair = pairs[Math.floor(Math.random() * pairs.length)];
-    let a = pair.a;
-    let b = pair.b;
+            // 格式化b的显示
+            let textb = b === 0 ? "" : (b > 0 ? `+${b}` : `${b}`);    
 
-    // 格式化b的显示
-    let textb = b === 0 ? "" : (b > 0 ? `+${b}` : `${b}`);    
+            // 随机生成n, xm, ym
+            let n = Math.floor(Math.random() * 11) - 5;
+            let xm = Math.floor(Math.random() * 11) - 5;
+            let ym = Math.floor(Math.random() * 11) - 5;
 
-    // 随机生成n, xm, ym
+            // 计算c
+            let c = Math.pow((a*a + b*b), 0.5) * n - a * xm - b * ym;
+            let textc = c === 0 ? "" : (c > 0 ? `+${c}` : `${c}`);
+
+            // 正确答案是n的绝对值
+            correctAnswer = Math.abs(n);
+
+            // 返回问题文本
+            return `\\(\\begin{array}{lll}已知直线${a}x${textb}y${textc}=0 ;\\\\求点M(${xm},${ym})到直线的距离。\\\\比例，勾股，向量，复数，判别式，公式......\\\\多种方法到后面才能云淡风轻.\\end{array}\\)`;
+        }
+
+   function generateLevel7Question() {
+    let p1 = Math.random() < 0.5 ? 1 : -1;
+    let p2 = Math.random() < 0.5 ? 1 : -1;
+    let p3 = Math.random() < 0.5 ? 1 : -1;
+
+    let a = p1 * (Math.floor(Math.random() * 5) + 1);
+    let texta = a === 1 ? "" : (a === -1 ? `-` : `${a}`);
+
+    let b = p2 * (Math.floor(Math.random() * 5) + 1);
+    let textb = b === 1 ? "+" : (b === -1 ? `-` : (b > 0 ? `+${b}` : `${b}`));
+
+    let m = Math.floor(Math.random() * 11) - 5;
     let n = Math.floor(Math.random() * 11) - 5;
-    let xm = Math.floor(Math.random() * 11) - 5;
-    let ym = Math.floor(Math.random() * 11) - 5;
 
-    // 计算c
-    let c = Math.pow((a*a + b*b), 0.5) * n - a * xm - b * ym;
+    let c = -a * m - b * n;
     let textc = c === 0 ? "" : (c > 0 ? `+${c}` : `${c}`);
 
-    // 正确答案是n的绝对值
-    correctAnswer = Math.abs(n);
+    let d = p3 * (Math.floor(Math.random() * 3) + 1);
 
-    // 返回问题文本
-    return `\\(\\begin{array}{lll}已知直线${a}x${textb}y${textc}=0 ;\\\\求点M(${xm},${ym})到直线的距离。\\\\比例，勾股，向量，复数，判别式，公式......\\\\多种方法到后面才能云淡风轻.\\end{array}\\)`;
+    let s = `(${m},${n})`;
+    correctAnswer = s;
+
+    return `\\(\\begin{array}{lll}直线l:${texta}x${textb}y${textc}=0 ; \\\\过点A(${m+d*a},${n+d*b})做l的垂线,垂足为？\\\\可以用方程组，向量，切线方程，判别式，复数...... \\end{array}\\)`;
 }
 
 
@@ -274,30 +299,26 @@ function generateLevel6Question() {
 
 
 
+        function generateLevelcomQuestion() // 综合测试
+        {
+            // 创建一个函数数组，每个元素都是一个生成题目的函数
+            const levelFunctions = [
+                generateLevel1Question,
+                generateLevel2Question,
+                generateLevel3Question,
+                generateLevel4Question,
+                generateLevel5Question,
+                generateLevel6Question,
+                generateLevel7Question
+            ];
 
+            // 随机选择一个函数
+            const randomIndex = Math.floor(Math.random() * levelFunctions.length);
+            const selectedFunction = levelFunctions[randomIndex];
 
-function generateLevelcomQuestion() // 综合测试
-
-{
-    // 创建一个函数数组，每个元素都是一个生成题目的函数
-    const levelFunctions = [
-        generateLevel1Question,
-        generateLevel2Question,
-        generateLevel3Question,
-        generateLevel4Question,
-        generateLevel5Question,
-        generateLevel6Question
-    ];
-
-    // 随机选择一个函数
-    const randomIndex = Math.floor(Math.random() * levelFunctions.length);
-    const selectedFunction = levelFunctions[randomIndex];
-
-    // 调用被选中的函数并返回结果
-    return selectedFunction();
-}
-
-
+            // 调用被选中的函数并返回结果
+            return selectedFunction();
+        }
 
         function newQuestion() {
             const questionElement = document.getElementById('question');
@@ -308,10 +329,23 @@ function generateLevelcomQuestion() // 综合测试
             document.getElementById('result').innerHTML = '';
         }
 
+        function toHalfWidth(str) {
+            return str.replace(/[\uFF01-\uFF5E]/g, function(char) {
+                return String.fromCharCode(char.charCodeAt(0) - 0xFEE0);
+            }).replace(/\u3000/g, ' '); // 将全角空格替换为半角空格
+        }
+
         function checkAnswer() {
-            const userAnswer = parseInt(document.getElementById('answer').value);
-            if (isNaN(userAnswer)) {
-                alert("请输入有效的数字");
+            let userAnswer = document.getElementById('answer').value.trim();
+            
+            // 移除所有空格
+            userAnswer = userAnswer.replace(/\s+/g, '');
+            
+            // 将全角字符转换为半角字符
+            userAnswer = toHalfWidth(userAnswer);
+
+            if (!userAnswer) {
+                alert("请输入有效的答案");
                 return;
             }
 
@@ -319,7 +353,7 @@ function generateLevelcomQuestion() // 综合测试
             let resultText;
             let isCorrect;
 
-            if (userAnswer === correctAnswer) {
+            if (userAnswer === correctAnswer.toString()) {
                 resultText = '正确！';
                 resultElement.style.color = 'green';
                 isCorrect = true;
