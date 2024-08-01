@@ -226,7 +226,7 @@
             let yb = ((xa * b - xb * ya) % 2 === 0) ? b : b + 1; 
             let s = 0.5 * Math.abs(xa * yb - xb * ya);
             correctAnswer = s;
-            return `\\(\\begin{array}{lll}直角坐标系中点O(0,0),A(${xa},${ya}),B(${xb},${yb});\\\\SΔOAB=?\\\\你可以用多少不同的方法来运算，\\\\铅垂？割补？点到线距离？三角函数？行列式？ \\end{array}\\)`;
+            return `\\(\\begin{array}{lll}直角坐标系中点O(0,0),A(${xa},${ya}),B(${xb},${yb});\\\\SΔOAB=?\\\\你可以用多少不同的方法来运算，\\\\你可以先用ggb画一下的;\\\\铅垂？割补？点到线距离？三角函数？行列式？ \\end{array}\\)`;
         }
 
         function generateLevel6Question() {
@@ -263,7 +263,7 @@
             correctAnswer = Math.abs(n);
 
             // 返回问题文本
-            return `\\(\\begin{array}{lll}已知直线${a}x${textb}y${textc}=0 ;\\\\求点M(${xm},${ym})到直线的距离。\\\\比例，勾股，向量，复数，判别式，公式......\\\\多种方法到后面才能云淡风轻.\\end{array}\\)`;
+            return `\\(\\begin{array}{lll}已知直线${a}x${textb}y${textc}=0 ;\\\\求点M(${xm},${ym})到直线的距离。\\\\你可以先用ggb画一下的;\\\\比例，勾股，向量，复数，判别式，公式......\\\\多种方法到后面才能云淡风轻.\\end{array}\\)`;
         }
 
    function generateLevel7Question() {
@@ -288,7 +288,7 @@
     let s = `(${m},${n})`;
     correctAnswer = s;
 
-    return `\\(\\begin{array}{lll}直线l:${texta}x${textb}y${textc}=0 ; \\\\过点A(${m+d*a},${n+d*b})做l的垂线,垂足为？\\\\可以用方程组，向量，切线方程，判别式，复数...... \\end{array}\\)`;
+    return `\\(\\begin{array}{lll}直线l:${texta}x${textb}y${textc}=0 ; \\\\过点A(${m+d*a},${n+d*b})做l的垂线,垂足为？\\\\你可以先用ggb画一下的;\\\\可以用方程组，向量，切线方程，判别式，复数...... \\end{array}\\)`;
 }
 
 
