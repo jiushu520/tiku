@@ -167,7 +167,7 @@
                 case 3: return generateLevel3Question();
                 case 4: return generateLevel4Question();
                 case 5: return generateLevel5Question();
-                case 6: return generateLevel6Question();
+                case com: return generateLevelcomQuestion();
                 default: return "";
             }
         }
@@ -226,7 +226,7 @@ function generateLevel4Question() {
             return `\\(\\begin{array}{lll}直角坐标系中点O(0,0),A(${xa},${ya}),B(${xb},${yb});\\\\SΔOAB=?\\\\你可以用多少不同的方法来运算，\\\\铅垂？割补？点到线距离？三角函数？行列式？ \\end{array}\\)`;
         }
 
-function generateLevel6Question() // 综合测试
+function generateLevelcomQuestion() // 综合测试
 
 {
     // 创建一个函数数组，每个元素都是一个生成题目的函数
