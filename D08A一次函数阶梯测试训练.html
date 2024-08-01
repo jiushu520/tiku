@@ -135,7 +135,7 @@
         let incorrectCount = 0;
         let currentDifficulty = 1;
 
-        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5","级别 6", "级别 7","综合测试"];
+        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5","级别 6", "级别 7","级别 8","综合测试"];
 
         document.addEventListener("DOMContentLoaded", () => {
             generateDifficultyButtons();
@@ -169,7 +169,9 @@
                 case 5: return generateLevel5Question();
                 case 6: return generateLevel6Question();
                 case 7: return generateLevel7Question();
-                case 8: return generateLevelcomQuestion();
+                case 8: return generateLevel8Question();
+
+                case 9: return generateLevelcomQuestion();
                 default: return "";
             }
         }
@@ -293,6 +295,37 @@
 
 
 
+   function generateLevel8Question() {
+    let p1 = Math.random() < 0.5 ? 1 : -1;
+    let p2 = Math.random() < 0.5 ? 1 : -1;
+    let p3 = Math.random() < 0.5 ? 1 : -1;
+
+    let a = p1 * (Math.floor(Math.random() * 5) + 1);
+    let texta = a === 1 ? "" : (a === -1 ? `-` : `${a}`);
+
+    let b = p2 * (Math.floor(Math.random() * 5) + 1);
+    let textb = b === 1 ? "+" : (b === -1 ? `-` : (b > 0 ? `+${b}` : `${b}`));
+
+    let m = Math.floor(Math.random() * 11) - 5;
+    let n = Math.floor(Math.random() * 11) - 5;
+
+    let c = -a * m - b * n;
+    let textc = c === 0 ? "" : (c > 0 ? `+${c}` : `${c}`);
+
+    let d = p3 * (Math.floor(Math.random() * 3) + 1);
+
+    let s = `(${m-d*a},${n-d*b})`;
+    correctAnswer = s;
+
+    return `\\(\\begin{array}{lll}直线l:${texta}x${textb}y${textc}=0 ; \\\\点A(${m+d*a},${n+d*b})关于l的对称点是？\\\\你可以先用ggb画一下的;\\\\可以用方程组，向量，切线方程，判别式，复数...... \\end{array}\\)`;
+}
+
+
+
+
+
+
+
 
 
 
@@ -309,7 +342,8 @@
                 generateLevel4Question,
                 generateLevel5Question,
                 generateLevel6Question,
-                generateLevel7Question
+                generateLevel7Question,
+                generateLevel8Question,
             ];
 
             // 随机选择一个函数
