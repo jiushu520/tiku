@@ -428,7 +428,7 @@ function addToHistory(question, userAnswer, correctAnswer, isCorrect) {
 document.getElementById('answer').addEventListener('input', function(event) {
     const answer = document.getElementById('answer').value;
     const renderedAnswer = document.getElementById('rendered-answer');
-    if (answer.includes('\\') || answer.includes('^')) {
+    if (answer.includes('\\') || answer.includes('^') || answer.includes('_')) {
         renderedAnswer.innerHTML = `\\(${answer}\\)`;
         renderedAnswer.style.display = 'block';
         MathJax.typeset([renderedAnswer]);
@@ -437,6 +437,7 @@ document.getElementById('answer').addEventListener('input', function(event) {
         renderedAnswer.innerHTML = '';
     }
 });
+
 
 
         document.getElementById('answer').addEventListener('keypress', function(event) {
