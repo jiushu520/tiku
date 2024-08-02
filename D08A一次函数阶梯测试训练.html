@@ -204,7 +204,7 @@
             return `\\(\\begin{array}{lll}y=${k}x${textb} ;&x=${x} ;& y= ?\\\\f(x)=${k}x${textb} ;&f(${x})= ?   \\end{array}\\)`;
         }
 
-        function generateLevel2Question() {
+        function generateLevel2aQuestion() {
             let k = Math.floor(Math.random() * 8) + 2;
             let b = Math.floor(Math.random() * 10 - 5);
             let textb = b === 0 ? "" : (b > 0 ? `+${b}` : `${b}`);
@@ -213,7 +213,9 @@
             return `\\(\\begin{array}{lll}y=${k}x${textb} ;&y=${k * x + b} ;& x= ?\\\\f(x)=${k}x${textb} ;&f(？)=${k * x + b}   \\end{array}\\)`;
         }
 
-        function generateLevel3Question() {
+
+
+        function generateLevel2bQuestion() {
             let n = Math.random() < 0.5 ? 1 : -1;
             let nk = Math.floor(Math.random() * 8) + 1;
             let k = n * nk;
@@ -224,6 +226,78 @@
             correctAnswer = k * x + b;
             return `\\(\\begin{array}{lll}y=${textk}x${textb};& x= ${x};&y=? ;\\\\  f(x)=${textk}x${textb};&x= ${x};&f(${x})=?   \\end{array}\\)`;
         }
+
+
+     function generateLevel2Question() {
+            const levelFunctions = [
+                generateLevel2aQuestion,
+                generateLevel2bQuestion,
+
+            ];
+
+            const randomIndex = Math.floor(Math.random() * levelFunctions.length);
+            const selectedFunction = levelFunctions[randomIndex];
+
+            return selectedFunction();
+        }
+
+
+
+
+
+
+
+
+        function generateLevel3aQuestion() {
+            let possibleNumbers = [-5, -4, -3, -2, -1, 1, 2, 3, 4, 5];
+            possibleNumbers = possibleNumbers.sort(() => Math.random() - 0.5);
+            const x1 = possibleNumbers[0];
+            const x2 = possibleNumbers[1];
+            let n = Math.random() < 0.5 ? 1 : -1;
+            let nk = Math.floor(Math.random() * 4) + 1;
+            let k = n * nk;
+            let b = Math.floor(Math.random() * 19) - 9;
+            let y1=b+k*x1;
+            let y2=b+k*x2;
+            correctAnswer = b;
+            return `\\(\\begin{array}{lll}过点A(${x1},${y1})、B(${x2},${y2})的直线\\\\与y轴交点为(0,b),\\\\则b=? \\\\可以画图，比例，线面积为0，方程组、定比分点...... \\\\line((${x1},${y1}),(${x2},${y2}))\\end{array}\\)`;
+        }
+
+
+        function generateLevel3bQuestion() {
+            let possibleNumbers = [-5, -4, -3, -2, -1, 1, 2, 3, 4, 5];
+            possibleNumbers = possibleNumbers.sort(() => Math.random() - 0.5);
+            const y1 = possibleNumbers[0];
+            const y2 = possibleNumbers[1];
+            let n = Math.random() < 0.5 ? 1 : -1;
+            let nk = Math.floor(Math.random() * 4) + 1;
+            let k = n * nk;
+            let t = Math.floor(Math.random() * 19) - 9;
+            let x1=t+k*y1;
+            let x2=t+k*y2;
+            correctAnswer = t;
+            return `\\(\\begin{array}{lll}过点A(${x1},${y1})、B(${x2},${y2})的直线\\\\与x轴交点为(t,0),\\\\则t=? \\\\可以画图，比例，线面积为0，方程组、定比分点......\\\\line((${x1},${y1}),(${x2},${y2})) \\end{array}\\)`;
+           
+        }
+
+
+     function generateLevel3Question() {
+            const levelFunctions = [
+                generateLevel3aQuestion,
+                generateLevel3bQuestion,
+
+            ];
+
+            const randomIndex = Math.floor(Math.random() * levelFunctions.length);
+            const selectedFunction = levelFunctions[randomIndex];
+
+            return selectedFunction();
+        }
+
+
+
+
+
 
         function generateLevel4Question() {
             let xa = Math.floor(Math.random() * 11) - 5;
