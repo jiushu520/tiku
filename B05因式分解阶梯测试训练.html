@@ -197,7 +197,7 @@
             let textm = m === 1 ? "+1" : (m === -1 ? "-1" : (m > 1 ? `+${m}` : `${m}`));
             let textn  = n === 1 ? "" : (n === -1 ? "-" : (n > 1 ? `${n}` : `${n}`));
             let textmn = mn=== 1 ? "+" : (mn === -1 ? "-" : (mn > 1 ? `+${mn}` : `${mn}`));
-            correctAnswer = `${textn}x(x${textm})`;
+            correctAnswer = [`${textn}x(x${textm})`, `x(${textn}x${textm})`];
            return `\\(\\begin{gather}因式分解:${textn}x^2${textmn}x \\\\ \\begin{array}{|c|c|c|} \\hline bx & x^2 & abx \\\\ \\hline & x & a \\\\ \\hline \\end{array} \\end{gather}\\)`;
         }
 
@@ -320,41 +320,37 @@
             }).replace(/\u3000/g, ' ');
         }
 
-        function checkAnswer() {
-            let userAnswer = document.getElementById('answer').value.trim();
-            userAnswer = userAnswer.replace(/\s+/g, '');
-            userAnswer = toHalfWidth(userAnswer);
+function checkAnswer() {
+    let userAnswer = document.getElementById('answer').value.trim();
+    userAnswer = userAnswer.replace(/\s+/g, '');
+    userAnswer = toHalfWidth(userAnswer);
 
-            if (!userAnswer) {
-                alert("请输入有效的答案");
-                return;
-            }
+    if (!userAnswer) {
+        alert("请输入有效的答案");
+        return;
+    }
 
-            const resultElement = document.getElementById('result');
-            let resultText;
-            let isCorrect;
+    const resultElement = document.getElementById('result');
+    let resultText;
+    let isCorrect = correctAnswer.includes(userAnswer);
 
-            if (Array.isArray(correctAnswer)) {
-                isCorrect = correctAnswer.some(ans => ans === userAnswer);
-            } else {
-                isCorrect = userAnswer === correctAnswer;
-            }
+    if (isCorrect) {
+        resultText = '正确！';
+        resultElement.style.color = 'green';
+        correctCount++;
+    } else {
+        resultText = `错误。正确答案是 ${correctAnswer.join(' 或 ')}。`;
+        resultElement.style.color = 'red';
+        incorrectCount++;
+    }
 
-            if (isCorrect) {
-                resultText = '正确！';
-                resultElement.style.color = 'green';
-                correctCount++;
-            } else {
-                resultText = `错误。正确答案是 ${Array.isArray(correctAnswer) ? correctAnswer.join(' 或 ') : correctAnswer}。`;
-                resultElement.style.color = 'red';
-                incorrectCount++;
-            }
+    resultElement.innerHTML = resultText;
+    updateScore();
+    addToHistory(currentQuestion, userAnswer, correctAnswer.join(' 或 '), isCorrect);
+    setTimeout(newQuestion, 1500);
+}
 
-            resultElement.innerHTML = resultText;
-            updateScore();
-            addToHistory(currentQuestion, userAnswer, Array.isArray(correctAnswer) ? correctAnswer.join(' 或 ') : correctAnswer, isCorrect);
-            setTimeout(newQuestion, 1500);
-        }
+
 
         function addToHistory(question, userAnswer, correctAnswer, isCorrect) {
             const historyElement = document.getElementById('history');
