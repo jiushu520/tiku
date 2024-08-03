@@ -147,7 +147,7 @@
         let incorrectCount = 0;
         let currentDifficulty = 1;
 
-        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4"];
+        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5"];
 
         document.addEventListener("DOMContentLoaded", () => {
             generateDifficultyButtons();
@@ -178,6 +178,7 @@
                 case 2: return generateLevel2Question();
                 case 3: return generateLevel3Question();
                 case 4: return generateLevel4Question();
+                case 5: return generateLevel5Question();
                 default: return "";
             }
         }
@@ -302,6 +303,28 @@
 
             return selectedFunction();
         }
+
+
+
+function generateLevel5Question() {
+            const levelFunctions = [
+                generateLevel1Question,
+                generateLevel2Question,
+                generateLevel3Question,
+                generateLevel4bQuestion,
+            ];
+
+            const randomIndex = Math.floor(Math.random() * levelFunctions.length);
+            const selectedFunction = levelFunctions[randomIndex];
+
+            return selectedFunction();
+
+
+}
+
+
+
+
 
         function newQuestion() {
             const questionElement = document.getElementById('question');
