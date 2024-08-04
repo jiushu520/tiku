@@ -201,7 +201,7 @@
             let textm = m === 1 ? "+1" : (m === -1 ? "-1" : (m > 1 ? `+${m}` : `${m}`));
             let textn  = n === 1 ? "" : (n === -1 ? "-" : (n > 1 ? `${n}` : `${n}`));
             let textmn = mn=== 1 ? "+" : (mn === -1 ? "-" : (mn > 1 ? `+${mn}` : `${mn}`));
-            correctAnswer = [`${textn}x(x${textm})`, `x(${textn}x${textm})`];
+            correctAnswer = [`${textn}x(x${textm})`];
            return `\\(\\begin{gather}因式分解:${textn}x^2${textmn}x \\\\ \\begin{array}{|c|c|c|} \\hline bx & x^2 & abx \\\\ \\hline & x & a \\\\ \\hline \\end{array} \\end{gather}\\)`;
         }
 
