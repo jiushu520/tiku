@@ -147,7 +147,7 @@
         let incorrectCount = 0;
         let currentDifficulty = 1;
 
-        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5", "级别 6", "级别 7"];
+        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5", "级别 6", "级别 7", "级别 8"];
 
         document.addEventListener("DOMContentLoaded", () => {
             generateDifficultyButtons();
@@ -181,6 +181,7 @@
                 case 5: return generateLevel5Question();
                 case 6: return generateLevel6Question();
                 case 7: return generateLevel7Question();
+                case 8: return generateLevel8Question();
                 default: return "";
             }
         }
@@ -464,9 +465,6 @@ abc=?\\\\
 
 
 
-
-
-
         function generateLevel6Question() {
             const levelFunctions = [
                 generateLevel6aQuestion,
@@ -481,13 +479,56 @@ abc=?\\\\
 
 
 
+function generateLevel7Question() {
+    let m = (Math.floor(Math.random() * 3) + 1) * (Math.random() < 0.5 ? 1 : -1);
+    let n = (Math.floor(Math.random() * 3) + 1) * (Math.random() < 0.5 ? 1 : -1);
+
+    let a = (Math.floor(Math.random() * 3) + 1) * (Math.random() < 0.5 ? 1 : -1);
+    let b = (Math.floor(Math.random() * 3) + 4);
+    let c = (Math.floor(Math.random() * 3) - 4);
+
+    let tm = m === 1 ? "" : (m === -1 ? `-` : `${m}`);
+    let tn = n > 0 ? `+${n}` : `${n}`;
+
+    let ta = a === 1 ? "" : (a === -1 ? `-` : `${a}`);
+    let tb = b > 0 ? `+${b}` : `${b}`;
+    let tc = c > 0 ? `+${c}` : `${c}`;
+
+    let x1 = a * m;
+    let x2 = a * n + b * m;
+    let x3 = c * m + b * n;
+    let x4 = c * n;
+
+    let textx1 = x1;
+    let textx2 = x2 === 0 ? "" : (x2 === 1 ? "+x^2" : (x2 === -1 ? "-x^2" : (x2 > 0 ? `+${x2}x^2` : `${x2}x^2`)));
+    let textx3 = x3 === 0 ? "" : (x3 === 1 ? "+x" : (x3 === -1 ? "-x" : (x3 > 0 ? `+${x3}x` : `${x3}x`)));
+    let textx4 = x4 === 0 ? "" : (x4 > 0 ? `+${x4}` : `${x4}`);
+
+    correctAnswer = [`${textx1}x^3${textx2}${textx3}${textx4}`];
+
+    return `\\(\\begin{gather}展开:(${tm}x${tn})(${ta}x^2${tb}x${tc}) \\\\ 
+    \\begin{array}{|c|c|c|c|} 
+    \\hline ${tn} & 囗x^2 & 囗x & 囗1 \\\\ 
+    \\hline ${m}x & 囗x^3 & 囗x^2& 囗x \\\\ 
+    \\hline   & ${ta}x^2 & ${tb}x & ${tc} \\\\ 
+    \\hline \\end{array} \\\\
+
+    \\end{gather}\\)`;
+}
 
 
 
 
 
 
-        function generateLevel7Question() {
+
+
+
+
+
+
+
+        function generateLevel8Question() {
             const levelFunctions = [
                 generateLevel1Question,
                 generateLevel2Question,
@@ -495,6 +536,7 @@ abc=?\\\\
                 generateLevel4Question,
                 generateLevel5Question,
                 generateLevel6Question,
+                generateLevel7Question,
 
             ];
 
