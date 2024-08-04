@@ -147,7 +147,7 @@
         let incorrectCount = 0;
         let currentDifficulty = 1;
 
-        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5", "级别 6"];
+        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5", "级别 6", "级别 7"];
 
         document.addEventListener("DOMContentLoaded", () => {
             generateDifficultyButtons();
@@ -180,6 +180,7 @@
                 case 4: return generateLevel4Question();
                 case 5: return generateLevel5Question();
                 case 6: return generateLevel6Question();
+                case 7: return generateLevel7Question();
                 default: return "";
             }
         }
@@ -193,8 +194,8 @@
         }
 
         function generateLevel2Question() {
-            let m = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
-            let n = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
+            let m = (Math.floor(Math.random() * 9) + 1) * (Math.random() < 0.5 ? 1 : -1);
+            let n = (Math.floor(Math.random() * 9) + 1) * (Math.random() < 0.5 ? 1 : -1);
             let mn = m*n;    
             let textm = m === 1 ? "+1" : (m === -1 ? "-1" : (m > 1 ? `+${m}` : `${m}`));
             let textn  = n === 1 ? "" : (n === -1 ? "-" : (n > 1 ? `${n}` : `${n}`));
@@ -203,44 +204,46 @@
            return `\\(\\begin{gather}因式分解:${textn}x^2${textmn}x \\\\ \\begin{array}{|c|c|c|} \\hline bx & x^2 & abx \\\\ \\hline & x & a \\\\ \\hline \\end{array} \\end{gather}\\)`;
         }
 
-        
+
+
         function generateLevel3aQuestion() {
             let m = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
-            let n = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
+
 
             let textm = m > 0 ? `+${m}` : `${m}`;
-            let textn = n > 0 ? `+${n}` : `${n}`;
 
-            let p = m + n;
-            let t = m * n;
+
+            let p = m + m;
+            let t = m * m;
 
             let textp = p === 0 ? "" : (p === 1 ? "+x" : (p === -1 ? "-x" : (p > 1 ? `+${p}x` : `${p}x`)));
             let textt = t === 0 ? "" : (t > 0 ? `+${t}` : `${t}`);
-            correctAnswer = [`(x${textm})(x${textn})`, `(x${textn})(x${textm})`];
-            if (m === n) {
-                correctAnswer.push(`(x${textm})^2`);
-            }
+            correctAnswer = [`(x${textm})(x${textm})`, `(x${textm})^2`];
+
             return `\\(\\begin{gather}因式分解:x^2${textp}${textt} \\\\ \\begin{array}{|c|c|c|} \\hline b&bx& ${textt}\\\\ \\hline x & x^2 &ax \\\\ \\hline  &x&a \\\\ \\hline  \\end{array} \\end{gather}\\)`;
         }
+
+
 
         function generateLevel3bQuestion() {
-            let m = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
-            let n = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
+            let m = (Math.floor(Math.random() * 9) + 1) * (Math.random() < 0.5 ? 1 : -1);
+            let n = -m ;
 
             let textm = m > 0 ? `+${m}` : `${m}`;
             let textn = n > 0 ? `+${n}` : `${n}`;
 
-            let p = m + n;
-            let t = m * n;
+
+            let p = 0;
+            let t = m * m;
 
             let textp = p === 0 ? "" : (p === 1 ? "+x" : (p === -1 ? "-x" : (p > 1 ? `+${p}x` : `${p}x`)));
             let textt = t === 0 ? "" : (t > 0 ? `+${t}` : `${t}`);
             correctAnswer = [`(x${textm})(x${textn})`, `(x${textn})(x${textm})`];
-            if (m === n) {
-                correctAnswer.push(`(x${textm})^2`);
-            }
-            return `\\(\\begin{gather}因式分解:x^2${textp}${textt} \\\\ \\begin{array}{|c|c|c|} \\hline b&bx& ${textt}\\\\ \\hline x & x^2 &ax \\\\ \\hline  &x&a \\\\ \\hline  \\end{array} \\end{gather}\\)`;
+
+            return `\\(\\begin{gather}因式分解:x^2-${t}\\\\ \\begin{array}{|c|c|c|} \\hline b&bx& ${textt}\\\\ \\hline x & x^2 &ax \\\\ \\hline  &x&a \\\\ \\hline  \\end{array} \\end{gather}\\)`;
         }
+
+
 
         function generateLevel3Question() {
             const levelFunctions = [
@@ -254,6 +257,11 @@
             return selectedFunction();
         }
 
+
+
+
+
+        
         function generateLevel4aQuestion() {
             let m = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
             let n = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
@@ -274,6 +282,56 @@
         }
 
         function generateLevel4bQuestion() {
+            let m = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
+            let n = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
+
+            let textm = m > 0 ? `+${m}` : `${m}`;
+            let textn = n > 0 ? `+${n}` : `${n}`;
+
+            let p = m + n;
+            let t = m * n;
+
+            let textp = p === 0 ? "" : (p === 1 ? "+x" : (p === -1 ? "-x" : (p > 1 ? `+${p}x` : `${p}x`)));
+            let textt = t === 0 ? "" : (t > 0 ? `+${t}` : `${t}`);
+            correctAnswer = [`(x${textm})(x${textn})`, `(x${textn})(x${textm})`];
+            if (m === n) {
+                correctAnswer.push(`(x${textm})^2`);
+            }
+            return `\\(\\begin{gather}因式分解:x^2${textp}${textt} \\\\ \\begin{array}{|c|c|c|} \\hline b&bx& ${textt}\\\\ \\hline x & x^2 &ax \\\\ \\hline  &x&a \\\\ \\hline  \\end{array} \\end{gather}\\)`;
+        }
+
+        function generateLevel4Question() {
+            const levelFunctions = [
+                generateLevel4aQuestion,
+                generateLevel4bQuestion,
+            ];
+
+            const randomIndex = Math.floor(Math.random() * levelFunctions.length);
+            const selectedFunction = levelFunctions[randomIndex];
+
+            return selectedFunction();
+        }
+
+        function generateLevel5aQuestion() {
+            let m = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
+            let n = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
+
+            let textm = m > 0 ? `+${m}` : `${m}`;
+            let textn = n > 0 ? `+${n}` : `${n}`;
+
+            let p = m + n;
+            let t = m * n;
+
+            let textp = p === 0 ? "" : (p === 1 ? "+x" : (p === -1 ? "-x" : (p > 1 ? `+${p}x` : `${p}x`)));
+            let textt = t === 0 ? "" : (t > 0 ? `+${t}` : `${t}`);
+            correctAnswer = [`(x${textm})(x${textn})`, `(x${textn})(x${textm})`];
+            if (m === n) {
+                correctAnswer.push(`(x${textm})^2`);
+            }
+            return `\\(\\begin{gather}因式分解:x^2${textp}${textt} \\\\ \\begin{array}{|c|c|c|} \\hline b&bx& ${textt}\\\\ \\hline x & x^2 &ax \\\\ \\hline  &x&a \\\\ \\hline  \\end{array} \\end{gather}\\)`;
+        }
+
+        function generateLevel5bQuestion() {
             let c = (Math.floor(Math.random() * 5) + 2) * (Math.random() < 0.5 ? 1 : -1);
             let m = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
             let n = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
@@ -293,10 +351,19 @@
             return `\\(\\begin{gather}因式分解:${c}x^2${textpc}${texttc} \\\\${c}\\times  \\begin{array}{|c|c|c|} \\hline b&bx& ${m*n}\\\\ \\hline x &x^2 &ax \\\\ \\hline  &x&a \\\\ \\hline  \\end{array} \\end{gather}\\)`;
         }
 
-        function generateLevel4Question() {
+
+
+
+
+
+
+
+
+
+        function generateLevel5Question() {
             const levelFunctions = [
-                generateLevel4aQuestion,
-                generateLevel4bQuestion,
+                generateLevel5aQuestion,
+                generateLevel5bQuestion,
             ];
 
             const randomIndex = Math.floor(Math.random() * levelFunctions.length);
@@ -307,7 +374,7 @@
 
 
 
-function generateLevel5Question() {
+function generateLevel6Question() {
 
             let a = (Math.floor(Math.random() * 3) + 1) * (Math.random() < 0.5 ? 1 : -1);
             let b = (Math.floor(Math.random() * 3) + 4) ;
@@ -334,7 +401,9 @@ function generateLevel5Question() {
 ab+bc+ca=${x1}\\\\
 a+b+c=${x2}\\\\
 abc=${x3}\\\\
-\\end{cases}
+
+\\end{cases}\\\\
+分组分解，拆添项，试根法......
 
  \\end{gather}\\)`;
 
@@ -344,13 +413,14 @@ abc=${x3}\\\\
 }
 
 
-        function generateLevel6Question() {
+        function generateLevel7Question() {
             const levelFunctions = [
                 generateLevel1Question,
                 generateLevel2Question,
                 generateLevel3Question,
                 generateLevel4Question,
                 generateLevel5Question,
+                generateLevel6Question,
 
             ];
 
