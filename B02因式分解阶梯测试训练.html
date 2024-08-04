@@ -147,7 +147,7 @@
         let incorrectCount = 0;
         let currentDifficulty = 1;
 
-        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5", "级别 6", "级别 7"];
+        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5", "级别 6", "级别 7", "级别 8"];
 
         document.addEventListener("DOMContentLoaded", () => {
             generateDifficultyButtons();
@@ -181,6 +181,7 @@
                 case 5: return generateLevel5Question();
                 case 6: return generateLevel6Question();
                 case 7: return generateLevel7Question();
+                case 8: return generateLevel8Question();
                 default: return "";
             }
         }
@@ -344,7 +345,7 @@
 
             let textpc = pc === 0 ? "" : (pc > 0 ? `+${pc}x` : `${pc}x`);
             let texttc = tc === 0 ? "" : (tc > 0 ? `+${tc}` : `${tc}`);
-            correctAnswer = [`${c}(x${textm})(x${textn})`, `${c}(x${textn})(x${textm})`];
+            correctAnswer = [`${c}(x${textm})(x${textn})`,`${c}(x${textn})(x${textm})`];
             if (m === n) {
                 correctAnswer.push(`${c}(x${textm})^2`);
             }
@@ -464,6 +465,36 @@ abc=${x3}\\\\
 
 
 
+function generateLevel7Question() {
+    let km = (Math.floor(Math.random() * 10) + 0); // 生成0到9之间的随机整数
+    let kn = (Math.floor(Math.random() * 8) + 1); // 生成1到8之间的随机整数
+
+    let n = (km + kn) % 10 + 1; // 对(km + kn)取模10再加1
+    let m = km + 1;
+
+    let p = -(m + n);
+    let t = m * n;
+    
+    let tp = p === 0 ? "" : (p === 1 ? "+x" : (p === -1 ? "-x" : (p > 0 ? `+${p}x` : `${p}x`)));
+    let tt = t === 0 ? "" : (t > 0 ? `+${t}` : `${t}`);
+
+    correctAnswer = [`${m},${n}`, `${n},${m}`, `${m};${n}`, `${n};${m}`];
+
+    return `\\(\\begin{gather}解方程: x^2 ${tp} ${tt} = 0 \\\\
+
+\\begin{array}{|c|c|c|}
+\\hline 
+b & bx & ab \\\\
+\\hline 
+x & x^2 & ax \\\\
+\\hline 
+  & x & b \\\\
+\\hline 
+\\end{array}\\\\
+输入格式：a,b或a;b\\\\
+因式分解是解方程的一种常用方法，试试吧，\\\\当然你还可以用求根公式、配方法等......
+\\end{gather}\\)`;
+}
 
 
 
@@ -471,7 +502,8 @@ abc=${x3}\\\\
 
 
 
-        function generateLevel7Question() {
+
+        function generateLevel8Question() {
             const levelFunctions = [
                 generateLevel1Question,
                 generateLevel2Question,
@@ -479,6 +511,7 @@ abc=${x3}\\\\
                 generateLevel4Question,
                 generateLevel5Question,
                 generateLevel6Question,
+                generateLevel7Question,
 
             ];
 
