@@ -499,12 +499,12 @@ function generateLevel7Question() {
     let x3 = c * m + b * n;
     let x4 = c * n;
 
-    let textx1 = x1;
+    let textx1 = x1 === 0 ? "" : (x1 === 1 ? "x^3" : (x1 === -1 ? "-x^3" :`${x1}x^3`));
     let textx2 = x2 === 0 ? "" : (x2 === 1 ? "+x^2" : (x2 === -1 ? "-x^2" : (x2 > 0 ? `+${x2}x^2` : `${x2}x^2`)));
     let textx3 = x3 === 0 ? "" : (x3 === 1 ? "+x" : (x3 === -1 ? "-x" : (x3 > 0 ? `+${x3}x` : `${x3}x`)));
     let textx4 = x4 === 0 ? "" : (x4 > 0 ? `+${x4}` : `${x4}`);
 
-    correctAnswer = [`${textx1}x^3${textx2}${textx3}${textx4}`];
+    correctAnswer = [`${textx1}${textx2}${textx3}${textx4}`];
 
     return `\\(\\begin{gather}展开:(${tm}x${tn})(${ta}x^2${tb}x${tc}) \\\\ 
     \\begin{array}{|c|c|c|c|} 
