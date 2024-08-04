@@ -241,7 +241,7 @@
             let textt = t === 0 ? "" : (t > 0 ? `+${t}` : `${t}`);
             correctAnswer = [`(x${textm})(x${textn})`, `(x${textn})(x${textm})`];
 
-            return `\\(\\begin{gather}因式分解:x^2-${t}\\\\ \\begin{array}{|c|c|c|} \\hline b&bx& ${textt}\\\\ \\hline x & x^2 &ax \\\\ \\hline  &x&a \\\\ \\hline  \\end{array} \\end{gather}\\)`;
+            return `\\(\\begin{gather}因式分解:x^2-${t}\\\\ \\begin{array}{|c|c|c|} \\hline b&bx& ${-textt}\\\\ \\hline x & x^2 &ax \\\\ \\hline  &x&a \\\\ \\hline  \\end{array} \\end{gather}\\)`;
         }
 
 
