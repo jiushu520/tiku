@@ -465,7 +465,7 @@ abc=${x3}\\\\
 
 
 
-function generateLevel7Question() {
+function generateLevel7aQuestion() {
     let km = (Math.floor(Math.random() * 10) + 0); // 生成0到9之间的随机整数
     let kn = (Math.floor(Math.random() * 8) + 1); // 生成1到8之间的随机整数
 
@@ -496,6 +496,55 @@ x & x^2 & ax \\\\
 \\end{gather}\\)`;
 }
 
+
+
+
+
+function generateLevel7bQuestion() {
+    let km = (Math.floor(Math.random() * 10) + 0); // 生成0到9之间的随机整数
+    let kn = (Math.floor(Math.random() * 8) + 1); // 生成1到8之间的随机整数
+
+    let n = (km + kn) % 10 - 5; // 对(km + kn)取模10再加1
+    let m = km -5 ;
+
+    let p = -(m + n);
+    let t = m * n;
+    
+    let tp = p === 0 ? "" : (p === 1 ? "+x" : (p === -1 ? "-x" : (p > 0 ? `+${p}x` : `${p}x`)));
+    let tt = t === 0 ? "" : (t > 0 ? `+${t}` : `${t}`);
+
+    correctAnswer = [`${m},${n}`, `${n},${m}`, `${m};${n}`, `${n};${m}`];
+
+    return `\\(\\begin{gather}解方程: x^2 ${tp} ${tt} = 0 \\\\
+
+\\begin{array}{|c|c|c|}
+\\hline 
+b & bx & ab \\\\
+\\hline 
+x & x^2 & ax \\\\
+\\hline 
+  & x & b \\\\
+\\hline 
+\\end{array}\\\\
+输入格式：a,b或a;b\\\\
+因式分解是解方程的一种常用方法，试试吧，\\\\当然你还可以用求根公式、配方法等......
+\\end{gather}\\)`;
+}
+
+
+        function generateLevel7Question() {
+            const levelFunctions = [
+
+                generateLevel7aQuestion,
+                generateLevel7bQuestion,
+
+            ];
+
+            const randomIndex = Math.floor(Math.random() * levelFunctions.length);
+            const selectedFunction = levelFunctions[randomIndex];
+
+            return selectedFunction();
+        }
 
 
 
