@@ -147,7 +147,7 @@
         let incorrectCount = 0;
         let currentDifficulty = 1;
 
-        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5"];
+        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5", "级别 6"];
 
         document.addEventListener("DOMContentLoaded", () => {
             generateDifficultyButtons();
@@ -179,6 +179,7 @@
                 case 3: return generateLevel3Question();
                 case 4: return generateLevel4Question();
                 case 5: return generateLevel5Question();
+                case 6: return generateLevel6Question();
                 default: return "";
             }
         }
@@ -307,20 +308,67 @@
 
 
 function generateLevel5Question() {
+
+            let a = (Math.floor(Math.random() * 3) + 1) * (Math.random() < 0.5 ? 1 : -1);
+            let b = (Math.floor(Math.random() * 3) + 4) ;
+            let c = (Math.floor(Math.random() * 3) - 4) ;
+            let ta   = a === 0 ? "" : (a > 0 ? `+${a}` : `${a}`);
+            let tb   = b === 0 ? "" : (b > 0 ? `+${b}` : `${b}`);
+            let tc   = c === 0 ? "" : (c > 0 ? `+${c}` : `${c}`);
+
+            let x1=a*b+b*c+c*a;
+            let x2=a+b+c;
+            let x3=a*b*c;
+
+            let textx1   = x1 === 0 ? "" : (x1 === 1 ? "+x^2" : (x1 === -1 ? "-x^2" :(x1 > 0 ? `+${x1}x^2` : `${x1}x^2`)));
+            let textx2   = x2 === 0 ? "" : (x2 === 1 ? "+x" : (x2 === -1 ? "-x" :(x2 > 0 ? `+${x2}x` : `${x2}x`)));
+            let textx3   = x3 === 0 ? "" : (x3 > 0 ? `+${x3}` : `${x3}`);
+
+
+            correctAnswer = [`(x${ta})(x${tb})(x${tc})`, `(x${ta})(x${tc})(x${tb})`, `(x${tb})(x${ta})(x${tc})`,`(x${tb})(x${tc})(x${ta})`,`(x${tc})(x${ta})(x${tb})`,`(x${tc})(x${tb})(x${ta})`, ];
+           
+            return `\\(\\begin{gather}因式分解:x^3${textx1}${textx2}${textx3} \\\\ \\begin{array}{|c|c|c|c|} \\hline x^3&x^2&x&1\\\\ \\hline 1 &${x1} &${x2}&${x3} \\\\ \\hline1& ab+bc+cd &a+b+c &abc\\\\ \\hline \\end{array}\\\\
+
+\\\\
+\\begin{cases}
+ab+bc+ca=${x1}\\\\
+a+b+c=${x2}\\\\
+abc=${x3}\\\\
+\\end{cases}
+
+ \\end{gather}\\)`;
+
+
+
+
+}
+
+
+        function generateLevel6Question() {
             const levelFunctions = [
                 generateLevel1Question,
                 generateLevel2Question,
                 generateLevel3Question,
-                generateLevel4bQuestion,
+                generateLevel4Question,
+                generateLevel5Question,
+
             ];
 
             const randomIndex = Math.floor(Math.random() * levelFunctions.length);
             const selectedFunction = levelFunctions[randomIndex];
 
             return selectedFunction();
+        }
 
 
-}
+
+
+
+
+
+
+
+
 
 
 
