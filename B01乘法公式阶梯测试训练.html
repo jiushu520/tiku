@@ -407,8 +407,8 @@ function generateLevel6aQuestion() {
             let tb   = b === 0 ? "" : (b > 0 ? `+${b}` : `${b}`);
             let tc   = c === 0 ? "" : (c > 0 ? `+${c}` : `${c}`);
 
-            let x1=a*b+b*c+c*a;
-            let x2=a+b+c;
+            let x1=a+b+c;
+            let x2=a*b+b*c+c*a;
             let x3=a*b*c;
 
             let textx1   = x1 === 0 ? "" : (x1 === 1 ? "+x^2" : (x1 === -1 ? "-x^2" :(x1 > 0 ? `+${x1}x^2` : `${x1}x^2`)));
@@ -439,8 +439,8 @@ function generateLevel6bQuestion() {
 
             let ta   = a === 0 ? "" : (a > 0 ? `+${a}` : `${a}`);
 
-            let x1=3*a*a;
-            let x2=3*a;
+            let x1=3*a;
+            let x2=3*a*a;
             let x3=a*a*a;
 
             let textx1   = x1 === 0 ? "" : (x1 === 1 ? "+x^2" : (x1 === -1 ? "-x^2" :(x1 > 0 ? `+${x1}x^2` : `${x1}x^2`)));
