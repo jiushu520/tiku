@@ -395,12 +395,12 @@ function generateLevel6aQuestion() {
 
             correctAnswer = [`(x${ta})(x${tb})(x${tc})`, `(x${ta})(x${tc})(x${tb})`, `(x${tb})(x${ta})(x${tc})`,`(x${tb})(x${tc})(x${ta})`,`(x${tc})(x${ta})(x${tb})`,`(x${tc})(x${tb})(x${ta})`, ];
            
-            return `\\(\\begin{gather}因式分解:x^3${textx1}${textx2}${textx3} \\\\ \\begin{array}{|c|c|c|c|} \\hline x^3&x^2&x&1\\\\ \\hline 1 &${x1} &${x2}&${x3} \\\\ \\hline1& ab+bc+cd &a+b+c &abc\\\\ \\hline \\end{array}\\\\
+            return `\\(\\begin{gather}因式分解:x^3${textx1}${textx2}${textx3} \\\\ \\begin{array}{|c|c|c|c|} \\hline x^3&x^2&x&1\\\\ \\hline 1 &${x1} &${x2}&${x3} \\\\ \\hline1& a+b+c & ab+bc+cd&abc\\\\ \\hline \\end{array}\\\\
 
 \\\\
 \\begin{cases}
-ab+bc+ca=${x1}\\\\
-a+b+c=${x2}\\\\
+a+b+c=${x1}\\\\
+ab+bc+ca=${x2}\\\\
 abc=${x3}\\\\
 
 \\end{cases}\\\\
