@@ -186,44 +186,12 @@
             }
         }
 
-        function generateLevel1aQuestion() {
-            const factorizationQuestions = [
-                { question: "(x+2)(x+3)", img: "images/test001.png", answers: ["x^2+5x+6"]  },
-                { question: "(x+1)(x+3)", answers: ["x^2+4x+3"] },
-                // 可以添加更多题目
-            ];
-
-            const randomIndex = Math.floor(Math.random() * factorizationQuestions.length);
-            const selectedQuestion = factorizationQuestions[randomIndex];
-
-            correctAnswer = selectedQuestion.answers;
-
-            let questionHtml = `\\(\\begin{gather}展开: ${selectedQuestion.question} \\\\ \\begin{array}{|c|c|c|} \\hline x & x^2 & ax \\\\ \\hline & x & a \\\\ \\hline \\end{array} \\end{gather}\\)`;
-            if (selectedQuestion.img) {
-                questionHtml += `<br><img src="${selectedQuestion.img}" alt="问题图片" style="max-width: 100%; height: auto;">`;
-            }
-
-            return questionHtml;
-        }
-
-        function generateLevel1bQuestion() {
+        function generateLevel1Question() {
             let m = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
             let textm = m === 1 ? "+1" : (m === -1 ? "-1" : (m > 1 ? `+${m}` : `${m}`));
             let textm2 = m === 1 ? "+" : (m === -1 ? "-" : (m > 1 ? `+${m}` : `${m}`));
             correctAnswer = [`x^2${textm2}x`];           
             return `\\(\\begin{gather}展开: x(x${textm})\\\\ \\begin{array}{|c|c|c|} \\hline x &   &   \\\\ \\hline & x & ${m} \\\\ \\hline \\end{array} \\end{gather}\\)`;
-        }
-
-        function generateLevel1Question() {
-            const levelFunctions = [
-                generateLevel1aQuestion,
-                generateLevel1bQuestion,
-            ];
-
-            const randomIndex = Math.floor(Math.random() * levelFunctions.length);
-            const selectedFunction = levelFunctions[randomIndex];
-
-            return selectedFunction();
         }
 
         function generateLevel2Question() {
@@ -235,13 +203,18 @@
             let textmn = mn=== 1 ? "+" : (mn === -1 ? "-" : (mn > 1 ? `+${mn}` : `${mn}`));
             correctAnswer = [`${textn}x^2${textmn}x`];
 
+
            return `\\(\\begin{gather}展开:${textn}x(x${textm}) \\\\ \\begin{array}{|c|c|c|} \\hline bx & x^2 & abx \\\\ \\hline & x & a \\\\ \\hline \\end{array} \\end{gather}\\)`;
         }
+
+
 
         function generateLevel3aQuestion() {
             let m = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
 
+
             let textm = m > 0 ? `+${m}` : `${m}`;
+
 
             let p = m + m;
             let t = m * m;
@@ -253,6 +226,8 @@
             return `\\(\\begin{gather}展开:(x${textm})^2\\\\ \\begin{array}{|c|c|c|} \\hline a&ax& a^2\\\\ \\hline x & x^2 &ax \\\\ \\hline  &x&a \\\\ \\hline  \\end{array} \\end{gather}\\)`;
         }
 
+
+
         function generateLevel3bQuestion() {
             let m = (Math.floor(Math.random() * 9) + 1) * (Math.random() < 0.5 ? 1 : -1);
             let n = -m ;
@@ -260,12 +235,14 @@
             let textm = m > 0 ? `+${m}` : `${m}`;
             let textn = n > 0 ? `+${n}` : `${n}`;
 
+
             let p = 0;
             let t = m * m;
 
             let textp = p === 0 ? "" : (p === 1 ? "+x" : (p === -1 ? "-x" : (p > 1 ? `+${p}x` : `${p}x`)));
             let textt = t === 0 ? "" : (t > 0 ? `+${t}` : `${t}`);
             correctAnswer = [`x^2-${t}`];
+
 
             return `\\(\\begin{gather}展开:(x${textm})(x${textn})\\\\ \\begin{array}{|c|c|c|} \\hline -a&-ax& -a^2\\\\ \\hline x & x^2 &ax \\\\ \\hline  &x&a \\\\ \\hline  \\end{array} \\end{gather}\\)`;
         }
@@ -277,6 +254,7 @@
             let textm = m > 0 ? `+${m}` : `${m}`;
             let textn = n > 0 ? `+${n}` : `${n}`;
 
+
             let p = 0;
             let t = m * m;
 
@@ -284,8 +262,14 @@
             let textt = t === 0 ? "" : (t > 0 ? `+${t}` : `${t}`);
             correctAnswer = [`x^2-${t}`];
 
+
             return `\\(\\begin{gather}展开:(${m}+x)(x${textn})\\\\ \\begin{array}{|c|c|c|} \\hline -a&-ax& -a^2\\\\ \\hline x & x^2 &ax \\\\ \\hline  &x&a \\\\ \\hline  \\end{array} \\end{gather}\\)`;
         }
+
+
+
+
+
 
         function generateLevel3Question() {
             const levelFunctions = [
@@ -300,6 +284,11 @@
             return selectedFunction();
         }
 
+
+
+
+
+        
         function generateLevel4aQuestion() {
             let m = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
             let n = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
@@ -315,7 +304,27 @@
             correctAnswer = [ `x^2${textp}${textt}`];
 
             return `\\(\\begin{gather}展开:(x${textm})(x${textn}) \\\\ \\begin{array}{|c|c|c|} \\hline b&bx& ${textt}\\\\ \\hline x & x^2 &ax \\\\ \\hline  &x&a \\\\ \\hline  \\end{array} \\end{gather}\\)`;
-                }
+        }
+
+
+
+
+        function generateLevel4bQuestion() {
+            let m = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
+            let n = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
+
+            let textm = m > 0 ? `+${m}` : `${m}`;
+            let textn = n > 0 ? `+${n}` : `${n}`;
+
+            let p = m + n;
+            let t = m * n;
+
+            let textp = p === 0 ? "" : (p === 1 ? "+x" : (p === -1 ? "-x" : (p > 1 ? `+${p}x` : `${p}x`)));
+            let textt = t === 0 ? "" : (t > 0 ? `+${t}` : `${t}`);
+            correctAnswer = [`x^2${textp}${textt}`];
+  
+            return `\\(\\begin{gather}因式分解:(x${textm})(x${textn}) \\\\ \\begin{array}{|c|c|c|} \\hline b&bx& ${textt}\\\\ \\hline x & x^2 &ax \\\\ \\hline  &x&a \\\\ \\hline  \\end{array} \\end{gather}\\)`;
+        }
 
         function generateLevel4Question() {
             const levelFunctions = [
@@ -329,29 +338,8 @@
             return selectedFunction();
         }
 
-        function generateLevel5Question() {
-            let m = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
-            let n = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
-            let p = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
 
-            let textm = m > 0 ? `+${m}` : `${m}`;
-            let textn = n > 0 ? `+${n}` : `${n}`;
-            let textp = p > 0 ? `+${p}` : `${p}`;
-
-            let q = m + n + p;
-            let r = m*n + m*p + n*p;
-            let s = m * n * p;
-
-            let textq = q === 0 ? "" : (q === 1 ? "+x^2" : (q === -1 ? "-x^2" : (q > 1 ? `+${q}x^2` : `${q}x^2`)));
-            let textr = r === 0 ? "" : (r === 1 ? "+x" : (r === -1 ? "-x" : (r > 1 ? `+${r}x` : `${r}x`)));
-            let texts = s === 0 ? "" : (s > 0 ? `+${s}` : `${s}`);
-
-            correctAnswer = [`x^3${textq}${textr}${texts}`];
-
-            return `\\(\\begin{gather}展开:(x${textm})(x${textn})(x${textp}) \\\\ \\begin{array}{|c|c|c|c|} \\hline c&cx&cx^2& ${texts}\\\\ \\hline b&bx& bx^2 &${textr}\\\\ \\hline x & x^2 &x^3 &${textq}\\\\ \\hline  &x&x^2&x^3 \\\\ \\hline  \\end{array} \\end{gather}\\)`;
-        }
-
-        function generateLevel6Question() {
+        function generateLevel5aQuestion() {
             let m = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
             let n = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
 
@@ -359,113 +347,310 @@
             let textn = n > 0 ? `+${n}` : `${n}`;
 
             let p = m + n;
-            let q = m * n;
-
-            let textp = p === 0 ? "" : (p === 1 ? "+y" : (p === -1 ? "-y" : (p > 1 ? `+${p}y` : `${p}y`)));
-            let textq = q === 0 ? "" : (q > 0 ? `+${q}` : `${q}`);
-
-            correctAnswer = [`x^2${textp}${textq}`];
-
-            return `\\(\\begin{gather}因式分解:x^2${textp}${textq} \\\\ \\begin{array}{|c|c|c|} \\hline b&bx& ${textq}\\\\ \\hline x & x^2 &ax \\\\ \\hline  &x&a \\\\ \\hline  \\end{array} \\end{gather}\\)`;
-        }
-
-        function generateLevel7Question() {
-            let m = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
-            let n = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
-            let p = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
-
-            let textm = m > 0 ? `+${m}` : `${m}`;
-            let textn = n > 0 ? `+${n}` : `${n}`;
-            let textp = p > 0 ? `+${p}` : `${p}`;
-
-            let q = m + n + p;
-            let r = m*n + m*p + n*p;
-            let s = m * n * p;
-
-            let textq = q === 0 ? "" : (q === 1 ? "+x^2" : (q === -1 ? "-x^2" : (q > 1 ? `+${q}x^2` : `${q}x^2`)));
-            let textr = r === 0 ? "" : (r === 1 ? "+x" : (r === -1 ? "-x" : (r > 1 ? `+${r}x` : `${r}x`)));
-            let texts = s === 0 ? "" : (s > 0 ? `+${s}` : `${s}`);
-
-            correctAnswer = [`(x${textm})(x${textn})(x${textp})`];
-
-            return `\\(\\begin{gather}因式分解:x^3${textq}${textr}${texts} \\\\ \\begin{array}{|c|c|c|c|} \\hline c&cx&cx^2& ${texts}\\\\ \\hline b&bx& bx^2 &${textr}\\\\ \\hline x & x^2 &x^3 &${textq}\\\\ \\hline  &x&x^2&x^3 \\\\ \\hline  \\end{array} \\end{gather}\\)`;
-        }
-
-        function generateLevel8Question() {
-            let m = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
-            let n = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
-
-            let textm = m > 0 ? `+${m}` : `${m}`;
-            let textn = n > 0 ? `+${n}` : `${n}`;
-
-            let p = m + n;
-            let q = m * n;
+            let t = m * n;
 
             let textp = p === 0 ? "" : (p === 1 ? "+x" : (p === -1 ? "-x" : (p > 1 ? `+${p}x` : `${p}x`)));
-            let textq = q === 0 ? "" : (q > 0 ? `+${q}` : `${q}`);
+            let textt = t === 0 ? "" : (t > 0 ? `+${t}` : `${t}`);
+            correctAnswer = [ `x^2${textp}${textt}`];
 
-            correctAnswer = [`(x${textm})(x${textn})`, `(x${textn})(x${textm})`];
-
-            return `\\(\\begin{gather}因式分解:x^2${textp}${textq} \\\\ \\begin{array}{|c|c|c|} \\hline b&bx& ${textq}\\\\ \\hline x & x^2 &ax \\\\ \\hline  &x&a \\\\ \\hline  \\end{array} \\end{gather}\\)`;
+            return `\\(\\begin{gather}展开:(x${textm})(x${textn}) \\\\ \\begin{array}{|c|c|c|} \\hline b&bx& ${textt}\\\\ \\hline x & x^2 &ax \\\\ \\hline  &x&a \\\\ \\hline  \\end{array} \\end{gather}\\)`;
         }
 
+        function generateLevel5bQuestion() {
+            let c = (Math.floor(Math.random() * 5) + 2) * (Math.random() < 0.5 ? 1 : -1);
+            let m = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
+            let n = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
+
+            let textm = m > 0 ? `+${m}` : `${m}`;
+            let textn = n > 0 ? `+${n}` : `${n}`;
+
+            let pc = (m + n) * c;
+            let tc = (m * n) * c;
+
+            let textpc = pc === 0 ? "" : (pc > 0 ? `+${pc}x` : `${pc}x`);
+            let texttc = tc === 0 ? "" : (tc > 0 ? `+${tc}` : `${tc}`);
+            correctAnswer = [``, `${c}x^2${textpc}${texttc}`];
+            if (m === n) {
+                correctAnswer.push(`${c}(x${textm})^2`);
+            }
+            return `\\(\\begin{gather}展开:${c}(x${textm})(x${textn}) \\\\${c}\\times  \\begin{array}{|c|c|c|} \\hline b&bx& ${m*n}\\\\ \\hline x &x^2 &ax \\\\ \\hline  &x&a \\\\ \\hline  \\end{array} \\end{gather}\\)`;
+        }
+
+
+
+
+
+
+
+
+
+
+        function generateLevel5Question() {
+            const levelFunctions = [
+                generateLevel5aQuestion,
+                generateLevel5bQuestion,
+            ];
+
+            const randomIndex = Math.floor(Math.random() * levelFunctions.length);
+            const selectedFunction = levelFunctions[randomIndex];
+
+            return selectedFunction();
+        }
+
+
+
+function generateLevel6aQuestion() {
+
+            let a = (Math.floor(Math.random() * 3) + 1) * (Math.random() < 0.5 ? 1 : -1);
+            let b = (Math.floor(Math.random() * 3) + 4) ;
+            let c = (Math.floor(Math.random() * 3) - 4) ;
+            let ta   = a === 0 ? "" : (a > 0 ? `+${a}` : `${a}`);
+            let tb   = b === 0 ? "" : (b > 0 ? `+${b}` : `${b}`);
+            let tc   = c === 0 ? "" : (c > 0 ? `+${c}` : `${c}`);
+
+            let x1=a+b+c;
+            let x2=a*b+b*c+c*a;
+            let x3=a*b*c;
+
+            let textx1   = x1 === 0 ? "" : (x1 === 1 ? "+x^2" : (x1 === -1 ? "-x^2" :(x1 > 0 ? `+${x1}x^2` : `${x1}x^2`)));
+            let textx2   = x2 === 0 ? "" : (x2 === 1 ? "+x" : (x2 === -1 ? "-x" :(x2 > 0 ? `+${x2}x` : `${x2}x`)));
+            let textx3   = x3 === 0 ? "" : (x3 > 0 ? `+${x3}` : `${x3}`);
+
+
+            correctAnswer = [ `x^3${textx1}${textx2}${textx3}` ];
+           
+            return `\\(\\begin{gather}展开:(x${ta})(x${tb})(x${tc}) \\\\ \\begin{array}{|c|c|c|c|} \\hline x^3&x^2&x&1\\\\ \\hline  \\hline1& a+b+c &ab+bc+ac &abc\\\\ \\hline \\end{array}\\\\
+
+\\\\
+\\begin{cases}
+a+b+c=?x^2\\\\
+ab+bc+ac=?x\\\\
+abc=?\\\\
+
+\\end{cases}\\\\
+
+ \\end{gather}\\)`;}
+
+
+
+
+function generateLevel6bQuestion() {
+
+            let a = (Math.floor(Math.random() * 3) + 1) * (Math.random() < 0.5 ? 1 : -1);
+
+            let ta   = a === 0 ? "" : (a > 0 ? `+${a}` : `${a}`);
+
+            let x1=3*a;
+            let x2=3*a*a;
+            let x3=a*a*a;
+
+            let textx1   = x1 === 0 ? "" : (x1 === 1 ? "+x^2" : (x1 === -1 ? "-x^2" :(x1 > 0 ? `+${x1}x^2` : `${x1}x^2`)));
+            let textx2   = x2 === 0 ? "" : (x2 === 1 ? "+x" : (x2 === -1 ? "-x" :(x2 > 0 ? `+${x2}x` : `${x2}x`)));
+            let textx3   = x3 === 0 ? "" : (x3 > 0 ? `+${x3}` : `${x3}`);
+
+
+            correctAnswer = [ `x^3${textx1}${textx2}${textx3}` ];
+           
+            return `\\(\\begin{gather}展开:(x${ta})^3 \\\\ \\begin{array}{|c|c|c|c|} \\hline x^3&x^2&x&1\\\\ \\hline  \\hline1& a+b+c  &ab+bc+ac&abc\\\\ \\hline \\end{array}\\\\
+
+\\\\
+\\begin{cases}
+a+b+c=?x^2\\\\
+ab+bc+ca=?x\\\\
+abc=?\\\\
+
+\\end{cases}\\\\
+
+ \\end{gather}\\)`;}
+
+
+
+        function generateLevel6Question() {
+            const levelFunctions = [
+                generateLevel6aQuestion,
+                generateLevel6bQuestion,
+            ];
+
+            const randomIndex = Math.floor(Math.random() * levelFunctions.length);
+            const selectedFunction = levelFunctions[randomIndex];
+
+            return selectedFunction();
+        }
+
+
+
+function generateLevel7Question() {
+    let m = (Math.floor(Math.random() * 3) + 1) * (Math.random() < 0.5 ? 1 : -1);
+    let n = (Math.floor(Math.random() * 3) + 1) * (Math.random() < 0.5 ? 1 : -1);
+
+    let a = (Math.floor(Math.random() * 3) + 1) * (Math.random() < 0.5 ? 1 : -1);
+    let b = (Math.floor(Math.random() * 3) + 4);
+    let c = (Math.floor(Math.random() * 3) - 4);
+
+    let tm = m === 1 ? "" : (m === -1 ? `-` : `${m}`);
+    let tn = n > 0 ? `+${n}` : `${n}`;
+
+    let ta = a === 1 ? "" : (a === -1 ? `-` : `${a}`);
+    let tb = b > 0 ? `+${b}` : `${b}`;
+    let tc = c > 0 ? `+${c}` : `${c}`;
+
+    let x1 = a * m;
+    let x2 = a * n + b * m;
+    let x3 = c * m + b * n;
+    let x4 = c * n;
+
+    let textx1 = x1 === 0 ? "" : (x1 === 1 ? "x^3" : (x1 === -1 ? "-x^3" :`${x1}x^3`));
+    let textx2 = x2 === 0 ? "" : (x2 === 1 ? "+x^2" : (x2 === -1 ? "-x^2" : (x2 > 0 ? `+${x2}x^2` : `${x2}x^2`)));
+    let textx3 = x3 === 0 ? "" : (x3 === 1 ? "+x" : (x3 === -1 ? "-x" : (x3 > 0 ? `+${x3}x` : `${x3}x`)));
+    let textx4 = x4 === 0 ? "" : (x4 > 0 ? `+${x4}` : `${x4}`);
+
+    correctAnswer = [`${textx1}${textx2}${textx3}${textx4}`];
+
+    return `\\(\\begin{gather}展开:(${tm}x${tn})(${ta}x^2${tb}x${tc}) \\\\ 
+    \\begin{array}{|c|c|c|c|} 
+    \\hline ${tn} & 囗x^2 & 囗x & 囗1 \\\\ 
+    \\hline ${m}x & 囗x^3 & 囗x^2& 囗x \\\\ 
+    \\hline   & ${ta}x^2 & ${tb}x & ${tc} \\\\ 
+    \\hline \\end{array} \\\\
+
+    \\end{gather}\\)`;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function generateLevel8Question() {
+            const levelFunctions = [
+                generateLevel1Question,
+                generateLevel2Question,
+                generateLevel3Question,
+                generateLevel4Question,
+                generateLevel5Question,
+                generateLevel6Question,
+                generateLevel7Question,
+
+            ];
+
+            const randomIndex = Math.floor(Math.random() * levelFunctions.length);
+            const selectedFunction = levelFunctions[randomIndex];
+
+            return selectedFunction();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         function newQuestion() {
-            const question = generateQuestion();
-            document.getElementById('question').innerHTML = question;
+            const questionElement = document.getElementById('question');
+            currentQuestion = generateQuestion();
+            questionElement.innerHTML = currentQuestion;
             MathJax.typeset();
             document.getElementById('answer').value = '';
             document.getElementById('result').innerHTML = '';
             document.getElementById('rendered-answer').style.display = 'none';
+            document.getElementById('rendered-answer').innerHTML = '';
         }
 
-        function checkAnswer() {
-            const userAnswer = document.getElementById('answer').value.replace(/\s/g, '').toLowerCase();
-            const isCorrect = correctAnswer.some(answer => userAnswer === answer.replace(/\s/g, '').toLowerCase());
-
-            if (isCorrect) {
-                document.getElementById('result').innerHTML = '正确!';
-                document.getElementById('result').className = 'correct';
-                correctCount++;
-            } else {
-                document.getElementById('result').innerHTML = '错误。正确答案是: ' + correctAnswer.join(' 或 ');
-                document.getElementById('result').className = 'incorrect';
-                incorrectCount++;
-            }
-
-            updateScore();
-            updateHistory(isCorrect);
-            renderAnswer();
+        function toHalfWidth(str) {
+            return str.replace(/[\uFF01-\uFF5E]/g, function(char) {
+                return String.fromCharCode(char.charCodeAt(0) - 0xFEE0);
+            }).replace(/\u3000/g, ' ');
         }
 
-        function renderAnswer() {
-            const renderedAnswer = document.getElementById('rendered-answer');
-            renderedAnswer.style.display = 'block';
-            renderedAnswer.innerHTML = '\\(' + document.getElementById('answer').value + '\\)';
-            MathJax.typeset();
+function checkAnswer() {
+    let userAnswer = document.getElementById('answer').value.trim();
+    userAnswer = userAnswer.replace(/\s+/g, '');
+    userAnswer = toHalfWidth(userAnswer);
+
+    if (!userAnswer) {
+        alert("请输入有效的答案");
+        return;
+    }
+
+    const resultElement = document.getElementById('result');
+    let resultText;
+    let isCorrect = correctAnswer.includes(userAnswer);
+
+    if (isCorrect) {
+        resultText = '正确！';
+        resultElement.style.color = 'green';
+        correctCount++;
+    } else {
+        resultText = `错误。正确答案是 ${correctAnswer.join(' 或 ')}。`;
+        resultElement.style.color = 'red';
+        incorrectCount++;
+    }
+
+    resultElement.innerHTML = resultText;
+    updateScore();
+    addToHistory(currentQuestion, userAnswer, correctAnswer.join(' 或 '), isCorrect);
+    setTimeout(newQuestion, 1500);
+}
+
+
+
+        function addToHistory(question, userAnswer, correctAnswer, isCorrect) {
+            const historyElement = document.getElementById('history');
+            const historyRow = document.createElement('tr');
+            historyRow.className = isCorrect ? 'correct' : 'incorrect';
+            historyRow.innerHTML = `
+                <td>${question}</td>
+                <td>${difficultyNames[currentDifficulty - 1]}</td>
+                <td class="mathjax-answer">\\(${userAnswer}\\)</td>
+                <td class="mathjax-answer">\\(${correctAnswer}\\)</td>
+                <td>${isCorrect ? '正确' : '错误'}</td>
+            `;
+            historyElement.insertBefore(historyRow, historyElement.firstChild);
+            MathJax.typesetPromise([historyRow]).then(() => {
+                console.log('MathJax rendering complete');
+            }).catch((err) => console.log('MathJax rendering error:', err));
         }
 
         function updateScore() {
-            document.getElementById('score').innerHTML = `正确: ${correctCount} | 错误: ${incorrectCount}`;
+            const scoreElement = document.getElementById('score');
+            const total = correctCount + incorrectCount;
+            const accuracy = total === 0 ? 0 : Math.floor((correctCount / total) * 100);
+            scoreElement.innerHTML = `正确: ${correctCount} | 错误: ${incorrectCount} | 总计: ${total} | 正确率: ${accuracy}%`;
         }
 
-        function updateHistory(isCorrect) {
-            const historyTable = document.getElementById('history');
-            const newRow = historyTable.insertRow(0);
-            newRow.insertCell(0).innerHTML = document.getElementById('question').innerHTML;
-            newRow.insertCell(1).innerHTML = difficultyNames[currentDifficulty - 1];
-            newRow.insertCell(2).innerHTML = document.getElementById('answer').value;
-            newRow.insertCell(3).innerHTML = correctAnswer.join(' 或 ');
-            newRow.insertCell(4).innerHTML = isCorrect ? '正确' : '错误';
-            newRow.className = isCorrect ? 'correct' : 'incorrect';
-        }
+        document.getElementById('answer').addEventListener('input', function(event) {
+            const answer = document.getElementById('answer').value;
+            const renderedAnswer = document.getElementById('rendered-answer');
+            if (answer.includes('\\') || answer.includes('^') || answer.includes('_')) {
+                renderedAnswer.innerHTML = `\\(${answer}\\)`;
+                renderedAnswer.style.display = 'block';
+                MathJax.typeset([renderedAnswer]);
+            } else {
+                renderedAnswer.style.display = 'none';
+                renderedAnswer.innerHTML = '';
+            }
+        });
 
-        document.getElementById('answer').addEventListener('keyup', function(event) {
+        document.getElementById('answer').addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
                 checkAnswer();
             }
         });
-
-        newQuestion();
     </script>
 </body>
 </html>
