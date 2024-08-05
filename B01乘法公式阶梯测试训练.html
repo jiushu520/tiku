@@ -419,12 +419,12 @@ function generateLevel6aQuestion() {
 
             correctAnswer = [ `x^3${textx1}${textx2}${textx3}` ];
            
-            return `\\(\\begin{gather}展开:(x${ta})(x${tb})(x${tc}) \\\\ \\begin{array}{|c|c|c|c|} \\hline x^3&x^2&x&1\\\\ \\hline  \\hline1& a+b+c &ab+bc+cd &abc\\\\ \\hline \\end{array}\\\\
+            return `\\(\\begin{gather}展开:(x${ta})(x${tb})(x${tc}) \\\\ \\begin{array}{|c|c|c|c|} \\hline x^3&x^2&x&1\\\\ \\hline  \\hline1& a+b+c &ab+bc+ac &abc\\\\ \\hline \\end{array}\\\\
 
 \\\\
 \\begin{cases}
 a+b+c=?x^2\\\\
-ab+bc+ca=?x\\\\
+ab+bc+ac=?x\\\\
 abc=?\\\\
 
 \\end{cases}\\\\
@@ -451,7 +451,7 @@ function generateLevel6bQuestion() {
 
             correctAnswer = [ `x^3${textx1}${textx2}${textx3}` ];
            
-            return `\\(\\begin{gather}展开:(x${ta})^3 \\\\ \\begin{array}{|c|c|c|c|} \\hline x^3&x^2&x&1\\\\ \\hline  \\hline1& a+b+c  &ab+bc+cd&abc\\\\ \\hline \\end{array}\\\\
+            return `\\(\\begin{gather}展开:(x${ta})^3 \\\\ \\begin{array}{|c|c|c|c|} \\hline x^3&x^2&x&1\\\\ \\hline  \\hline1& a+b+c  &ab+bc+ac&abc\\\\ \\hline \\end{array}\\\\
 
 \\\\
 \\begin{cases}
