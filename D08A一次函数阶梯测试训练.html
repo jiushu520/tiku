@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>一次函数阶梯测试训练</title>
+    <title>D08A一次函数阶梯测试训练</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
@@ -67,8 +67,8 @@
 
         #result {
             display: inline;
-            color: inherit; /* 确保颜色与父元素一致 */
-            font-size: inherit; /* 确保字体大小与父元素一致 */
+            color: inherit;
+            font-size: inherit;
             margin: 0;
             padding: 0;
         }
@@ -81,7 +81,7 @@
         table {
             margin-top: 20px;
             border-collapse: collapse;
-            table-layout: auto; /* 使表格布局根据内容自动调整 */
+            table-layout: auto;
         }
 
         th, td {
@@ -102,38 +102,28 @@
             color: red;
         }
 
-
-
-
         #rendered-answer {
             margin-top: 10px;
             font-size: 16px;
             border: 1px solid #ccc;
             padding: 10px;
             width: 200px;
-            display: none; /* 初始状态下隐藏 */
         }
 
-.mathjax-answer {
-    font-size: 16px;
-}
-
-
-
+        .mathjax-answer {
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
     <div class="game-container">
         <h1>玖数学测训系统</h1>
-
         <h3>D08A一次函数阶梯测试训练</h3>
-
         <div class="difficulty-buttons" id="difficultyButtons"></div>
         <div id="question"></div><br>
-        <input type="text" id="answer" placeholder="输入你的答案"><br>
+        <input type="text" id="answer" placeholder="输入你的答案" oninput="updatePreview()"><br>
         <div id="rendered-answer"></div><br>
         <button onclick="checkAnswer()">提交答案</button><br>
-
         <div id="result"></div>
         <div id="score">正确: 0 | 错误: 0</div>
         <table>
@@ -156,7 +146,7 @@
         let incorrectCount = 0;
         let currentDifficulty = 1;
 
-        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5","级别 6", "级别 7","级别 8","综合测试"];
+        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5", "级别 6", "级别 7", "级别 8"];
 
         document.addEventListener("DOMContentLoaded", () => {
             generateDifficultyButtons();
@@ -201,7 +191,7 @@
             let b = Math.floor(Math.random() * 11 - 5);
             let textb = b === 0 ? "" : (b > 0 ? `+${b}` : `${b}`);
             let x = Math.floor(Math.random() * 6);
-            correctAnswer = k * x + b;
+            correctAnswer = [`${k * x + b}`];  // 设置为单一值
             return `\\(\\begin{array}{lll}y=${k}x${textb} ;&x=${x} ;& y= ?\\\\f(x)=${k}x${textb} ;&f(${x})= ?   \\end{array}\\)`;
         }
 
@@ -210,7 +200,7 @@
             let b = Math.floor(Math.random() * 10 - 5);
             let textb = b === 0 ? "" : (b > 0 ? `+${b}` : `${b}`);
             let x = Math.floor(Math.random() * 6);
-            correctAnswer = x;
+            correctAnswer =  [`${x}`];
             return `\\(\\begin{array}{lll}y=${k}x${textb} ;&y=${k * x + b} ;& x= ?\\\\f(x)=${k}x${textb} ;&f(？)=${k * x + b}   \\end{array}\\)`;
         }
 
@@ -224,7 +214,7 @@
             let b = Math.floor(Math.random() * 19) - 9;
             let textb = b === 0 ? "" : (b > 0 ? `+${b}` : `${b}`);
             let x = Math.floor(Math.random() * 11) - 5;
-            correctAnswer = k * x + b;
+             correctAnswer = [`${k*x+b}`];  // 设置为单一值
             return `\\(\\begin{array}{lll}y=${textk}x${textb};& x= ${x};&y=? ;\\\\  f(x)=${textk}x${textb};&x= ${x};&f(${x})=?   \\end{array}\\)`;
         }
 
@@ -260,7 +250,7 @@
             let b = Math.floor(Math.random() * 19) - 9;
             let y1=b+k*x1;
             let y2=b+k*x2;
-            correctAnswer = b;
+            correctAnswer = [`${b}`];;
             return `\\(\\begin{array}{lll}过点A(${x1},${y1})、B(${x2},${y2})的直线\\\\与y轴交点为(0,b),\\\\则b=? \\\\可以画图，比例，线面积为0，方程组、定比分点...... \\\\line((${x1},${y1}),(${x2},${y2}))\\end{array}\\)`;
         }
 
@@ -276,7 +266,7 @@
             let t = Math.floor(Math.random() * 19) - 9;
             let x1=t+k*y1;
             let x2=t+k*y2;
-            correctAnswer = t;
+            correctAnswer =  [`${t}`];;
             return `\\(\\begin{array}{lll}过点A(${x1},${y1})、B(${x2},${y2})的直线\\\\与x轴交点为(t,0),\\\\则t=? \\\\可以画图，比例，线面积为0，方程组、定比分点......\\\\line((${x1},${y1}),(${x2},${y2})) \\end{array}\\)`;
            
         }
@@ -308,7 +298,7 @@
             let xb = xa + offset * direction; // 确保 xb 不等于 xa
             let k = Math.floor(Math.random() * 11) - 5;
             let yb = ya + k * (xb - xa);
-            correctAnswer = k;
+            correctAnswer =  [`${k}`];;
             return `\\(\\begin{array}{lll}过点A(${xa},${ya}),B(${xb},${yb});\\\\直线的斜率k=?\\\\可以配数，可以画图算高宽比，\\\\ \\textup{ggb上可以输入slope(segment((${xa},${ya}),(${xb},${yb})) }\\end{array}\\)`;
         }
 
@@ -319,7 +309,7 @@
             let b = Math.floor(Math.random() * 11) - 5;
             let yb = ((xa * b - xb * ya) % 2 === 0) ? b : b + 1; 
             let s = 0.5 * Math.abs(xa * yb - xb * ya);
-            correctAnswer = s;
+            correctAnswer =  [`${s}`];;
             return `\\(\\begin{array}{lll}直角坐标系中点O(0,0),A(${xa},${ya}),B(${xb},${yb});\\\\SΔOAB=?\\\\你可以用多少不同的方法来运算，\\\\你可以先用ggb画一下的;\\\\铅垂？割补？点到线距离？三角函数？行列式？ \\end{array}\\)`;
         }
 
@@ -348,7 +338,7 @@
             let c = Math.pow((a * a + b * b), 0.5) * n - a * xm - b * ym;
             let textc = c === 0 ? "" : (c > 0 ? `+${c}` : `${c}`);
 
-            correctAnswer = Math.abs(n);
+            correctAnswer =  [`${Math.abs(n)}`];
 
             return `\\(\\begin{array}{lll}已知直线${a}x${textb}y${textc}=0 ;\\\\求点M(${xm},${ym})到直线的距离。\\\\你可以先用ggb画一下的;\\\\比例，勾股，向量，复数，判别式，公式......\\\\多种方法到后面才能云淡风轻.\\end{array}\\)`;
         }
@@ -373,7 +363,7 @@
             let d = p3 * (Math.floor(Math.random() * 3) + 1);
 
             let s = `(${m},${n})`;
-            correctAnswer = s;
+            correctAnswer =  [`${s}`];;
 
             return `\\(\\begin{array}{lll}直线l:${texta}x${textb}y${textc}=0 ; \\\\过点A(${m + d * a},${n + d * b})做l的垂线,垂足为？\\\\你可以先用ggb画一下的;\\\\可以用方程组，向量，切线方程，判别式，复数...... \\end{array}\\)`;
         }
@@ -398,7 +388,7 @@
             let d = p3 * (Math.floor(Math.random() * 3) + 1);
 
             let s = `(${m - d * a},${n - d * b})`;
-            correctAnswer = s;
+            correctAnswer =  [`${s}`];;
 
             return `\\(\\begin{array}{lll}直线l:${texta}x${textb}y${textc}=0 ; \\\\点A(${m + d * a},${n + d * b})关于l的对称点是？\\\\你可以先用ggb画一下的;\\\\可以用方程组，向量，切线方程，判别式，复数...... \\end{array}\\)`;
         }
@@ -421,144 +411,91 @@
             return selectedFunction();
         }
 
+
+
+
+
+
         function newQuestion() {
-            const questionElement = document.getElementById('question');
-            currentQuestion = generateQuestion();
-            questionElement.innerHTML = currentQuestion;
-            MathJax.typeset();
+            const question = generateQuestion();
+            document.getElementById('question').innerHTML = question;
+            MathJax.typesetPromise([document.getElementById('question')]).catch((err) => console.log(err));
             document.getElementById('answer').value = '';
             document.getElementById('result').innerHTML = '';
             document.getElementById('rendered-answer').style.display = 'none';
-            document.getElementById('rendered-answer').innerHTML = '';
         }
 
-        function toHalfWidth(str) {
-            return str.replace(/[\uFF01-\uFF5E]/g, function(char) {
-                return String.fromCharCode(char.charCodeAt(0) - 0xFEE0);
-            }).replace(/\u3000/g, ' '); // 将全角空格替换为半角空格
+        function updatePreview() {
+            const input = document.getElementById('answer').value;
+            const renderedAnswer = document.getElementById('rendered-answer');
+            renderedAnswer.style.display = 'block';
+            renderedAnswer.innerHTML = '\\(' + input + '\\)';
+            MathJax.typesetPromise([renderedAnswer]).catch((err) => console.log(err));
         }
 
+      
 function checkAnswer() {
-    let userAnswer = document.getElementById('answer').value.trim();
+    const userAnswer = document.getElementById('answer').value.trim();
     
-    userAnswer = userAnswer.replace(/\s+/g, '');
-    userAnswer = toHalfWidth(userAnswer);
-
-    if (!userAnswer) {
-        alert("请输入有效的答案");
-        return;
+    if (userAnswer === '') {
+        document.getElementById('result').innerHTML = '请输入答案！';
+        document.getElementById('result').className = 'incorrect';
+        return; // 直接返回，不更新历史记录或生成新题目
     }
 
-    const resultElement = document.getElementById('result');
-    let resultText;
-    let isCorrect;
-
-    // 处理正确答案可以是数组或单个字符串的情况
-    if (Array.isArray(correctAnswer)) {
-        isCorrect = correctAnswer.some(ans => ans === userAnswer);
-    } else {
-        isCorrect = userAnswer === correctAnswer;
-    }
+    const normalizedUserAnswer = userAnswer.replace(/\s/g, '').toLowerCase();
+    const isCorrect = correctAnswer.some(answer => normalizedUserAnswer === answer.replace(/\s/g, '').toLowerCase());
 
     if (isCorrect) {
-        resultText = '正确！';
-        resultElement.style.color = 'green';
+        document.getElementById('result').innerHTML = '正确!';
+        document.getElementById('result').className = 'correct';
         correctCount++;
     } else {
-        resultText = `错误。正确答案是 ${Array.isArray(correctAnswer) ? correctAnswer.join(' 或 ') : correctAnswer}。`;
-        resultElement.style.color = 'red';
+        document.getElementById('result').innerHTML = '错误。正确答案是: ' + correctAnswer.join(' 或 ');
+        document.getElementById('result').className = 'incorrect';
         incorrectCount++;
     }
 
-    resultElement.innerHTML = resultText;
     updateScore();
-    addToHistory(currentQuestion, userAnswer, Array.isArray(correctAnswer) ? correctAnswer.join(' 或 ') : correctAnswer, isCorrect);
-    setTimeout(newQuestion, 1500);
-}
+    updateHistory(isCorrect);
 
-function checkAnswer() {
-    let userAnswer = document.getElementById('answer').value.trim();
-    
-    userAnswer = userAnswer.replace(/\s+/g, '');
-    userAnswer = toHalfWidth(userAnswer);
+    // 重新渲染整个页面的数学公式
+    MathJax.typesetPromise().catch((err) => console.log(err));
 
-    if (!userAnswer) {
-        alert("请输入有效的答案");
-        return;
+    // 只有在答案不为空时才生成新问题
+    if (userAnswer !== '') {
+        newQuestion();
     }
-
-    const resultElement = document.getElementById('result');
-    let resultText;
-    let isCorrect;
-
-    // 将正确答案和用户答案都转换为字符串类型进行比较
-    if (Array.isArray(correctAnswer)) {
-        isCorrect = correctAnswer.some(ans => ans.toString() === userAnswer);
-    } else {
-        isCorrect = userAnswer === correctAnswer.toString();
-    }
-
-    if (isCorrect) {
-        resultText = '正确！';
-        resultElement.style.color = 'green';
-        correctCount++;
-    } else {
-        resultText = `错误。正确答案是 ${Array.isArray(correctAnswer) ? correctAnswer.join(' 或 ') : correctAnswer}。`;
-        resultElement.style.color = 'red';
-        incorrectCount++;
-    }
-
-    resultElement.innerHTML = resultText;
-    updateScore();
-    addToHistory(currentQuestion, userAnswer, Array.isArray(correctAnswer) ? correctAnswer.join(' 或 ') : correctAnswer, isCorrect);
-    setTimeout(newQuestion, 1500);
 }
 
 
 
-
-        function addToHistory(question, userAnswer, correctAnswer, isCorrect) {
-            const historyElement = document.getElementById('history');
-            const historyRow = document.createElement('tr');
-            historyRow.className = isCorrect ? 'correct' : 'incorrect';
-            historyRow.innerHTML = `
-                <td>${question}</td>
-                <td>${difficultyNames[currentDifficulty - 1]}</td>
-                <td class="mathjax-answer">\\(${userAnswer}\\)</td>
-                <td class="mathjax-answer">\\(${correctAnswer}\\)</td>
-                <td>${isCorrect ? '正确' : '错误'}</td>
-            `;
-            historyElement.insertBefore(historyRow, historyElement.firstChild);
-            MathJax.typesetPromise([historyRow]).then(() => {
-                console.log('MathJax rendering complete');
-            }).catch((err) => console.log('MathJax rendering error:', err));
-        }
 
         function updateScore() {
-            const scoreElement = document.getElementById('score');
-            const total = correctCount + incorrectCount;
-            const accuracy = total === 0 ? 0 : Math.floor((correctCount / total) * 100);
-            scoreElement.innerHTML = `正确: ${correctCount} | 错误: ${incorrectCount} | 总计: ${total} | 正确率: ${accuracy}%`;
+            document.getElementById('score').innerHTML = `正确: ${correctCount} | 错误: ${incorrectCount}`;
         }
 
-        document.getElementById('answer').addEventListener('input', function(event) {
-            const answer = document.getElementById('answer').value;
-            const renderedAnswer = document.getElementById('rendered-answer');
-            if (answer.includes('\\') || answer.includes('^') || answer.includes('_')) {
-                renderedAnswer.innerHTML = `\\(${answer}\\)`;
-                renderedAnswer.style.display = 'block';
-                MathJax.typeset([renderedAnswer]);
-            } else {
-                renderedAnswer.style.display = 'none';
-                renderedAnswer.innerHTML = '';
-            }
-        });
+        function updateHistory(isCorrect) {
+            const historyTable = document.getElementById('history');
+            const newRow = historyTable.insertRow(0);
+            newRow.insertCell(0).innerHTML = document.getElementById('question').innerHTML;
+            newRow.insertCell(1).innerHTML = difficultyNames[currentDifficulty - 1];
+            newRow.insertCell(2).innerHTML = '\\(' + document.getElementById('answer').value + '\\)';
+            newRow.insertCell(3).innerHTML = '\\(' + correctAnswer.join('\\) 或 \\(') + '\\)';
+            newRow.insertCell(4).innerHTML = isCorrect ? '正确' : '错误';
+            newRow.className = isCorrect ? 'correct' : 'incorrect';
 
-        document.getElementById('answer').addEventListener('keypress', function(event) {
+            // 重新渲染新添加的行中的数学公式
+            MathJax.typesetPromise([newRow]).catch((err) => console.log(err));
+        }
+
+        document.getElementById('answer').addEventListener('keyup', function(event) {
             if (event.key === 'Enter') {
                 checkAnswer();
             }
         });
+
+        newQuestion();
     </script>
 </body>
 </html>

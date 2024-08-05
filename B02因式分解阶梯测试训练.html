@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>因式分解阶梯测试训练</title>
+    <title>B02因式分解阶梯测试训练</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
@@ -108,7 +108,6 @@
             border: 1px solid #ccc;
             padding: 10px;
             width: 200px;
-            display: none;
         }
 
         .mathjax-answer {
@@ -122,7 +121,7 @@
         <h3>B02因式分解阶梯测试训练</h3>
         <div class="difficulty-buttons" id="difficultyButtons"></div>
         <div id="question"></div><br>
-        <input type="text" id="answer" placeholder="输入你的答案"><br>
+        <input type="text" id="answer" placeholder="输入你的答案" oninput="updatePreview()"><br>
         <div id="rendered-answer"></div><br>
         <button onclick="checkAnswer()">提交答案</button><br>
         <div id="result"></div>
@@ -186,13 +185,15 @@
             }
         }
 
-        function generateLevel1Question() {
+         function generateLevel1Question() {
             let m = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
             let textm = m === 1 ? "+1" : (m === -1 ? "-1" : (m > 1 ? `+${m}` : `${m}`));
             let textm2 = m === 1 ? "+" : (m === -1 ? "-" : (m > 1 ? `+${m}` : `${m}`));
-            correctAnswer = `x(x${textm})`;           
+            correctAnswer = [`x(x${textm})` ];           
             return `\\(\\begin{gather}因式分解:x^2${textm2}x \\\\ \\begin{array}{|c|c|c|} \\hline x & x^2 & ax \\\\ \\hline & x & a \\\\ \\hline \\end{array} \\end{gather}\\)`;
         }
+
+
 
         function generateLevel2Question() {
             let m = (Math.floor(Math.random() * 9) + 1) * (Math.random() < 0.5 ? 1 : -1);
@@ -569,14 +570,7 @@ x & x^2 & ax \\\\
 
             return selectedFunction();
         }
-
-
-
-
-
-
-
-
+  
 
 
 
@@ -585,96 +579,85 @@ x & x^2 & ax \\\\
 
 
         function newQuestion() {
-            const questionElement = document.getElementById('question');
-            currentQuestion = generateQuestion();
-            questionElement.innerHTML = currentQuestion;
-            MathJax.typeset();
+            const question = generateQuestion();
+            document.getElementById('question').innerHTML = question;
+            MathJax.typesetPromise([document.getElementById('question')]).catch((err) => console.log(err));
             document.getElementById('answer').value = '';
             document.getElementById('result').innerHTML = '';
             document.getElementById('rendered-answer').style.display = 'none';
-            document.getElementById('rendered-answer').innerHTML = '';
         }
 
-        function toHalfWidth(str) {
-            return str.replace(/[\uFF01-\uFF5E]/g, function(char) {
-                return String.fromCharCode(char.charCodeAt(0) - 0xFEE0);
-            }).replace(/\u3000/g, ' ');
+        function updatePreview() {
+            const input = document.getElementById('answer').value;
+            const renderedAnswer = document.getElementById('rendered-answer');
+            renderedAnswer.style.display = 'block';
+            renderedAnswer.innerHTML = '\\(' + input + '\\)';
+            MathJax.typesetPromise([renderedAnswer]).catch((err) => console.log(err));
         }
 
+      
 function checkAnswer() {
-    let userAnswer = document.getElementById('answer').value.trim();
-    userAnswer = userAnswer.replace(/\s+/g, '');
-    userAnswer = toHalfWidth(userAnswer);
-
-    if (!userAnswer) {
-        alert("请输入有效的答案");
-        return;
+    const userAnswer = document.getElementById('answer').value.trim();
+    
+    if (userAnswer === '') {
+        document.getElementById('result').innerHTML = '请输入答案！';
+        document.getElementById('result').className = 'incorrect';
+        return; // 直接返回，不更新历史记录或生成新题目
     }
 
-    const resultElement = document.getElementById('result');
-    let resultText;
-    let isCorrect = correctAnswer.includes(userAnswer);
+    const normalizedUserAnswer = userAnswer.replace(/\s/g, '').toLowerCase();
+    const isCorrect = correctAnswer.some(answer => normalizedUserAnswer === answer.replace(/\s/g, '').toLowerCase());
 
     if (isCorrect) {
-        resultText = '正确！';
-        resultElement.style.color = 'green';
+        document.getElementById('result').innerHTML = '正确!';
+        document.getElementById('result').className = 'correct';
         correctCount++;
     } else {
-        resultText = `错误。正确答案是 ${correctAnswer.join(' 或 ')}。`;
-        resultElement.style.color = 'red';
+        document.getElementById('result').innerHTML = '错误。正确答案是: ' + correctAnswer.join(' 或 ');
+        document.getElementById('result').className = 'incorrect';
         incorrectCount++;
     }
 
-    resultElement.innerHTML = resultText;
     updateScore();
-    addToHistory(currentQuestion, userAnswer, correctAnswer.join(' 或 '), isCorrect);
-    setTimeout(newQuestion, 1500);
+    updateHistory(isCorrect);
+
+    // 重新渲染整个页面的数学公式
+    MathJax.typesetPromise().catch((err) => console.log(err));
+
+    // 只有在答案不为空时才生成新问题
+    if (userAnswer !== '') {
+        newQuestion();
+    }
 }
 
 
 
-        function addToHistory(question, userAnswer, correctAnswer, isCorrect) {
-            const historyElement = document.getElementById('history');
-            const historyRow = document.createElement('tr');
-            historyRow.className = isCorrect ? 'correct' : 'incorrect';
-            historyRow.innerHTML = `
-                <td>${question}</td>
-                <td>${difficultyNames[currentDifficulty - 1]}</td>
-                <td class="mathjax-answer">\\(${userAnswer}\\)</td>
-                <td class="mathjax-answer">\\(${correctAnswer}\\)</td>
-                <td>${isCorrect ? '正确' : '错误'}</td>
-            `;
-            historyElement.insertBefore(historyRow, historyElement.firstChild);
-            MathJax.typesetPromise([historyRow]).then(() => {
-                console.log('MathJax rendering complete');
-            }).catch((err) => console.log('MathJax rendering error:', err));
-        }
 
         function updateScore() {
-            const scoreElement = document.getElementById('score');
-            const total = correctCount + incorrectCount;
-            const accuracy = total === 0 ? 0 : Math.floor((correctCount / total) * 100);
-            scoreElement.innerHTML = `正确: ${correctCount} | 错误: ${incorrectCount} | 总计: ${total} | 正确率: ${accuracy}%`;
+            document.getElementById('score').innerHTML = `正确: ${correctCount} | 错误: ${incorrectCount}`;
         }
 
-        document.getElementById('answer').addEventListener('input', function(event) {
-            const answer = document.getElementById('answer').value;
-            const renderedAnswer = document.getElementById('rendered-answer');
-            if (answer.includes('\\') || answer.includes('^') || answer.includes('_')) {
-                renderedAnswer.innerHTML = `\\(${answer}\\)`;
-                renderedAnswer.style.display = 'block';
-                MathJax.typeset([renderedAnswer]);
-            } else {
-                renderedAnswer.style.display = 'none';
-                renderedAnswer.innerHTML = '';
-            }
-        });
+        function updateHistory(isCorrect) {
+            const historyTable = document.getElementById('history');
+            const newRow = historyTable.insertRow(0);
+            newRow.insertCell(0).innerHTML = document.getElementById('question').innerHTML;
+            newRow.insertCell(1).innerHTML = difficultyNames[currentDifficulty - 1];
+            newRow.insertCell(2).innerHTML = '\\(' + document.getElementById('answer').value + '\\)';
+            newRow.insertCell(3).innerHTML = '\\(' + correctAnswer.join('\\) 或 \\(') + '\\)';
+            newRow.insertCell(4).innerHTML = isCorrect ? '正确' : '错误';
+            newRow.className = isCorrect ? 'correct' : 'incorrect';
 
-        document.getElementById('answer').addEventListener('keypress', function(event) {
+            // 重新渲染新添加的行中的数学公式
+            MathJax.typesetPromise([newRow]).catch((err) => console.log(err));
+        }
+
+        document.getElementById('answer').addEventListener('keyup', function(event) {
             if (event.key === 'Enter') {
                 checkAnswer();
             }
         });
+
+        newQuestion();
     </script>
 </body>
 </html>
