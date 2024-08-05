@@ -146,7 +146,7 @@
         let incorrectCount = 0;
         let currentDifficulty = 1;
 
-        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5", "级别 6", "级别 7", "级别 8"];
+        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5", "级别 6", "级别 7", "级别 8", "综合测试"];
 
         document.addEventListener("DOMContentLoaded", () => {
             generateDifficultyButtons();
@@ -425,6 +425,15 @@
             document.getElementById('rendered-answer').style.display = 'none';
         }
 
+        function toHalfWidth(str) {
+            return str.replace(/[\uFF01-\uFF5E]/g, function(char) {
+                return String.fromCharCode(char.charCodeAt(0) - 0xFEE0);
+            }).replace(/\u3000/g, ' ');
+        }
+
+
+
+
         function updatePreview() {
             const input = document.getElementById('answer').value;
             const renderedAnswer = document.getElementById('rendered-answer');
@@ -443,8 +452,9 @@ function checkAnswer() {
         return; // 直接返回，不更新历史记录或生成新题目
     }
 
-    const normalizedUserAnswer = userAnswer.replace(/\s/g, '').toLowerCase();
-    const isCorrect = correctAnswer.some(answer => normalizedUserAnswer === answer.replace(/\s/g, '').toLowerCase());
+    // 使用 toHalfWidth 函数将用户输入转换为半角字符
+    const normalizedUserAnswer = toHalfWidth(userAnswer.replace(/\s/g, '').toLowerCase());
+    const isCorrect = correctAnswer.some(answer => normalizedUserAnswer === toHalfWidth(answer.replace(/\s/g, '').toLowerCase()));
 
     if (isCorrect) {
         document.getElementById('result').innerHTML = '正确!';
