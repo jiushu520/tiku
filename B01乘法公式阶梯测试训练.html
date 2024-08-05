@@ -186,13 +186,56 @@
             }
         }
 
-        function generateLevel1Question() {
+
+        function generateLevel1aQuestion() { // 可以添加更多题目入题库
+
+            const factorizationQuestions = [
+                { question: "(x+2)(x+3)", answers: ["x^2+5x+6"] },
+                { question: "(x+1)(x+3)", answers: ["x^2+4x+3"] },
+                // 可以添加更多题目
+            ];
+
+            const randomIndex = Math.floor(Math.random() * factorizationQuestions.length);
+            const selectedQuestion = factorizationQuestions[randomIndex];
+
+            correctAnswer = selectedQuestion.answers;
+
+            return `\\(\\begin{gather}展开: ${selectedQuestion.question} \\\\ \\begin{array}{|c|c|c|} \\hline x & x^2 & ax \\\\ \\hline & x & a \\\\ \\hline \\end{array} \\end{gather}\\)`;
+        }
+
+
+
+
+
+        function generateLevel1bQuestion() {
             let m = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
             let textm = m === 1 ? "+1" : (m === -1 ? "-1" : (m > 1 ? `+${m}` : `${m}`));
             let textm2 = m === 1 ? "+" : (m === -1 ? "-" : (m > 1 ? `+${m}` : `${m}`));
             correctAnswer = [`x^2${textm2}x`];           
             return `\\(\\begin{gather}展开: x(x${textm})\\\\ \\begin{array}{|c|c|c|} \\hline x &   &   \\\\ \\hline & x & ${m} \\\\ \\hline \\end{array} \\end{gather}\\)`;
         }
+
+
+
+
+        function generateLevel1Question() {
+            const levelFunctions = [
+                generateLevel1aQuestion,
+                generateLevel1bQuestion,
+ 
+            ];
+
+            const randomIndex = Math.floor(Math.random() * levelFunctions.length);
+            const selectedFunction = levelFunctions[randomIndex];
+
+            return selectedFunction();
+        }
+
+
+
+
+
+
 
         function generateLevel2Question() {
             let m = (Math.floor(Math.random() * 9) + 1) * (Math.random() < 0.5 ? 1 : -1);
@@ -206,6 +249,15 @@
 
            return `\\(\\begin{gather}展开:${textn}x(x${textm}) \\\\ \\begin{array}{|c|c|c|} \\hline bx & x^2 & abx \\\\ \\hline & x & a \\\\ \\hline \\end{array} \\end{gather}\\)`;
         }
+
+
+
+ 
+
+
+
+
+
 
 
 
@@ -560,9 +612,9 @@ function generateLevel7Question() {
 
 
 
-        function newQuestion() {
+              function newQuestion() {
             const questionElement = document.getElementById('question');
-            currentQuestion = generateQuestion();
+            const currentQuestion = generateQuestion();
             questionElement.innerHTML = currentQuestion;
             MathJax.typeset();
             document.getElementById('answer').value = '';
@@ -577,37 +629,37 @@ function generateLevel7Question() {
             }).replace(/\u3000/g, ' ');
         }
 
-function checkAnswer() {
-    let userAnswer = document.getElementById('answer').value.trim();
-    userAnswer = userAnswer.replace(/\s+/g, '');
-    userAnswer = toHalfWidth(userAnswer);
+        function checkAnswer() {
+            let userAnswer = document.getElementById('answer').value.trim();
+            userAnswer = userAnswer.replace(/\s+/g, '');
+            userAnswer = toHalfWidth(userAnswer);
 
-    if (!userAnswer) {
-        alert("请输入有效的答案");
-        return;
-    }
+            if (!userAnswer) {
+                alert("请输入有效的答案");
+                return;
+            }
 
-    const resultElement = document.getElementById('result');
-    let resultText;
-    let isCorrect = correctAnswer.includes(userAnswer);
+            const resultElement = document.getElementById('result');
+            let resultText;
+            let isCorrect = Array.isArray(correctAnswer) 
+                ? correctAnswer.includes(userAnswer)
+                : userAnswer === correctAnswer;
 
-    if (isCorrect) {
-        resultText = '正确！';
-        resultElement.style.color = 'green';
-        correctCount++;
-    } else {
-        resultText = `错误。正确答案是 ${correctAnswer.join(' 或 ')}。`;
-        resultElement.style.color = 'red';
-        incorrectCount++;
-    }
+            if (isCorrect) {
+                resultText = '正确！';
+                resultElement.style.color = 'green';
+                correctCount++;
+            } else {
+                resultText = `错误。正确答案是 ${Array.isArray(correctAnswer) ? correctAnswer.join(' 或 ') : correctAnswer}。`;
+                resultElement.style.color = 'red';
+                incorrectCount++;
+            }
 
-    resultElement.innerHTML = resultText;
-    updateScore();
-    addToHistory(currentQuestion, userAnswer, correctAnswer.join(' 或 '), isCorrect);
-    setTimeout(newQuestion, 1500);
-}
-
-
+            resultElement.innerHTML = resultText;
+            updateScore();
+            addToHistory(generateQuestion(), userAnswer, Array.isArray(correctAnswer) ? correctAnswer.join(' 或 ') : correctAnswer, isCorrect);
+            setTimeout(newQuestion, 1500);
+        }
 
         function addToHistory(question, userAnswer, correctAnswer, isCorrect) {
             const historyElement = document.getElementById('history');
