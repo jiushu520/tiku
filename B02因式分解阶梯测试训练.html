@@ -185,13 +185,53 @@
             }
         }
 
-         function generateLevel1Question() {
+
+        function generateLevel1aQuestion() {
+            const factorizationQuestions = [
+                { question: "\\\\(x^2 + 5x+6)", img: "images/test001.png", answers: ["(x+2)(x+3)", "(x+3)(x+2)"] },
+                { question: "\\\\(x^2 - x)",  answers: ["x(x-1)", "(x-1)x"] },
+                { question: "\\\\(x^2 + 2x)",  answers: ["x(x+2)", "(x+2)x"] },
+                { question: "\\\\(x^2 - 2x)",  answers: ["x(x-2)", "(x-2)x"] },
+                // 可以添加更多题目
+            ];
+
+            const randomIndex = Math.floor(Math.random() * factorizationQuestions.length);
+            const selectedQuestion = factorizationQuestions[randomIndex];
+
+            correctAnswer = selectedQuestion.answers;
+
+            let questionHtml = `\\(\\begin{gather}因式分解: ${selectedQuestion.question} \\\\ \\begin{array}{|c|c|c|} \\hline x & x^2 & ax \\\\ \\hline & x & a \\\\ \\hline \\end{array} \\end{gather}\\)`;
+            if (selectedQuestion.img) {
+                questionHtml += `<br><img src="${selectedQuestion.img}" alt="问题图片" style="max-width: 100%; height: auto;">`;
+            }
+
+            return questionHtml;
+        }
+
+
+
+         function generateLevel1bQuestion() {
             let m = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
             let textm = m === 1 ? "+1" : (m === -1 ? "-1" : (m > 1 ? `+${m}` : `${m}`));
             let textm2 = m === 1 ? "+" : (m === -1 ? "-" : (m > 1 ? `+${m}` : `${m}`));
             correctAnswer = [`x(x${textm})` ];           
             return `\\(\\begin{gather}因式分解:x^2${textm2}x \\\\ \\begin{array}{|c|c|c|} \\hline x & x^2 & ax \\\\ \\hline & x & a \\\\ \\hline \\end{array} \\end{gather}\\)`;
         }
+
+      function generateLevel1Question() {
+            const levelFunctions = [
+                generateLevel1aQuestion,
+                generateLevel1bQuestion,
+            ];
+
+            const randomIndex = Math.floor(Math.random() * levelFunctions.length);
+            const selectedFunction = levelFunctions[randomIndex];
+
+            return selectedFunction();
+        }
+
+
+
 
 
 
