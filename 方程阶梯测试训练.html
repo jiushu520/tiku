@@ -624,7 +624,7 @@ function generateLevel8Question() {
 
     correctAnswer = selectedQuestion.answers;
 
-    let questionHtml = `\\(\\begin{gather}解方程: ${selectedQuestion.question} \\\\  \\end{gather}\\)`;
+    let questionHtml = `\\(\\begin{gather}${selectedQuestion.question} \\\\  \\end{gather}\\)`;
     if (selectedQuestion.img) {
         questionHtml += `<br><img src="${selectedQuestion.img}" alt="问题图片" style="max-width: 100%; height: auto;">`;
     }
@@ -756,7 +756,7 @@ function generateLevel8Question() {
 
             correctAnswer = selectedQuestion.answers;
 
-            let questionHtml = `\\(${selectedQuestion.question} \\)`;
+            let questionHtml = `\\(解方程:${selectedQuestion.question} \\)`;
             if (selectedQuestion.img) {
                 questionHtml += `<br><img src="${selectedQuestion.img}" alt="问题图片" style="max-width: 100%; height: auto;">`;
             }
