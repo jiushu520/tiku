@@ -213,9 +213,9 @@ function generateLevel1bQuestion() {
     correctAnswer = [`${m}`, `x=${m}`];
 
     // 生成n+m个〇和m个〇的字符串
-    let nmO = '〇'.repeat(n + m);
-    let mO = '*'.repeat(m);
-    let nO = '囗'.repeat(n);
+    let nmO = '△'.repeat(n + m);
+    let mO = '〇'.repeat(m);
+    let nO = '●'.repeat(n);
 
     return `\\(\\begin{gather}解方程: ${qtext} \\\\ \\begin{array}{l} ${nmO} \\\\ ${mO}${nO} \\end{array} \\end{gather}\\)`;
 }
@@ -252,9 +252,9 @@ function generateLevel1bQuestion() {
 
             correctAnswer = [`${m}`,`x=${m}` ];           
     // 生成n+m个〇和m个〇的字符串
-    let nmO = '〇'.repeat(n + m);
-    let mO = '*'.repeat(m);
-    let nO = '囗'.repeat(n);
+    let nmO = '△'.repeat(n + m);
+    let mO = '〇'.repeat(m);
+    let nO = '●'.repeat(n);
 
     return `\\(\\begin{gather}解方程: ${qtext} \\\\ \\begin{array}{l} ${nmO} \\\\ ${mO}${nO} \\end{array} \\end{gather}\\)`;
 }
