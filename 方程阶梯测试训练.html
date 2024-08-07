@@ -145,7 +145,7 @@
         let correctCount = 0;
         let incorrectCount = 0;
         let currentDifficulty = 1;
-        const difficultyNames = ["级别 1", "级别 2", "级别 3", "未知领域"];
+        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4"];
 
         document.addEventListener("DOMContentLoaded", () => {
             generateDifficultyButtons();
@@ -175,13 +175,14 @@
                 case 1: return generateLevel1Question();
                 case 2: return generateLevel2Question();
                 case 3: return generateLevel3Question();
+                case 4: return generateLevel4Question();
 
                 default: return "";
             }
         }
 
 
-        function generateLevel1aQuestion() {
+        function generateLevel6Question() {
             const factorizationQuestions = [
                 { question: "\\\\(x^2 + 5x+6)", answers: ["(x+2)(x+3)", "(x+3)(x+2)"] },
                 { question: "\\\\(x^2 - x)",  answers: ["x(x-1)", "(x-1)x"] },
@@ -204,27 +205,45 @@
         }
 
 
-function generateLevel1bQuestion() {
+function generateLevel1aQuestion() {
     let m = (Math.floor(Math.random() * 5) + 1);
     let n = (Math.floor(Math.random() * m) + 1);
 
-    let textm = n === 1 ? "+1" : (n === -1 ? "-1" : (n > 1 ? `+${n}` : `${n}`));
+    let textm = m === 1 ? "+1" : (m === -1 ? "-1" : (m > 1 ? `+${m}` : `${m}`));
     let qtext = Math.random() < 0.5 ? `x${textm}=${m+n}` : `${m}+x=${m+n}`;
-    correctAnswer = [`${m}`, `x=${m}`];
+    correctAnswer = [`${n}`, `x=${n}`];
 
     // 生成n+m个〇和m个〇的字符串
     let nmO = '△'.repeat(n + m);
     let mO = '〇'.repeat(m);
     let nO = '●'.repeat(n);
 
-    return `\\(\\begin{gather}解方程: ${qtext} \\\\ \\begin{array}{l} ${nmO} \\\\ ${mO}${nO} \\end{array} \\end{gather}\\)`;
+    return `\\(\\begin{gather}解方程: ${qtext} \\\\ \\begin{array}{c} ${nmO} \\\\ ${mO}${nO} \\end{array} \\end{gather}\\)`;
 }
+
+
+function generateLevel1bQuestion() {
+    let m = (Math.floor(Math.random() * 5) + 1);
+    let n = (Math.floor(Math.random() * m) + 1);
+
+    let textm = m === 1 ? "+1" : (m === -1 ? "-1" : (m > 1 ? `+${m}` : `${m}`));
+    let qtext = Math.random() < 0.5 ? `x${textm}=${m+n}` : `${m}+x=${m+n}`;
+    correctAnswer = [`${n}`, `x=${n}`];
+
+    // 生成n+m个〇和m个〇的字符串
+    let nmO = '△'.repeat(n + m);
+    let mO = '〇'.repeat(m);
+    let nO = '●'.repeat(n);
+
+    return `\\(\\begin{gather}解方程: ${qtext} \\\\ \\begin{array}{c} ${nmO} \\\\ ${mO}${nO} \\end{array} \\end{gather}\\)`;
+}
+
 
 
 
       function generateLevel1Question() {
             const levelFunctions = [
-                generateLevel1bQuestion,
+                generateLevel1aQuestion,
                 generateLevel1bQuestion,
             ];
 
@@ -239,16 +258,16 @@ function generateLevel1bQuestion() {
 
 
 
-        function generateLevel2Question() {
+        function generateLevel2aQuestion() {
             let m = (Math.floor(Math.random() * 5) + 1) ;
             let n = (Math.floor(Math.random() * m) + 1) ;
 
             let textm = n === 1 ? "+1" : (n === -1 ? "-1" : (n > 1 ? `+${n}` : `${n}`));
-    let qtext = Math.random() < 0.5 
-        ? `x${textm}=${m+n}` 
+    let qtext = Math.random() < 0.3 
+        ? `${m+n}=x${textm}` 
         : (Math.random() < 0.5 
-            ? `${m+n}+x=${m}` 
-            : `${m+n}-x=${m}`);
+            ? `${m+n}=${n}+x` 
+            : `${n}=${m+n}-x`);
 
             correctAnswer = [`${m}`,`x=${m}` ];           
     // 生成n+m个〇和m个〇的字符串
@@ -256,13 +275,36 @@ function generateLevel1bQuestion() {
     let mO = '〇'.repeat(m);
     let nO = '●'.repeat(n);
 
-    return `\\(\\begin{gather}解方程: ${qtext} \\\\ \\begin{array}{l} ${nmO} \\\\ ${mO}${nO} \\end{array} \\end{gather}\\)`;
+    return `\\(\\begin{gather}解方程: ${qtext} \\\\ \\begin{array}{c} ${nmO} \\\\ ${mO}${nO} \\end{array} \\end{gather}\\)`;
 }
 
 
-      function generateLevel1Question() {
+
+
+
+
+
+      function generateLevel2Question() {
             const levelFunctions = [
-                generateLevel1bQuestion,
+                generateLevel2aQuestion,
+                generateLevel2aQuestion,
+            ];
+
+            const randomIndex = Math.floor(Math.random() * levelFunctions.length);
+            const selectedFunction = levelFunctions[randomIndex];
+
+            return selectedFunction();
+        }
+
+
+
+
+
+
+
+      function generateLevel3Question() {
+            const levelFunctions = [
+                generateLevel1aQuestion,
                 generateLevel1bQuestion,
             ];
 
@@ -271,6 +313,23 @@ function generateLevel1bQuestion() {
 
             return selectedFunction();
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -353,6 +412,20 @@ x & x^2 & ax \\\\
         }
 
 
+
+
+
+        function generateLevel4Question() {
+            const levelFunctions = [
+                generateLevel3aQuestion,
+                generateLevel3bQuestion,
+            ];
+
+            const randomIndex = Math.floor(Math.random() * levelFunctions.length);
+            const selectedFunction = levelFunctions[randomIndex];
+
+            return selectedFunction();
+        }
 
 
 
