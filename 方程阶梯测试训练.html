@@ -145,7 +145,7 @@
         let correctCount = 0;
         let incorrectCount = 0;
         let currentDifficulty = 1;
-        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5", ];
+        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5", "级别 6",];
 
         document.addEventListener("DOMContentLoaded", () => {
             generateDifficultyButtons();
@@ -177,6 +177,7 @@
                 case 3: return generateLevel3Question();
                 case 4: return generateLevel4Question();
                 case 5: return generateLevel5Question();
+                case 6: return generateLevel6Question();
 
 
                 default: return "";
@@ -313,6 +314,18 @@ function generateLevel1bQuestion() {
 
 
 
+      function generateLevel5Question() {
+            let m = (Math.floor(Math.random() * 5) + 2) * (Math.random() < 0.5 ? -1 : 1);
+            let n = (Math.floor(Math.random() * 5) + 1)  ;
+            let c = (Math.floor(Math.random() * 5) + 2) * (Math.random() < 0.5 ? -1 : 1);
+            let textn = n > 0 ? `+${n}` : `${n}`;
+            let textc = c === 1 ? `` : `${c}`;
+         
+            let qtext = `${textc}(x${textn})=${c*m+c*n}`;
+            correctAnswer = [`${m}`,`x=${m}` ];           
+
+    return `\\(\\begin{gather}解方程: ${qtext} \\end{gather}\\)`;
+        }
 
 
 
@@ -327,7 +340,10 @@ function generateLevel1bQuestion() {
 
 
 
-        function generateLevel5Question() {
+
+
+
+        function generateLevel6Question() {
     let km = (Math.floor(Math.random() * 10) + 0); // 生成0到9之间的随机整数
     let kn = (Math.floor(Math.random() * 8) + 1); // 生成1到8之间的随机整数
 
@@ -360,16 +376,6 @@ x & x^2 & ax \\\\
 
 
 
-
-
-
-
-
-
-
-
-        
-  
 
 
 
