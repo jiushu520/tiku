@@ -384,10 +384,13 @@ function generateLevel3aQuestion() {
 
       function generateLevel5bQuestion() {
     let m = (Math.floor(Math.random() * 10) + 2);
-    let qtext = `若:x^2+${m}x+1=0,\\\\ 则：x^3+\\frac{1}{x^3}=?`;
-    correctAnswer = [`${-m*(m*m-3)}`];
-    return `\\(\\begin{gather} ${qtext} \\\\ \\end{gather}\\)`;
+    let qtext = `若:x^2+${m}x-1=0,\\\\ 则：x^3-\\frac{1}{x^3}=?`;
+    correctAnswer = [`${m*(m*m+3)}`];
+    return `\\(\\begin{gather} ${qtext} \\\\     \\end{gather}\\)`;
         }
+
+
+
 
        function generateLevel5Question() {
             const levelFunctions = [
@@ -400,6 +403,27 @@ function generateLevel3aQuestion() {
 
             return selectedFunction();
 }
+
+
+
+
+
+
+        function generateLevel5Question() {
+            const levelFunctions = [
+
+                generateLevel5aQuestion,
+                generateLevel5bQuestion,
+
+            ];
+
+            const randomIndex = Math.floor(Math.random() * levelFunctions.length);
+            const selectedFunction = levelFunctions[randomIndex];
+
+            return selectedFunction();
+}
+
+
 
 
 
