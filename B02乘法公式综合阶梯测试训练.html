@@ -145,7 +145,7 @@
         let correctCount = 0;
         let incorrectCount = 0;
         let currentDifficulty = 1;
-        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5", ];
+        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5","级别 6",  ];
 
         document.addEventListener("DOMContentLoaded", () => {
             generateDifficultyButtons();
@@ -177,6 +177,7 @@
                 case 3: return generateLevel3Question();
                 case 4: return generateLevel4Question();
                 case 5: return generateLevel5Question();
+                case 6: return generateLevel6Question();
 
 
 
@@ -211,7 +212,7 @@ function generateLevel1Question() {
 function generateLevel2aQuestion() {
     let m = (Math.floor(Math.random() * 10) + 1);
     let n = (Math.floor(Math.random() * 5) + 1)*2;
-    let mpn = m+2*n;
+    let mpn = m+4*n;
 
     let text = n > 0 ? `+${n}` : `${n}`;
     let qtext = `(m-n)^2=${m},mn=${n};\\\\(m+n)^2=?`;
@@ -350,7 +351,7 @@ function generateLevel3aQuestion() {
 
       function generateLevel4bQuestion() {
     let m = (Math.floor(Math.random() * 10) + 2);
-    let qtext = `若:x^2+${m}x-1=0,\\\\ 则：x^2+\\frac{1}{x^2}=?`;
+    let qtext = `若:x^2+${m}x+1=0,\\\\ 则：x^2+\\frac{1}{x^2}=?`;
     correctAnswer = [`${m*m-2}`];
     return `\\(\\begin{gather} ${qtext} \\\\ \\end{gather}\\)`;
         }
@@ -373,9 +374,41 @@ function generateLevel3aQuestion() {
 
 
 
+      function generateLevel5aQuestion() {
+    let m = (Math.floor(Math.random() * 10) + 2);
+    let qtext = `若:x^2-${m}x+1=0,\\\\ 则：x^3+\\frac{1}{x^3}=?`;
+    correctAnswer = [`${m*(m*m-3)}`];
+    return `\\(\\begin{gather} ${qtext} \\\\ \\end{gather}\\)`;
+        }
 
 
-        function generateLevel5Question() {
+      function generateLevel5bQuestion() {
+    let m = (Math.floor(Math.random() * 10) + 2);
+    let qtext = `若:x^2+${m}x+1=0,\\\\ 则：x^3+\\frac{1}{x^3}=?`;
+    correctAnswer = [`${-m*(m*m-3)}`];
+    return `\\(\\begin{gather} ${qtext} \\\\ \\end{gather}\\)`;
+        }
+
+       function generateLevel5Question() {
+            const levelFunctions = [
+                generateLevel5aQuestion,
+                generateLevel5bQuestion,
+            ];
+
+            const randomIndex = Math.floor(Math.random() * levelFunctions.length);
+            const selectedFunction = levelFunctions[randomIndex];
+
+            return selectedFunction();
+}
+
+
+
+
+
+
+
+
+        function generateLevel6Question() {
             const levelFunctions = [
                 generateLevel1Question,
                 generateLevel2Question,
