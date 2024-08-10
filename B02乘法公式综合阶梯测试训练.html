@@ -391,7 +391,7 @@ x^3+\\frac{1}{x^3}=(x+\\frac{1}{x})[(x+\\frac{1}{x})^2-3]\\\\
       function generateLevel5bQuestion() {
     let m = (Math.floor(Math.random() * 10) + 2);
     let qtext = `若:x^2+${m}x-1=0,\\\\ 则：x^3-\\frac{1}{x^3}=?`;
-    correctAnswer = [`${m*(m*m+3)}`];
+    correctAnswer = [`${-m*(m*m+3)}`];
     return `\\(\\begin{gather} ${qtext} \\\\    
 \\begin{array}{ll}
 (x-\\frac{1}{x})^3=x^3-3x+3\\frac{1}{x}-\\frac{1}{x^3}\\\\
