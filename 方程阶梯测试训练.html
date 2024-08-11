@@ -265,7 +265,7 @@ function generateLevel1bQuestion() {
 
 
 
-      function generateLevel3Question() {
+      function generateLevel3aQuestion() {
             let m = (Math.floor(Math.random() * 5) + 1) ;
             let n = (Math.floor(Math.random() * 5) + 1);
             let c = (Math.floor(Math.random() * 5) + 1) ;
@@ -280,7 +280,7 @@ function generateLevel1bQuestion() {
 
 
 
-      function generateLevel4Question() {
+      function generateLevel3bQuestion() {
             let m = (Math.floor(Math.random() * 5) + 2) * (Math.random() < 0.5 ? -1 : 1);
             let n = (Math.floor(Math.random() * 5) + 1);
             let c = (Math.floor(Math.random() * 5) + 1) ;
@@ -294,10 +294,26 @@ function generateLevel1bQuestion() {
         }
 
 
+   function generateLevel3Question() {
+            const levelFunctions = [
+                generateLevel3aQuestion,
+                generateLevel3bQuestion,
+
+            ];
+
+            const randomIndex = Math.floor(Math.random() * levelFunctions.length);
+            const selectedFunction = levelFunctions[randomIndex];
+
+            return selectedFunction();
+        }
 
 
 
-      function generateLevel5Question() {
+
+
+
+
+      function generateLevel4Question() {
             let m = (Math.floor(Math.random() * 5) + 2) * (Math.random() < 0.5 ? -1 : 1);
             let n = (Math.floor(Math.random() * 5) + 1)  ;
             let c = (Math.floor(Math.random() * 5) + 2) * (Math.random() < 0.5 ? -1 : 1);
@@ -313,7 +329,7 @@ function generateLevel1bQuestion() {
 
 
 
-        function generateLevel6Question() {
+        function generateLevel5Question() {
             const Questions = [
 
 
@@ -442,7 +458,7 @@ function generateLevel1bQuestion() {
 
 
 
-        function generateLevel7Question() {
+        function generateLevel6Question() {
 
             const Questions = [
 
@@ -573,7 +589,7 @@ function generateLevel1bQuestion() {
 
 
 let currentQuestionIndex = 0; // 添加一个全局变量来跟踪当前题目索引
-function generateLevel8Question() {
+function generateLevel7Question() {
     const Questions = [
 { question: "解方程：\\frac{1}{3}x-\\frac{1}{5}x=2", answers: ["15", "x=15"] },
 { question: "解方程：\\frac{x-3}{2}+\\frac{x-1}{3}=\\frac{19}{6}", answers: ["6", "x=6"] },
@@ -641,7 +657,7 @@ function generateLevel8Question() {
 
 
 
-        function generateLevel9Question() {
+        function generateLevel8Question() {
 
             const Questions = [
 
@@ -764,6 +780,61 @@ function generateLevel8Question() {
             return questionHtml;
 
         }
+
+
+      function generateLevel9aQuestion() {
+            let m = (Math.floor(Math.random() * 5) + 2) ;
+            let absm=Math.abs(m)
+
+            let qtext = `\\left| x \\right|=${m}\\\\
+                              格式：a,b或a;b或\\pm a  `;
+            correctAnswer = [`${m},${-m}` ,`${-m},${m}` ,`\\pm ${absm}`,
+                                      `x=${m},x=${-m}` ,`x=${-m},x=${m}` ,`x=\\pm ${absm}`,                                                                                                   
+                                     ];           
+
+    return `\\(\\begin{gather}解方程: ${qtext} \\end{gather}\\)`;
+        }
+
+
+      function generateLevel9bQuestion() {
+            let m = (Math.floor(Math.random() * 9) + 2) ;
+            let n = (Math.floor(Math.random() * 5) + 1) ;
+            let textn = n > 0 ? `+${n}` : `${n}`;
+
+            let absm=Math.abs(m)
+
+            let qtext = `\\left| x${textn} \\right|=${m}\\\\
+                              格式：a,b或a;b `;
+            correctAnswer = [`${m-n},${-m-n}`,`${-m-n},${m-n}`, `${m-n};${-m-n}`,`${-m-n};${m-n}`, 
+                                      `x=${m-n},x=${-m-n}`,`x=${-m-n},x=${m-n}`, `x=${m-n};x=${-m-n}`,`x=${-m-n};x=${m-n}`,                                                                                                                                              
+                                      ];           
+
+    return `\\(\\begin{gather}解方程: ${qtext} \\end{gather}\\)`;
+        }
+
+
+
+
+
+
+
+
+
+      function generateLevel9Question() {
+            const levelFunctions = [
+                generateLevel9aQuestion,
+                generateLevel9bQuestion,
+
+            ];
+
+            const randomIndex = Math.floor(Math.random() * levelFunctions.length);
+            const selectedFunction = levelFunctions[randomIndex];
+
+            return selectedFunction();
+        }
+
+
+
 
 
 
