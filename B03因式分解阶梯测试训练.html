@@ -121,6 +121,17 @@
         <h3>B03因式分解阶梯测试训练</h3>
         <div class="difficulty-buttons" id="difficultyButtons"></div>
         <div id="question"></div><br>
+
+<div id="videoContainer" style="display: none;">
+    <video id="instructionalVideo" width="640" height="360" controls>
+        <source src="" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+
+
+
+
         <input type="text" id="answer" placeholder="输入你的答案" oninput="updatePreview()"><br>
         <div id="rendered-answer"></div><br>
         <button onclick="checkAnswer()">提交答案</button><br>
@@ -164,12 +175,40 @@
             });
         }
 
-        function setDifficulty(level) {
-            currentDifficulty = level;
-            document.querySelectorAll('.difficulty-buttons button').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`level${level}`).classList.add('active');
-            newQuestion();
-        }
+
+const videoConfig = {
+    1: "http://vs.leleketang.com/dat/ms/ma/k/video/18656.mp4",
+    2: "http://vs.leleketang.com/dat/ms/ma/k/video/18656.mp4",
+    3: "http://vs.leleketang.com/dat/ms/ma/k/video/18658.mp4",
+    4: "http://v.leleketang.com/dat/ms/ma/k/video/18657.mp4",
+    5: "http://v.leleketang.com/dat/ms/ma/k/video/18659.mp4",
+    6: "https://v.leleketang.com/dat/hs/ma/k/video/21034.mp4",
+    7: "http://vs.leleketang.com/dat/ms/ma/k/video/18660.mp4"
+    
+
+};
+
+function setDifficulty(level) {
+    currentDifficulty = level;
+    document.querySelectorAll('.difficulty-buttons button').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(`level${level}`).classList.add('active');
+    
+    const videoContainer = document.getElementById('videoContainer');
+    const video = document.getElementById('instructionalVideo');
+    
+    if (videoConfig[level]) {
+        video.src = videoConfig[level];
+        videoContainer.style.display = 'block';
+    } else {
+        video.src = "";
+        videoContainer.style.display = 'none';
+    }
+    
+    newQuestion();
+}
+
+
+
 
         function generateQuestion() {
             switch(currentDifficulty) {
@@ -188,10 +227,10 @@
 
         function generateLevel1aQuestion() {
             const factorizationQuestions = [
-                { question: "\\\\(x^2 + 5x+6)", img: "images/test001.png", answers: ["(x+2)(x+3)", "(x+3)(x+2)"] },
-                { question: "\\\\(x^2 - x)",  answers: ["x(x-1)", "(x-1)x"] },
-                { question: "\\\\(x^2 + 2x)",  answers: ["x(x+2)", "(x+2)x"] },
-                { question: "\\\\(x^2 - 2x)",  answers: ["x(x-2)", "(x-2)x"] },
+                { question: "x^2 + 5x+6", answers: ["(x+2)(x+3)", "(x+3)(x+2)"] },
+                { question: "x^2 - x",  answers: ["x(x-1)", "(x-1)x"] },
+                { question: "x^2 + 2x",  answers: ["x(x+2)", "(x+2)x"] },
+                { question: "x^2 - 2x",  answers: ["x(x-2)", "(x-2)x"] },
                 // 可以添加更多题目
             ];
 
