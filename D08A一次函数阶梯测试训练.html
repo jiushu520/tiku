@@ -123,7 +123,22 @@
         <div id="question"></div><br>
         <input type="text" id="answer" placeholder="输入你的答案" oninput="updatePreview()"><br>
         <div id="rendered-answer"></div><br>
+
+
+
+
+
         <button onclick="checkAnswer()">提交答案</button><br>
+
+<div id="videoContainer" style="display: none;">
+    <video id="instructionalVideo" width="640" height="360" controls>
+        <source src="" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+
+
+
         <div id="result"></div>
         <div id="score">正确: 0 | 错误: 0</div>
         <table>
@@ -164,12 +179,40 @@
             });
         }
 
-        function setDifficulty(level) {
-            currentDifficulty = level;
-            document.querySelectorAll('.difficulty-buttons button').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`level${level}`).classList.add('active');
-            newQuestion();
-        }
+const videoConfig = {
+    1: "http://vs.leleketang.com/dat/ms/ma/k/video/18728.mp4",//函数的定义
+    2: "http://v.leleketang.com/dat/hs/ma/k/video/21093.mp4",
+   
+    4: "http://vs.leleketang.com/dat/hs/ma/k/video/22135.mp4",
+
+    6: "https://v.leleketang.com/dat/hs/ma/k/video/21034.mp4",
+    7: "http://vs.leleketang.com/dat/ms/ma/k/video/18660.mp4"
+};
+
+
+
+
+function setDifficulty(level) {
+    currentDifficulty = level;
+    document.querySelectorAll('.difficulty-buttons button').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(`level${level}`).classList.add('active');
+    
+    const videoContainer = document.getElementById('videoContainer');
+    const video = document.getElementById('instructionalVideo');
+    
+    if (videoConfig[level]) {
+        video.src = videoConfig[level];
+        videoContainer.style.display = 'block';
+    } else {
+        video.src = "";
+        videoContainer.style.display = 'none';
+    }
+    
+    newQuestion();
+}
+
+
+
 
         function generateQuestion() {
             switch(currentDifficulty) {
