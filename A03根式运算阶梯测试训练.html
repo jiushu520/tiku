@@ -266,21 +266,25 @@
             6: "",
         };
 
-        function setDifficulty(level) {
-            currentDifficulty = level;
-            document.querySelectorAll('.difficulty-buttons button').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`level${level}`).classList.add('active');
+function setDifficulty(level) {
+    currentDifficulty = level;
+    document.querySelectorAll('.difficulty-buttons button').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(`level${level}`).classList.add('active');
 
-            const video = document.getElementById('instructionalVideo');
+    const video = document.getElementById('instructionalVideo');
+    const videoToggleContainer = document.querySelector('.switch-container');
 
-            if (videoConfig[level]) {
-                video.src = videoConfig[level];
-            } else {
-                video.src = "";
-            }
+    if (videoConfig[level]) {
+        video.src = videoConfig[level];
+        videoToggleContainer.style.display = 'inline-flex'; // 显示视频开关
+    } else {
+        video.src = "";
+        videoToggleContainer.style.display = 'none'; // 隐藏视频开关
+    }
 
-            newQuestion();
-        }
+    newQuestion();
+}
+
 
         function generateQuestion() {
             switch (currentDifficulty) {
@@ -348,7 +352,7 @@
             return `\\(\\begin{gather}化简: (\\sqrt{${m}} + \\sqrt{${n}})^2 = \\end{gather}\\)`;
         }
 
-        function generateLevel4Question() {
+        function generateLevel4aQuestion() {
             const questions = [
         { m: 2, n: 3 },    
         { m: 2, n: 5 },  
@@ -356,13 +360,7 @@
         { m: 3, n: 5 },
         { m: 3, n: 7 },
         { m: 5, n: 7 },
-        { m: 3, n: 2 },    
-        { m: 5, n: 2 },  
-        { m: 7, n: 2 }, 
-        { m: 5, n: 3 },
-        { m: 7, n: 3 },
-        { m: 7, n: 5 },
-
+   
             ];
 
             let randomIndex = Math.floor(Math.random() * questions.length);
@@ -371,10 +369,55 @@
             let m = selectedQuestion.m;
             let n = selectedQuestion.n;
 
-            correctAnswer = [`\\sqrt{${m}} + \\sqrt{${n}}`];
+            correctAnswer = [`\\sqrt{${m}} + \\sqrt{${n}}`,`\\sqrt{${n}} + \\sqrt{${m}}`];
 
             return `\\(\\begin{gather}化简: \\sqrt{${m + n} + 2\\sqrt{${n * m}}} = \\end{gather}\\)`;
         }
+
+
+        function generateLevel4bQuestion() {
+            const questions = [
+        { m: 2, n: 3 },    
+        { m: 2, n: 5 },  
+        { m: 2, n: 7 }, 
+        { m: 3, n: 5 },
+        { m: 3, n: 7 },
+        { m: 5, n: 7 },
+   
+            ];
+
+            let randomIndex = Math.floor(Math.random() * questions.length);
+            let selectedQuestion = questions[randomIndex];
+
+            let m = selectedQuestion.m;
+            let n = selectedQuestion.n;
+
+
+
+            correctAnswer = [`\\sqrt{${n}} - \\sqrt{${m}}`];
+
+            return `\\(\\begin{gather}化简: \\sqrt{${m + n} - 2\\sqrt{${n * m}}} = \\end{gather}\\)`;
+        }
+
+
+        function generateLevel4Question() {
+            const levelFunctions = [
+                generateLevel4aQuestion,
+                generateLevel4bQuestion,
+
+            ];
+
+            const randomIndex = Math.floor(Math.random() * levelFunctions.length);
+            const selectedFunction = levelFunctions[randomIndex];
+
+            return selectedFunction();
+        }
+
+
+
+
+
+
 
         function generateLevel5Question() {
             const levelFunctions = [
