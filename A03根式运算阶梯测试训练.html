@@ -347,7 +347,7 @@ function setDifficulty(level) {
             return `\\(\\begin{gather}化简:\\sqrt{${m}}\\times\\sqrt{${n}}= \\end{gather}\\)`;
         }
 
-        function generateLevel3Question() {
+        function generateLevel3aQuestion() {
             let m = (Math.floor(Math.random() * 5) + 1) * (Math.floor(Math.random() * 5) + 1);
             let n = (Math.floor(Math.random() * 5) + 1) * (Math.floor(Math.random() * 5) + 1);
 
@@ -361,6 +361,40 @@ function setDifficulty(level) {
 
             return `\\(\\begin{gather}化简: (\\sqrt{${m}} + \\sqrt{${n}})^2 = \\end{gather}\\)`;
         }
+
+
+       function generateLevel3bQuestion() {
+            let m = (Math.floor(Math.random() * 5) + 1) * (Math.floor(Math.random() * 5) + 1);
+            let n = (Math.floor(Math.random() * 5) + 1) * (Math.floor(Math.random() * 5) + 1);
+
+            let result = separateSquareRoot(n * m);
+            let a = 2 * result.a;
+            let b = result.b;
+
+            correctAnswer = b === 1 ?
+                [`${m + n - a} `] :
+                [`${m + n} - ${a}\\sqrt{${b}}`];
+
+            return `\\(\\begin{gather}化简: (\\sqrt{${m}} - \\sqrt{${n}})^2 = \\end{gather}\\)`;
+        }
+
+
+
+      function generateLevel3Question() {
+            const levelFunctions = [
+
+                generateLevel3aQuestion,
+                generateLevel3bQuestion,
+            ];
+
+            const randomIndex = Math.floor(Math.random() * levelFunctions.length);
+            const selectedFunction = levelFunctions[randomIndex];
+
+            return selectedFunction();
+        }
+
+
+
 
         function generateLevel4aQuestion() {
             const questions = [
