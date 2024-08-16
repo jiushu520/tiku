@@ -282,13 +282,19 @@ function setDifficulty(level) {
     if (videoConfig[level]) {
         video.src = videoConfig[level];
         videoToggleContainer.style.display = 'inline-flex'; // 显示视频开关
+        // 自动开启视频
+        document.getElementById('videoToggle').checked = true;
+        document.getElementById('videoContainer').style.display = 'block';
     } else {
         video.src = "";
         videoToggleContainer.style.display = 'none'; // 隐藏视频开关
+        document.getElementById('videoToggle').checked = false;
+        document.getElementById('videoContainer').style.display = 'none';
     }
 
     newQuestion();
 }
+
 
 
         function generateQuestion() {
