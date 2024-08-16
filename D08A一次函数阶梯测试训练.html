@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -84,7 +85,8 @@
             table-layout: auto;
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #ccc;
             padding: 8px;
             text-align: center;
@@ -113,30 +115,98 @@
         .mathjax-answer {
             font-size: 16px;
         }
+
+        .switch-container {
+            display: inline-flex;
+            align-items: center;
+            margin-left: 10px;
+        }
+
+        .switch-container label {
+            margin-right: 5px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 34px;
+            height: 20px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 20px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            border-radius: 50%;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: 0.4s;
+        }
+
+        input:checked+.slider {
+            background-color: #007bff;
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(14px);
+        }
+
+        #videoContainer {
+            margin-top: 20px;
+        }
     </style>
 </head>
+
 <body>
     <div class="game-container">
         <h1>玖数学测训系统</h1>
         <h3>D08A一次函数阶梯测试训练</h3>
         <div class="difficulty-buttons" id="difficultyButtons"></div>
         <div id="question"></div><br>
-        <input type="text" id="answer" placeholder="输入你的答案" oninput="updatePreview()"><br>
+
+        <input type="text" id="answer" placeholder="输入你的答案" oninput="updatePreview()">
         <div id="rendered-answer"></div><br>
-
-
-
-
-
         <button onclick="checkAnswer()">提交答案</button><br>
 
-<div id="videoContainer" style="display: none;">
-    <video id="instructionalVideo" width="640" height="360" controls>
-        <source src="" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-</div>
 
+    <div class="switch-container">
+        <label for="videoToggle">视频开关</label>
+            <label class="switch">
+                <input type="checkbox" id="videoToggle">
+                <span class="slider"></span>
+            </label>
+        </div><br>
+
+  
+
+        <div id="videoContainer" style="display: none;">
+            <video id="instructionalVideo" width="640" height="360" controls>
+                <source src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+  
 
 
         <div id="result"></div>
@@ -161,11 +231,22 @@
         let incorrectCount = 0;
         let currentDifficulty = 1;
 
-        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5", "级别 6", "级别 7", "级别 8", "综合测试"];
+         const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5", "级别 6", "级别 7", "级别 8", "综合测试"];
 
         document.addEventListener("DOMContentLoaded", () => {
             generateDifficultyButtons();
             setDifficulty(1);
+
+            // 添加视频开关事件监听
+            const videoToggle = document.getElementById('videoToggle');
+            videoToggle.addEventListener('change', function () {
+                const videoContainer = document.getElementById('videoContainer');
+                if (this.checked) {
+                    videoContainer.style.display = 'block';
+                } else {
+                    videoContainer.style.display = 'none';
+                }
+            });
         });
 
         function generateDifficultyButtons() {
@@ -179,7 +260,7 @@
             });
         }
 
-const videoConfig = {
+        const videoConfig = {
     1: "http://vs.leleketang.com/dat/ms/ma/k/video/18728.mp4",//函数的定义
     2: "http://v.leleketang.com/dat/hs/ma/k/video/21093.mp4",
     3: "",
@@ -188,35 +269,66 @@ const videoConfig = {
     5: "",
 
     6: "https://v.leleketang.com/dat/hs/ma/k/video/21034.mp4",
- 
-};
-
-
-
+    
+        };
 
 function setDifficulty(level) {
     currentDifficulty = level;
     document.querySelectorAll('.difficulty-buttons button').forEach(btn => btn.classList.remove('active'));
     document.getElementById(`level${level}`).classList.add('active');
-    
-    const videoContainer = document.getElementById('videoContainer');
+
     const video = document.getElementById('instructionalVideo');
-    
+    const videoToggleContainer = document.querySelector('.switch-container');
+
     if (videoConfig[level]) {
         video.src = videoConfig[level];
-        videoContainer.style.display = 'block';
+        videoToggleContainer.style.display = 'inline-flex'; // 显示视频开关
+        // 自动开启视频
+        document.getElementById('videoToggle').checked = true;
+        document.getElementById('videoContainer').style.display = 'block';
     } else {
         video.src = "";
-        videoContainer.style.display = 'none';
+        videoToggleContainer.style.display = 'none'; // 隐藏视频开关
+        document.getElementById('videoToggle').checked = false;
+        document.getElementById('videoContainer').style.display = 'none';
     }
-    
+
     newQuestion();
 }
 
 
 
-
         function generateQuestion() {
+            switch (currentDifficulty) {
+                case 1:
+       case 1: return generateLevel1Question();
+                case 2: return generateLevel2Question();
+                case 3: return generateLevel3Question();
+                case 4: return generateLevel4Question();
+                case 5: return generateLevel5Question();
+                case 6: return generateLevel6Question();
+                case 7: return generateLevel7Question();
+                case 8: return generateLevelcomQuestion() ;
+                default:
+                    return "";
+            }
+        }
+
+        function separateSquareRoot(n) {
+            let a = 1;
+            let b = n;
+
+            for (let i = 2; i * i <= n; i++) {
+                while (b % (i * i) === 0) {
+                    a *= i;
+                    b /= i * i;
+                }
+            }
+
+            return { a: a, b: b };
+        }
+
+  function generateQuestion() {
             switch(currentDifficulty) {
                 case 1: return generateLevel1Question();
                 case 2: return generateLevel2Question();
@@ -458,9 +570,6 @@ function setDifficulty(level) {
 
 
 
-
-
-
         function newQuestion() {
             const question = generateQuestion();
             document.getElementById('question').innerHTML = question;
@@ -471,13 +580,10 @@ function setDifficulty(level) {
         }
 
         function toHalfWidth(str) {
-            return str.replace(/[\uFF01-\uFF5E]/g, function(char) {
+            return str.replace(/[\uFF01-\uFF5E]/g, function (char) {
                 return String.fromCharCode(char.charCodeAt(0) - 0xFEE0);
             }).replace(/\u3000/g, ' ');
         }
-
-
-
 
         function updatePreview() {
             const input = document.getElementById('answer').value;
@@ -487,50 +593,43 @@ function setDifficulty(level) {
             MathJax.typesetPromise([renderedAnswer]).catch((err) => console.log(err));
         }
 
-      
-function checkAnswer() {
-    const userAnswer = document.getElementById('answer').value.trim();
-    
-    if (userAnswer === '') {
-        document.getElementById('result').innerHTML = '请输入答案！';
-        document.getElementById('result').className = 'incorrect';
-        return; // 直接返回，不更新历史记录或生成新题目
-    }
+        function checkAnswer() {
+            const userAnswer = document.getElementById('answer').value.trim();
 
-    // 使用 toHalfWidth 函数将用户输入转换为半角字符
-    const normalizedUserAnswer = toHalfWidth(userAnswer.replace(/\s/g, '').toLowerCase());
-    const isCorrect = correctAnswer.some(answer => normalizedUserAnswer === toHalfWidth(answer.replace(/\s/g, '').toLowerCase()));
+            if (userAnswer === '') {
+                document.getElementById('result').innerHTML = '请输入答案！';
+                document.getElementById('result').className = 'incorrect';
+                return; // 直接返回，不更新历史记录或生成新题目
+            }
 
-    if (isCorrect) {
-        document.getElementById('result').innerHTML = '正确!';
-        document.getElementById('result').className = 'correct';
-        correctCount++;
-    } else {
-        document.getElementById('result').innerHTML = '错误。正确答案是: ' + correctAnswer.join(' 或 ');
-        document.getElementById('result').className = 'incorrect';
-        incorrectCount++;
-    }
+            const normalizedUserAnswer = toHalfWidth(userAnswer.replace(/\s/g, '').toLowerCase());
+            const isCorrect = correctAnswer.some(answer => normalizedUserAnswer === toHalfWidth(answer.replace(/\s/g, '').toLowerCase()));
 
-    updateScore();
-    updateHistory(isCorrect);
+            if (isCorrect) {
+                document.getElementById('result').innerHTML = '正确!';
+                document.getElementById('result').className = 'correct';
+                correctCount++;
+            } else {
+                document.getElementById('result').innerHTML = '错误。正确答案是: ' + correctAnswer.join(' 或 ');
+                document.getElementById('result').className = 'incorrect';
+                incorrectCount++;
+            }
 
-    // 重新渲染整个页面的数学公式
-    MathJax.typesetPromise().catch((err) => console.log(err));
+            updateScore();
+            updateHistory(isCorrect);
 
-    // 只有在答案不为空时才生成新问题
-    if (userAnswer !== '') {
-        newQuestion();
-    }
-}
+            MathJax.typesetPromise().catch((err) => console.log(err));
 
-
-
+            if (userAnswer !== '') {
+                newQuestion();
+            }
+        }
 
         function updateScore() {
             document.getElementById('score').innerHTML = `正确: ${correctCount} | 错误: ${incorrectCount}`;
         }
 
-        function updateHistory(isCorrect) {
+function updateHistory(isCorrect) {
             const historyTable = document.getElementById('history');
             const newRow = historyTable.insertRow(0);
             newRow.insertCell(0).innerHTML = document.getElementById('question').innerHTML;
@@ -540,17 +639,18 @@ function checkAnswer() {
             newRow.insertCell(4).innerHTML = isCorrect ? '正确' : '错误';
             newRow.className = isCorrect ? 'correct' : 'incorrect';
 
-            // 重新渲染新添加的行中的数学公式
             MathJax.typesetPromise([newRow]).catch((err) => console.log(err));
         }
 
-        document.getElementById('answer').addEventListener('keyup', function(event) {
+        document.getElementById('answer').addEventListener('keyup', function (event) {
             if (event.key === 'Enter') {
                 checkAnswer();
             }
         });
 
         newQuestion();
+
     </script>
 </body>
+
 </html>
