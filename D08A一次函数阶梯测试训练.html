@@ -260,37 +260,46 @@
             });
         }
 
-        const videoConfig = {
-    1: "http://vs.leleketang.com/dat/ms/ma/k/video/18728.mp4",//函数的定义
-    2: "http://v.leleketang.com/dat/hs/ma/k/video/21093.mp4",
-    3: "",
-   
-    4: "http://vs.leleketang.com/dat/hs/ma/k/video/22135.mp4",
-    5: "",
+const videoConfig = {
+    1: "<video src='http://vs.leleketang.com/dat/ms/ma/k/video/18728.mp4' width='640' height='360' controls>Your browser does not support the video tag.</video>",  // 函数的定义
+    2: "<video src='http://v.leleketang.com/dat/hs/ma/k/video/21093.mp4' width='640' height='360' controls>Your browser does not support the video tag.</video>",
+    3: "<iframe src='https://player.bilibili.com/player.html?bvid=BV1Xu4y1v7em&high_quality=1&danmaku=0' width='640' height='360' allowfullscreen allow='autoplay; fullscreen' frameborder='0'></iframe>",
+    4: "<video src='http://vs.leleketang.com/dat/hs/ma/k/video/22135.mp4' width='640' height='360' controls>Your browser does not support the video tag.</video>",
+    5: "<iframe src='https://player.bilibili.com/player.html?bvid=BV1p3411j7YW&high_quality=1&danmaku=0' width='640' height='360' allowfullscreen allow='autoplay; fullscreen' frameborder='0'></iframe>",  
+    6: "<iframe src='https://player.bilibili.com/player.html?bvid=BV1rj411k7G3&high_quality=1&danmaku=0' width='640' height='360' allowfullscreen allow='autoplay; fullscreen' frameborder='0'></iframe>",
+    7: "<iframe src='https://player.bilibili.com/player.html?bvid=BV1i34y1e7EW&high_quality=1&danmaku=0' width='640' height='360' allowfullscreen allow='autoplay; fullscreen' frameborder='0'></iframe>",
+   8: "<iframe src='https://player.bilibili.com/player.html?bvid=BV1jT4y1g7mL&high_quality=1&danmaku=0' width='640' height='360' allowfullscreen allow='autoplay; fullscreen' frameborder='0'></iframe>",
 
-    6: "https://v.leleketang.com/dat/hs/ma/k/video/21034.mp4",
+
+
+
+
+
+
+
     
-        };
+};
+
 
 function setDifficulty(level) {
     currentDifficulty = level;
     document.querySelectorAll('.difficulty-buttons button').forEach(btn => btn.classList.remove('active'));
     document.getElementById(`level${level}`).classList.add('active');
 
-    const video = document.getElementById('instructionalVideo');
+    const videoContainer = document.getElementById('videoContainer');
     const videoToggleContainer = document.querySelector('.switch-container');
 
     if (videoConfig[level]) {
-        video.src = videoConfig[level];
+        videoContainer.innerHTML = videoConfig[level];
         videoToggleContainer.style.display = 'inline-flex'; // 显示视频开关
         // 自动开启视频
         document.getElementById('videoToggle').checked = true;
-        document.getElementById('videoContainer').style.display = 'block';
+        videoContainer.style.display = 'block';
     } else {
-        video.src = "";
+        videoContainer.innerHTML = "";
         videoToggleContainer.style.display = 'none'; // 隐藏视频开关
         document.getElementById('videoToggle').checked = false;
-        document.getElementById('videoContainer').style.display = 'none';
+        videoContainer.style.display = 'none';
     }
 
     newQuestion();

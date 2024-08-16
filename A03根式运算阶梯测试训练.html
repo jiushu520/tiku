@@ -260,38 +260,40 @@
             });
         }
 
-        const videoConfig = {
-            1: "http://vs.leleketang.com/dat/ms/ma/k/video/18684.mp4", // 化简二次根式
-            2: "http://vs.leleketang.com/dat/ms/ma/k/video/18683.mp4", // 二次根式乘法
-            3: "./video/根式中的完全平方公式.mp4",
-            4: "http://vs.leleketang.com/dat/ms/ma/k/video/18693.mp4", // 复合开根式
-            5: "",
-            6: "",
-        };
+const videoConfig = {
+    1: "<video src='http://vs.leleketang.com/dat/ms/ma/k/video/18684.mp4' width='640' height='360' controls>Your browser does not support the video tag.</video>",
+    2: "<video src='http://vs.leleketang.com/dat/ms/ma/k/video/18683.mp4' width='640' height='360' controls>Your browser does not support the video tag.</video>",
+    3: "<video src='./video/根式中的完全平方公式.mp4' width='640' height='360' controls>Your browser does not support the video tag.</video>",
+    4: "<video src='http://vs.leleketang.com/dat/ms/ma/k/video/18693.mp4' width='640' height='360' controls>Your browser does not support the video tag.</video>",
+    5: "",  // 如果您有视频链接，请在这里添加，否则保持空白
+    6: ""   // 如果您有视频链接，请在这里添加，否则保持空白
+};
+
 
 function setDifficulty(level) {
     currentDifficulty = level;
     document.querySelectorAll('.difficulty-buttons button').forEach(btn => btn.classList.remove('active'));
     document.getElementById(`level${level}`).classList.add('active');
 
-    const video = document.getElementById('instructionalVideo');
+    const videoContainer = document.getElementById('videoContainer');
     const videoToggleContainer = document.querySelector('.switch-container');
 
     if (videoConfig[level]) {
-        video.src = videoConfig[level];
+        videoContainer.innerHTML = videoConfig[level];
         videoToggleContainer.style.display = 'inline-flex'; // 显示视频开关
         // 自动开启视频
         document.getElementById('videoToggle').checked = true;
-        document.getElementById('videoContainer').style.display = 'block';
+        videoContainer.style.display = 'block';
     } else {
-        video.src = "";
+        videoContainer.innerHTML = "";
         videoToggleContainer.style.display = 'none'; // 隐藏视频开关
         document.getElementById('videoToggle').checked = false;
-        document.getElementById('videoContainer').style.display = 'none';
+        videoContainer.style.display = 'none';
     }
 
     newQuestion();
 }
+
 
 
         function generateQuestion() {
