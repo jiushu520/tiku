@@ -342,17 +342,17 @@ function setDifficulty(level) {
     let textn = n === 0 ? `` : (n > 0 ? `+${n}` : `${n}`);
     let textmmpn = m*m+n === 0 ? `` : (m*m+n > 0 ? `+${m*m+n}` : `${m*m+n}`);
 
-    let qtext = `函数y=x^2${text2m}${textmmpn}`;
+    let qtext = `\\huge 把函数y=x^2${text2m}${textmmpn}配成顶点式。`;
     correctAnswer = [`y=(x${textm})^2${textn}`];
 
-    return `\\(\\begin{gather}${qtext} 配成顶点式。\\\\
+    return `\\(   \\begin{gather}${qtext} \\\\
 \\begin{array}{|c|c|c|} 
 \\hline ${textm}&${textm}x&${m*m}\\\\ 
 \\hline x&x^2&${textm}x \\\\
 \\hline  &x &${textm} \\\\
 \\hline
 \\end{array}  
-\\\\y=(x+m)^2+n \\\\ 
+\\\\输入格式:y=(x+m)^2+n \\\\ 
 
 \\end{gather}\\)`;
         }
@@ -368,10 +368,10 @@ function setDifficulty(level) {
     
     let k = x*x + 2*m*x + (m*m + n);
 
-    let qtext = `函数 f(x)=x^2${text2m}${textmmpn}， \\\\ \\\\则f(${x})=?`;
+    let qtext = `函数 f(x)=x^2${text2m}${textmmpn}， \\\\则f(${x})=?`;
     correctAnswer =k>0 ? [`${k}`,`+${k}`] :[`${k}`];
 
-    return `\\(\\begin{gather}${qtext} \\\\ \\end{gather}\\)`;
+  return `\\( \\huge \\begin{gather} ${qtext} \\end{gather}\\)`;
 }
 
 
@@ -388,10 +388,10 @@ function setDifficulty(level) {
     
     
 
-    let qtext = `函数 f(x)=x^2${text2m}${textmmpn}， \\\\ \\\\则f(x)的对称轴为？`;
+    let qtext = `函数 f(x)=x^2${text2m}${textmmpn}，  \\\\则f(x)的对称轴为？`;
     correctAnswer =-m>0 ? [`x=${-m}`,`x=+${-m}`] :[`x=${-m}`];
 
-    return `\\(\\begin{gather}${qtext} \\\\ \\end{gather}\\)`;
+  return `\\( \\huge \\begin{gather} ${qtext} \\end{gather}\\)`;
         }
 
 
@@ -415,10 +415,10 @@ function setDifficulty(level) {
 
 
 
-    let qtext = `函数 f(x)=x^2${-m-n}x+${m*n}，写出f(x)与x轴的交点横坐标. \\\\`;
+    let qtext = `函数 f(x)=x^2${-m-n}x+${m*n}，\\\\ 写出f(x)与x轴的交点横坐标. \\\\`;
     correctAnswer = m===n ? [`${m}`,`+${m}`]: [`${m},${n}`,`${n},${m}`,`+${m},+${n}`,`+${n},+${m}`];
 
-    return `\\(\\begin{gather}${qtext} \\\\ \\end{gather}\\)`;
+  return `\\( \\huge \\begin{gather} ${qtext} \\end{gather}\\)`;
         }
 
       function generateLevel4bQuestion() {
@@ -426,10 +426,10 @@ function setDifficulty(level) {
      let n = (Math.floor(Math.random() * 5) + 1) ;
   
 
-    let qtext = `函数 f(x)=x^2+${m+n}x+${m*n}，写出f(x)与x轴的交点横坐标. \\\\`;
+    let qtext = `函数 f(x)=x^2+${m+n}x+${m*n}，\\\\写出f(x)与x轴的交点横坐标. \\\\`;
     correctAnswer = m===n ? [`${-m}`]: [`${-m},${-n}`,`${-n},${-m}`];
 
-    return `\\(\\begin{gather}${qtext} \\\\ \\end{gather}\\)`;
+  return `\\( \\huge \\begin{gather} ${qtext} \\end{gather}\\)`;
         }
 
 
@@ -439,10 +439,10 @@ function setDifficulty(level) {
  
       let textmpn = m+n === 0 ? `` :(m+n === 1 ? `+x` : (m+n === -1 ? `-x` :  (m+n > 0 ? `+${m+n}x` : `${m+n}x`)));
 
-    let qtext = `函数 f(x)=x^2${textmpn}${m*n}，写出f(x)与x轴的交点横坐标. \\\\`;
+    let qtext = `函数 f(x)=x^2${textmpn}${m*n}，\\\\ 写出f(x)与x轴的交点横坐标. \\\\`;
     correctAnswer = m===n ? [`${-m}`]: [`${-m},${-n}`,`${-n},${-m}`,`${-m},+${-n}`,`+${-n},${-m}`];
 
-    return `\\(\\begin{gather}${qtext} \\\\ \\end{gather}\\)`;
+  return `\\( \\huge \\begin{gather} ${qtext} \\end{gather}\\)`;
         }
 
 
@@ -453,8 +453,8 @@ function setDifficulty(level) {
 
       function generateLevel4Question() {
         const levelFunctions = [
-                generateLevel4cQuestion,
-                generateLevel4cQuestion,
+                generateLevel4aQuestion,
+                generateLevel4bQuestion,
                 generateLevel4cQuestion,
 
             ];
@@ -475,10 +475,10 @@ function setDifficulty(level) {
      let n = (Math.floor(Math.random() * 5) + 1)* ( -1 ) ;
      let textmpn = m+n === 0 ? `` :(m+n === 1 ? `+x` : (m+n === -1 ? `-x` :  (m+n > 0 ? `+${m+n}x` : `${m+n}x`)));
 
-    let qtext = `函数 f(x)=x^2${textmpn}${m*n}，f(x)与x轴的交于A、B两,则AB=? \\\\`;
+    let qtext = `函数 f(x)=x^2${textmpn}${m*n}，\\\\f(x)与x轴的交于A、B两,\\\\则AB=? \\\\`;
     correctAnswer = [`${m-n}`,`+${m-n}`];
 
-    return `\\(\\begin{gather}${qtext} \\\\ \\end{gather}\\)`;
+  return `\\( \\huge \\begin{gather} ${qtext} \\end{gather}\\)`;
         }
 
        
@@ -506,11 +506,11 @@ function generateLevel6Question() {
     // 特殊情况处理: 如果 k=0，直接显示 y=b 而不是 y=+b
     let answer = k === 0 ? `y=${b}` : `y=${textk}${textb}`;
 
-    let qtext = `函数 f(x)=x^2${textmpn}${m * n}，求过点(${x},${c})的切线方程。 \\\\`;
+    let qtext = ` 函数 f(x)=x^2${textmpn}${m * n}，\\\\求过点(${x},${c})的切线方程。 \\\\输入格式:y=kx+b\\\\`;
 
     correctAnswer = [answer];
 
-    return `\\(\\begin{gather}${qtext} \\end{gather}\\)`;
+    return `\\( \\huge \\begin{gather} ${qtext} \\end{gather}\\)`;
 }
 
 
