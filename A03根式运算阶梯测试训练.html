@@ -485,10 +485,11 @@ function setDifficulty(level) {
 
 
 let currentIndex = 0;
+
 function generateLevel6Question() {
     const questions = [
         { m: '3-1题:化简：a\\sqrt{-\\frac{1}{a}}', n: '-\\sqrt{-a}' }, 
-        { m: '3-2题:计算:\\sqrt{6 - 3\\sqrt{3}} + \\sqrt{6 + 3\\sqrt{3}} ', n: '3\\sqrt{2}' },
+        { m: '3-2题:计算:\\sqrt{6 - 3\\sqrt{3}} + \\sqrt{6 + 3\\sqrt{3}}', image: '', n: '3\\sqrt{2}' },//图片点位符
         { m: '3-3题:计算:\\sqrt{4 - \\sqrt{10} + 2\\sqrt{5}} + \\sqrt{4 + \\sqrt{10} + 2\\sqrt{5}}', n: ['\\sqrt{5}+1', '1+\\sqrt{5}'] }, 
     ];
 
@@ -499,17 +500,27 @@ function generateLevel6Question() {
     let n = selectedQuestion.n;
 
     // 如果 n 是一个数组，表示有多个正确答案
+    let correctAnswer;
     if (Array.isArray(n)) {
         correctAnswer = [...n];
     } else {
         correctAnswer = [`${n}`];
     }
 
+    // 构建返回的 LaTeX 代码
+    let questionLatex = `\\(\\begin{gather}${m} \\end{gather}\\)`;
+
+    // 如果有图片路径，则插入图片
+    if (selectedQuestion.image) {
+        questionLatex += `<br/><img src="${selectedQuestion.image}" style="width:50%;"><br/>`;
+    }
+
     // 更新索引值，确保按顺序出题
     currentIndex = (currentIndex + 1) % questions.length;
 
-    return `\\(\\begin{gather}${m} \\end{gather}\\)`;
+    return questionLatex;
 }
+
 
 
 
