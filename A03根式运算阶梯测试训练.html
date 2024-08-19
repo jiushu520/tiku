@@ -231,7 +231,7 @@
         let incorrectCount = 0;
         let currentDifficulty = 1;
 
-        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5"];
+        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5", "挑战自招"];
 
         document.addEventListener("DOMContentLoaded", () => {
             generateDifficultyButtons();
@@ -307,7 +307,9 @@ function setDifficulty(level) {
                 case 4:
                     return generateLevel4Question();
                 case 5:
-                    return generateLevel5Question();
+               return generateLevel5Question();
+                case 6:
+              return generateLevel6Question();
                 default:
                     return "";
             }
@@ -459,6 +461,31 @@ function setDifficulty(level) {
 
 
 
+function generateLevel6Question() {
+    const questions = [
+        { m: 'a\\sqrt{-\\frac{1}{a}}', n: '-\\sqrt{-a}' }, 
+        { m: '\\sqrt{6 - 3\\sqrt{3}} + \\sqrt{6 + 3\\sqrt{3}} ', n: '3\\sqrt{2}' },
+        { m: '\\sqrt{4 - \\sqrt{10} + 2\\sqrt{5}} + \\sqrt{4 + \\sqrt{10} + 2\\sqrt{5}}', n: ['\\sqrt{5}+1', '1+\\sqrt{5}'] }, 
+    ];
+
+    let randomIndex = Math.floor(Math.random() * questions.length);
+    let selectedQuestion = questions[randomIndex];
+
+    let m = selectedQuestion.m;
+    let n = selectedQuestion.n;
+
+    // 如果 n 是一个数组，表示有多个正确答案
+    if (Array.isArray(n)) {
+        correctAnswer = [...n];
+    } else {
+        correctAnswer = [`${n}`];
+    }
+
+    return `\\(\\begin{gather}化简: ${m} \\end{gather}\\)`;
+}
+
+
+
 
 
 
@@ -469,6 +496,7 @@ function setDifficulty(level) {
                 generateLevel2Question,
                 generateLevel3Question,
                 generateLevel4Question,
+      
             ];
 
             const randomIndex = Math.floor(Math.random() * levelFunctions.length);
@@ -476,6 +504,34 @@ function setDifficulty(level) {
 
             return selectedFunction();
         }
+
+
+function generateLevel6Question() {
+    const questions = [
+        { m: 'a\\sqrt{-\\frac{1}{a}}', n: '-\\sqrt{-a}' }, 
+        { m: '\\sqrt{6 - 3\\sqrt{3}} + \\sqrt{6 + 3\\sqrt{3}} ', n: '3\\sqrt{2}' },
+        { m: '\\sqrt{4 - \\sqrt{10} + 2\\sqrt{5}} + \\sqrt{4 + \\sqrt{10} + 2\\sqrt{5}}', n: ['\\sqrt{5}+1', '1+\\sqrt{5}'] }, 
+    ];
+
+    let randomIndex = Math.floor(Math.random() * questions.length);
+    let selectedQuestion = questions[randomIndex];
+
+    let m = selectedQuestion.m;
+    let n = selectedQuestion.n;
+
+    // 如果 n 是一个数组，表示有多个正确答案
+    if (Array.isArray(n)) {
+        correctAnswer = [...n];
+    } else {
+        correctAnswer = [`${n}`];
+    }
+
+    return `\\(\\begin{gather}化简: ${m} \\end{gather}\\)`;
+}
+
+
+
+
 
         function newQuestion() {
             const question = generateQuestion();
