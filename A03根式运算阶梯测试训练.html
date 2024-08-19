@@ -461,28 +461,6 @@ function setDifficulty(level) {
 
 
 
-function generateLevel6Question() {
-    const questions = [
-        { m: 'a\\sqrt{-\\frac{1}{a}}', n: '-\\sqrt{-a}' }, 
-        { m: '\\sqrt{6 - 3\\sqrt{3}} + \\sqrt{6 + 3\\sqrt{3}} ', n: '3\\sqrt{2}' },
-        { m: '\\sqrt{4 - \\sqrt{10} + 2\\sqrt{5}} + \\sqrt{4 + \\sqrt{10} + 2\\sqrt{5}}', n: ['\\sqrt{5}+1', '1+\\sqrt{5}'] }, 
-    ];
-
-    let randomIndex = Math.floor(Math.random() * questions.length);
-    let selectedQuestion = questions[randomIndex];
-
-    let m = selectedQuestion.m;
-    let n = selectedQuestion.n;
-
-    // 如果 n 是一个数组，表示有多个正确答案
-    if (Array.isArray(n)) {
-        correctAnswer = [...n];
-    } else {
-        correctAnswer = [`${n}`];
-    }
-
-    return `\\(\\begin{gather}化简: ${m} \\end{gather}\\)`;
-}
 
 
 
@@ -506,15 +484,16 @@ function generateLevel6Question() {
         }
 
 
+let currentIndex = 0;
 function generateLevel6Question() {
     const questions = [
-        { m: 'a\\sqrt{-\\frac{1}{a}}', n: '-\\sqrt{-a}' }, 
-        { m: '\\sqrt{6 - 3\\sqrt{3}} + \\sqrt{6 + 3\\sqrt{3}} ', n: '3\\sqrt{2}' },
-        { m: '\\sqrt{4 - \\sqrt{10} + 2\\sqrt{5}} + \\sqrt{4 + \\sqrt{10} + 2\\sqrt{5}}', n: ['\\sqrt{5}+1', '1+\\sqrt{5}'] }, 
+        { m: '3-1题:a\\sqrt{-\\frac{1}{a}}', n: '-\\sqrt{-a}' }, 
+        { m: '3-2题:\\sqrt{6 - 3\\sqrt{3}} + \\sqrt{6 + 3\\sqrt{3}} ', n: '3\\sqrt{2}' },
+        { m: '3-3题:\\sqrt{4 - \\sqrt{10} + 2\\sqrt{5}} + \\sqrt{4 + \\sqrt{10} + 2\\sqrt{5}}', n: ['\\sqrt{5}+1', '1+\\sqrt{5}'] }, 
     ];
 
-    let randomIndex = Math.floor(Math.random() * questions.length);
-    let selectedQuestion = questions[randomIndex];
+    // 获取当前索引的题目
+    let selectedQuestion = questions[currentIndex];
 
     let m = selectedQuestion.m;
     let n = selectedQuestion.n;
@@ -526,7 +505,10 @@ function generateLevel6Question() {
         correctAnswer = [`${n}`];
     }
 
-    return `\\(\\begin{gather}化简: ${m} \\end{gather}\\)`;
+    // 更新索引值，确保按顺序出题
+    currentIndex = (currentIndex + 1) % questions.length;
+
+    return `\\(\\begin{gather}${m} \\end{gather}\\)`;
 }
 
 
