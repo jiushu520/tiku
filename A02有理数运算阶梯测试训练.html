@@ -276,7 +276,7 @@ function generateLevel4Question() {
     let qtext = `\\Huge ${texta}${textb} = ?`;
     
     // Check if the correct answer is positive, negative, or zero
-    correctAnswer = c === 0 ? `0` : (c > 0 ? [`+${c}x`, `${c}x`] : [`${c}x`]);
+    correctAnswer = c === 0 ? [`0`,`0x`] : (c > 0 ? [`+${c}x`, `${c}x`] : [`${c}x`]);
     
     // Returning the question formatted in LaTeX
     return `\\(${qtext}\\)`;
