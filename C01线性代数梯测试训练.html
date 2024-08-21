@@ -407,19 +407,37 @@ function generateLevel4Question() {
     let b = Math.floor(Math.random() * 8) + 1;
     let m = Math.floor(Math.random() * 8) + 1;
     let n = Math.floor(Math.random() * 8) + 1;
-    let c = (a * n) - (b * m);
-    let d = (a * m) + (b * n);
-    let e = gcd(Math.abs(c), Math.abs(d));
-    let numerator = c / e;
-    let denominator = d / e;
 
-    correctAnswer = [`\\frac{${numerator}}{${denominator}}`];
+    let c = Math.abs((a * n) - (b * m));  // 向量积
+    let d =Math.abs( (a * m) + (b * n));  // 点积
+
+    let e = gcd(Math.abs(c), Math.abs(d));  // 计算最大公约数
+    let numerator = c / e;  // 分子
+    let denominator = d / e;  // 分母
+    let z = c / d;  // 正切值
+
+    // 生成正确答案
+    correctAnswer = z === Math.floor(z) ?  [`${z}`] : [`\\frac{${numerator}}{${denominator}}`];
+
+    // 生成题目
     return `\\( 
-\\begin{array}{c}在直角坐标系中，点A (${a}, ${b})、点B (${m}, ${n}) 和点 O (0,0)，\\\\
- 则 \\tan \\angle AOB 是多少？  \\\\ 
-如果是分数，请写成最简假分数。\\end{array} \\)`;
-
+\\begin{array}{c}
+在直角坐标系中，点A (${a}, ${b})、点B (${m}, ${n}) 和点 O (0,0)，\\\\
+则 \\tan \\angle AOB 是多少？ \\\\ 
+如果是分数，请写成最简假分数。
+\\end{array} \\)`;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
