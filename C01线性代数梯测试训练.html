@@ -231,7 +231,7 @@
         let incorrectCount = 0;
         let currentDifficulty = 1;
 
-         const difficultyNames = ["行列式", "点乘内积", "叉乘外积", "正切",  "综合测试"];
+         const difficultyNames = ["行列式", "点乘内积", "叉乘外积", "正切",  "空间法向量",  "综合测试"];
 
         document.addEventListener("DOMContentLoaded", () => {
             generateDifficultyButtons();
@@ -321,6 +321,7 @@ function setDifficulty(level) {
                 case 3: return generateLevel3Question();
                 case 4: return generateLevel4Question();
                 case 5: return generateLevel5Question();
+                case 6: return generateLevel6Question();
         
                 default: return "";
             }
@@ -431,6 +432,37 @@ function generateLevel4Question() {
 
 
 
+function generateLevel5Question() {
+    let a1 = (Math.floor(Math.random() * 8) + 1)* (Math.random() > 0.5 ? 1 : -1);
+    let a2=  (Math.floor(Math.random() * 8) + 1)* (Math.random() > 0.5 ? 1 : -1);
+    let a3 =  (Math.floor(Math.random() * 8) + 1)* (Math.random() > 0.5 ? 1 : -1);
+    let b1 =  (Math.floor(Math.random() * 8) + 1)* (Math.random() > 0.5 ? 1 : -1);
+    let b2 =  (Math.floor(Math.random() * 8) + 1)* (Math.random() > 0.5 ? 1 : -1);
+    let b3 =  (Math.floor(Math.random() * 8) + 1)* (Math.random() > 0.5 ? 1 : -1);
+
+
+    let x =a2*b3-a3*b2;  // 
+    let y =a3*b1-a1*b3;  // 
+    let z =a1*b2-a3*b1;  // 
+
+
+
+    // 生成正确答案
+    correctAnswer =  [`(${x},${y},${z})`];
+
+    // 生成题目
+    return `\\( 
+\\begin{array}{c}
+在空间直角坐标系中，向量u=(${a1}, ${a2},${a3})、v=(${b1}, ${b2},${b3})，\\\\
+求u,v的法向量？ \\\\ 
+也就是u\\otimes v=？ \\\\ 
+输入格式:(x,y,z)
+\\end{array} \\)`;
+}
+
+
+
+
 
 
 
@@ -443,12 +475,13 @@ function generateLevel4Question() {
 
 
         
-        function generateLevel5Question() {
+        function generateLevel6Question() {
             const levelFunctions = [
                 generateLevel1Question,
                 generateLevel2Question,
                 generateLevel3Question,
                 generateLevel4Question,
+                generateLevel5Question,
 
             ];
 
