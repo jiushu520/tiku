@@ -455,8 +455,6 @@ let textq = `\\[\\huge
 金箍棒头从点A (${a}, ${b})打到点B (${m}, ${n}) \\\\
 那么天命人抡了角度为\\angle AOB \\\\
 则 \\tan \\angle AOB 是多少？ \\\\ 
-
-如果是分数，请写成最简假分数。
 \\end{array} 
         \\]`;
 
@@ -467,13 +465,14 @@ let textq = `\\[\\huge
     let imageFile = Math.random() < 0.5 ? 'c0101.gif' : 'c0102.gif';
 
     // 插入图片
-  textq += `<br/><img src="./images/${imageFile}" style="width:30%;"><br/>   \\[ \\huge 
+  textq += `   \\[ 
       \\begin{array}{c}
        当你能用六种方法做出来,\\\\
        悟空的六魄聚齐，\\\\
-       大圣也许就会回归......
+       \\huge 大圣也许就会回归......
       \\end{array}       
- \\]`;
+       
+ \\] <br/><img src="./images/${imageFile}" style="width:30%;"><br/>如果是分数，请写成最简假分数。`;
 
 
     // 生成正确答案
