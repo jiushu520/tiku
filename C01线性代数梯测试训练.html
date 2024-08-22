@@ -231,7 +231,7 @@
         let incorrectCount = 0;
         let currentDifficulty = 1;
 
-         const difficultyNames = ["行列式", "点乘内积", "叉乘外积", "正切",  "空间法向量",  "综合测试"];
+         const difficultyNames = ["行列式", "点乘内积", "叉乘外积", "正切",  "天命人的正切", "空间法向量",  "综合测试"];
 
         document.addEventListener("DOMContentLoaded", () => {
             generateDifficultyButtons();
@@ -322,6 +322,7 @@ function setDifficulty(level) {
                 case 4: return generateLevel4Question();
                 case 5: return generateLevel5Question();
                 case 6: return generateLevel6Question();
+                case 7: return generateLevel7Question();
         
                 default: return "";
             }
@@ -433,6 +434,49 @@ function generateLevel4Question() {
 
 
 function generateLevel5Question() {
+    let a = Math.floor(Math.random() * 8) + 1;
+    let b = Math.floor(Math.random() * 8) + 1;
+    let m = Math.floor(Math.random() * 8) + 1;
+    let n = Math.floor(Math.random() * 8) + 1;
+
+    let c = Math.abs((a * n) - (b * m));  // 向量积
+    let d =Math.abs( (a * m) + (b * n));  // 点积
+
+    let e = gcd(Math.abs(c), Math.abs(d));  // 计算最大公约数
+    let numerator = c / e;  // 分子
+    let denominator = d / e;  // 分母
+    let z = c / d;  // 正切值
+
+
+let textq = `\\[
+   \\begin{array}{c}
+天命人以点 O (0,0)为圆心打怪，\\\\
+金箍棒头从点A (${a}, ${b})打到点B (${m}, ${n}) \\\\
+那么天命人抡了角度为\\angle AOB \\\\
+则 \\tan \\angle AOB 是多少？ \\\\ 
+如果是分数，请写成最简假分数。
+\\end{array} 
+        \\]`;
+
+
+
+
+    // 随机选择图片
+    let imageFile = Math.random() < 0.5 ? 'c0101.gif' : 'c0102.gif';
+
+    // 插入图片
+    textq += `<br/><img src="./images/${imageFile}" style="width:30%;"><br/>`;
+
+    // 生成正确答案
+    correctAnswer = z === Math.floor(z) ?  [`${z}`] : [`\\frac{${numerator}}{${denominator}}`];
+
+    return textq;
+
+}
+
+
+
+function generateLevel6Question() {
     let a1 = (Math.floor(Math.random() * 8) + 1)* (Math.random() > 0.5 ? 1 : -1);
     let a2=  (Math.floor(Math.random() * 8) + 1)* (Math.random() > 0.5 ? 1 : -1);
     let a3 =  (Math.floor(Math.random() * 8) + 1)* (Math.random() > 0.5 ? 1 : -1);
@@ -472,16 +516,15 @@ function generateLevel5Question() {
 
 
 
-
-
         
-        function generateLevel6Question() {
+        function generateLevel7Question() {
             const levelFunctions = [
                 generateLevel1Question,
                 generateLevel2Question,
                 generateLevel3Question,
                 generateLevel4Question,
                 generateLevel5Question,
+                generateLevel6Question,
 
             ];
 
