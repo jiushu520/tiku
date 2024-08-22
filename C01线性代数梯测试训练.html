@@ -266,6 +266,7 @@ const videoConfig = {
     2: "<iframe src='https://player.bilibili.com/player.html?bvid=BV1yP4y1w7hh&high_quality=1&danmaku=0' width='640' height='360' allowfullscreen allow='autoplay; fullscreen' frameborder='0'></iframe>",
     3: "<iframe src='https://player.bilibili.com/player.html?bvid=BV1yP4y1w7hh&high_quality=1&danmaku=0' width='640' height='360' allowfullscreen allow='autoplay; fullscreen' frameborder='0'></iframe>",
     4: "<iframe src='https://player.bilibili.com/player.html?bvid=BV12U4y1Z7tQ&high_quality=1&danmaku=0' width='640' height='360' allowfullscreen allow='autoplay; fullscreen' frameborder='0'></iframe>",
+    5: "<iframe src='https://player.bilibili.com/player.html?bvid=BV12U4y1Z7tQ&high_quality=1&danmaku=0' width='640' height='360' allowfullscreen allow='autoplay; fullscreen' frameborder='0'></iframe>",
 
     
 };
@@ -448,12 +449,13 @@ function generateLevel5Question() {
     let z = c / d;  // 正切值
 
 
-let textq = `\\[
+let textq = `\\[\\huge
    \\begin{array}{c}
 天命人以点 O (0,0)为圆心打怪，\\\\
 金箍棒头从点A (${a}, ${b})打到点B (${m}, ${n}) \\\\
 那么天命人抡了角度为\\angle AOB \\\\
 则 \\tan \\angle AOB 是多少？ \\\\ 
+
 如果是分数，请写成最简假分数。
 \\end{array} 
         \\]`;
@@ -465,7 +467,14 @@ let textq = `\\[
     let imageFile = Math.random() < 0.5 ? 'c0101.gif' : 'c0102.gif';
 
     // 插入图片
-    textq += `<br/><img src="./images/${imageFile}" style="width:30%;"><br/>`;
+  textq += `<br/><img src="./images/${imageFile}" style="width:30%;"><br/>   \\[ \\huge 
+      \\begin{array}{c}
+       当你能用六种方法做出来,\\\\
+       悟空的六魄聚齐，\\\\
+       大圣也许就会回归......
+      \\end{array}       
+ \\]`;
+
 
     // 生成正确答案
     correctAnswer = z === Math.floor(z) ?  [`${z}`] : [`\\frac{${numerator}}{${denominator}}`];
