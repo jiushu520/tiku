@@ -472,11 +472,11 @@ let textq = `\\[\\huge
        \\huge 大圣也许就会回归......
       \\end{array}       
        
- \\] <br/><img src="./images/${imageFile}" style="width:30%;"><br/>如果是分数，请写成最简假分数。`;
+\\] <br/><img src="./images/${imageFile}" style="width:30%;"><br/>\\[   \\begin{array}{c}如果是分数输入最简假分数 \\\\ 例:\\frac{1}{2}输入格式:\\textup{\\ frac{1}{2}} \\end{array}  \\] `;
 
-
+    
     // 生成正确答案
-    correctAnswer = z === Math.floor(z) ?  [`${z}`] : [`\\frac{${numerator}}{${denominator}}`];
+    correctAnswer = z === Math.floor(z) ?  [`${z}`] : [`\\frac{${numerator}}{${denominator}}`,`${numerator}/${denominator}`];
 
     return textq;
 
