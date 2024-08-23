@@ -379,6 +379,45 @@
 
 
 
+function generateLevel5cQuestion() {
+    let a = (Math.floor(Math.random() * 5) + 2) * (Math.random() < 0.5 ? 1 : -1);
+    let b = (Math.floor(Math.random() * 5) + 2) * (Math.random() < 0.5 ? 1 : -1);
+    let c = (Math.floor(Math.random() * 5) + 2) * (Math.random() < 0.5 ? 1 : -1);
+    let d = (Math.floor(Math.random() * 5) + 2) * (Math.random() < 0.5 ? 1 : -1);
+
+    let textb = b > 0 ? `+${b}y` : `${b}y`;
+    let textd = d > 0 ? `+${d}y` : `${d}y`;
+
+    let ac = a * c;
+    let acpbd = (a * d) + (b * c);  // 这里应该是 a*d 和 b*c 的乘积和
+    let bd = b * d;
+
+    let textac = ac > 0 ? `+${ac}` : `${ac}`;
+let textacpbd = acpbd === 0 
+    ? `` 
+    : (acpbd === 1 
+        ? `+xy` 
+        : (acpbd === -1 
+            ? `-xy` 
+            : (acpbd > 0 
+                ? `+${acpbd}xy` 
+                : `${acpbd}xy`
+            )
+        )
+    );
+
+      let textbd = bd>0 ?  `+${bd}y^2` : `${bd}y^2`;
+    
+    let qtext = `(${a}x${textb})(${c}x${textd})`;
+
+    correctAnswer = [`${ac}x^2${textacpbd}${textbd}`];
+    
+    return `\\(展开: ${qtext}\\)`;
+}
+
+
+
+
 
 
 
@@ -390,6 +429,7 @@
             const levelFunctions = [
                 generateLevel5aQuestion,
                 generateLevel5bQuestion,
+                generateLevel5cQuestion,
             ];
 
             const randomIndex = Math.floor(Math.random() * levelFunctions.length);
