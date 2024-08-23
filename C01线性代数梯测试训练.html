@@ -339,12 +339,12 @@ function generateLevel1Question() {
     let n = Math.floor(Math.random() * 8) * (Math.random() > 0.5 ? 1 : -1);
     let k = (a * n) - (b * m);
 
-    let textq = `\\(\\begin{array}{rr} \\begin{array}{|rl|} 
+    let textq = `\\(\\begin{array}{cc} \\begin{array}{|rl|} 
               
                  ${a} & ${b} \\\\ 
                  ${m} & ${n} \\\\  
                  
-                 \\end{array}&=\\\\
+                 \\end{array}=\\\\
                   行列式是时空之门,真正掌握了，\\\\用六种角度去来理解它\\\\
                   大圣也许就回来了..........  \\end{array}
 \\)`;
