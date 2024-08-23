@@ -559,13 +559,14 @@ function generateLevel7Question() {
                   & =\\\\
                    矩阵是变换之法真正掌握了，\\\\
                    用复数向量三角......角度去来理解它\\\\
-                   大圣也许就回来了..........  \\end{array}
+                   大圣也许就回来了..........  \\\\
+                                      \\end{array}
                \\)`;
    // 随机选择图片
     let imageFile = Math.random() < 0.5 ? 'c0101.gif' : 'c0102.gif';
     
     // 使用模板字面量来拼接 HTML
-    textq += `<br/><img src="./images/${imageFile}" style="width:30%;"><br/>`;
+    textq += `<br/><img src="./images/${imageFile}" style="width:30%;"><br/>输入格式:(a,b)`;
 
     correctAnswer = [`(${x},${y})`]
     return ` ${textq}  `;
