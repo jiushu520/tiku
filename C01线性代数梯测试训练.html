@@ -231,7 +231,7 @@
         let incorrectCount = 0;
         let currentDifficulty = 1;
 
-         const difficultyNames = ["行列式", "点乘内积", "叉乘外积", "正切",  "天命人的正切", "空间法向量",  "综合测试"];
+         const difficultyNames = ["行列式", "点乘内积", "叉乘外积", "正切",  "天命人的正切", "空间法向量", "矩阵变换",  "综合测试"];
 
         document.addEventListener("DOMContentLoaded", () => {
             generateDifficultyButtons();
@@ -324,6 +324,7 @@ function setDifficulty(level) {
                 case 5: return generateLevel5Question();
                 case 6: return generateLevel6Question();
                 case 7: return generateLevel7Question();
+                case 8: return generateLevel8Question();
         
                 default: return "";
             }
@@ -339,7 +340,7 @@ function generateLevel1Question() {
     let n = Math.floor(Math.random() * 8) * (Math.random() > 0.5 ? 1 : -1);
     let k = (a * n) - (b * m);
 
-    let textq = `\\(\\begin{array}{cc} \\begin{array}{|rl|} 
+    let textq = `\\(\\begin{array}{cc} \\huge \\begin{array}{|rr|} 
               
                  ${a} & ${b} \\\\ 
                  ${m} & ${n} \\\\  
@@ -526,6 +527,54 @@ function generateLevel6Question() {
 }
 
 
+function generateLevel7Question() {
+    let a = Math.floor(Math.random() * 8) * (Math.random() > 0.5 ? 1 : -1);
+    let b = Math.floor(Math.random() * 8) * (Math.random() > 0.5 ? 1 : -1);
+    let c = Math.floor(Math.random() * 8) * (Math.random() > 0.5 ? 1 : -1);
+    let d = Math.floor(Math.random() * 8) * (Math.random() > 0.5 ? 1 : -1);
+
+    let m = Math.floor(Math.random() * 8) * (Math.random() > 0.5 ? 1 : -1);
+    let n = Math.floor(Math.random() * 8) * (Math.random() > 0.5 ? 1 : -1);
+    let x =a*m+b*n;
+    let y =c*m+d*n;
+
+
+
+    let textq = `\\(\\begin{array}{rl} \\huge 
+               \\left ( \\begin{array}{rl} 
+              
+                 ${a} & ${b} \\\\ 
+                 ${c} & ${d} \\\\  
+                 
+                 \\end{array}
+               \\right )
+                           &
+               \\huge  \\begin{pmatrix}
+              
+                 ${m}  \\\\ 
+                 ${n}  \\\\  
+                 
+                 \\end{pmatrix}
+
+                  & =\\\\
+                   矩阵是变换之法真正掌握了，\\\\
+                   用复数向量三角......角度去来理解它\\\\
+                   大圣也许就回来了..........  \\end{array}
+               \\)`;
+   // 随机选择图片
+    let imageFile = Math.random() < 0.5 ? 'c0101.gif' : 'c0102.gif';
+    
+    // 使用模板字面量来拼接 HTML
+    textq += `<br/><img src="./images/${imageFile}" style="width:30%;"><br/>`;
+
+    correctAnswer = [`(${x},${y})`]
+    return ` ${textq}  `;
+}
+
+
+
+
+
 
 
 
@@ -538,7 +587,7 @@ function generateLevel6Question() {
 
 
         
-        function generateLevel7Question() {
+        function generateLevel8Question() {
             const levelFunctions = [
                 generateLevel1Question,
                 generateLevel2Question,
@@ -546,6 +595,7 @@ function generateLevel6Question() {
                 generateLevel4Question,
                 generateLevel5Question,
                 generateLevel6Question,
+                generateLevel7Question,
 
             ];
 
