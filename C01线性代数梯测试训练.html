@@ -339,13 +339,23 @@ function generateLevel1Question() {
     let n = Math.floor(Math.random() * 8) * (Math.random() > 0.5 ? 1 : -1);
     let k = (a * n) - (b * m);
 
-    let textq = `\\begin{array}{|cc|} 
+    let textq = `\\(\\begin{array}{rr} \\begin{array}{|rl|} 
+              
                  ${a} & ${b} \\\\ 
-                 ${m} & ${n} \\\\ 
-                 \\end{array}`;
+                 ${m} & ${n} \\\\  
+                 
+                 \\end{array}&=\\\\
+                  行列式是时空之门,真正掌握了，\\\\用六种角度去来理解它\\\\
+                  大圣也许就回来了..........  \\end{array}
+\\)`;
+   // 随机选择图片
+    let imageFile = Math.random() < 0.5 ? 'c0101.gif' : 'c0102.gif';
+    
+    // 使用模板字面量来拼接 HTML
+    textq += `<br/><img src="./images/${imageFile}" style="width:30%;"><br/>`;
 
     correctAnswer = k > 0 ? [`${k}`, `+${k}`] : [`${k}`]; // 设置为单一值
-    return `\\( ${textq} = \\)`;
+    return ` ${textq}  `;
 }
 
 
