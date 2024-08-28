@@ -186,6 +186,7 @@
 
         <input type="text" id="answer" placeholder="输入你的答案" oninput="updatePreview()">
         $$例:\sqrt{2}\text{输入格式为\sqrt{2} }$$
+        $$例:\frac{\sqrt{2}}{3}\text{输入格式为\frac{\sqrt{2}}{3} }$$
         <div id="rendered-answer"></div><br>
         <button onclick="checkAnswer()">提交答案</button><br>
 
@@ -488,9 +489,12 @@ let currentIndex = 0;
 
 function generateLevel6Question() {
     const questions = [
-        { m: '3-1题:化简：a\\sqrt{-\\frac{1}{a}}', n: '-\\sqrt{-a}' }, 
-        { m: '3-2题:计算:\\sqrt{6 - 3\\sqrt{3}} + \\sqrt{6 + 3\\sqrt{3}}', image: '', n: '3\\sqrt{2}' },//图片点位符
-        { m: '3-3题:计算:\\sqrt{4 - \\sqrt{10} + 2\\sqrt{5}} + \\sqrt{4 + \\sqrt{10} + 2\\sqrt{5}}', n: ['\\sqrt{5}+1', '1+\\sqrt{5}'] }, 
+        { m: '01题:化简：a\\sqrt{-\\frac{1}{a}}', n: '-\\sqrt{-a}' }, 
+        { m: '02题:计算:\\sqrt{6 - 3\\sqrt{3}} + \\sqrt{6 + 3\\sqrt{3}}', image: '', n: '3\\sqrt{2}' },//图片点位符
+        { m: '03题:计算:\\sqrt{4 - \\sqrt{10} + 2\\sqrt{5}} + \\sqrt{4 + \\sqrt{10} + 2\\sqrt{5}}', n: ['\\sqrt{5}+1', '1+\\sqrt{5}'] }, 
+
+         { m: '04题:若 7 + \\sqrt{11}和 5 - \\sqrt{11}的小数部分分别为 m和 n，则 \\frac{1}{m} + \\frac{1}{n}\\ 的值为\\_\\_\\_\\_。', n: ['\\frac{7\\sqrt{11}+23}{10}','\\frac{23+7\\sqrt{11}}{10}' ]}, 
+
     ];
 
     // 获取当前索引的题目
