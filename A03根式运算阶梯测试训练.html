@@ -185,8 +185,7 @@
         <div id="question"></div><br>
 
         <input type="text" id="answer" placeholder="输入你的答案" oninput="updatePreview()">
-        $$例:\sqrt{2}\text{输入格式为\sqrt{2} }$$
-        $$例:\frac{\sqrt{2}}{3}\text{输入格式为\frac{\sqrt{2}}{3} }$$
+        $$例:\sqrt{2}\text{输入格式为\sqrt{2} },\frac{\sqrt{2}}{3}\text{输入格式为\frac{\sqrt{2}}{3} }$$
         <div id="rendered-answer"></div><br>
         <button onclick="checkAnswer()">提交答案</button><br>
 
@@ -490,16 +489,25 @@ let currentIndex = 0;
 function generateLevel6Question() {
     const questions = [
         { m: '01题:化简：a\\sqrt{-\\frac{1}{a}}', n: '-\\sqrt{-a}' }, 
-        { m: '02题:计算:\\sqrt{6 - 3\\sqrt{3}} + \\sqrt{6 + 3\\sqrt{3}}', image: '', n: '3\\sqrt{2}' },//图片点位符
+        { m: '02题:计算:\\sqrt{6 - 3\\sqrt{3}} + \\sqrt{6 + 3\\sqrt{3}}', image: '', n: '3\\sqrt{2}' },//图片占位符
         { m: '03题:计算:\\sqrt{4 - \\sqrt{10} + 2\\sqrt{5}} + \\sqrt{4 + \\sqrt{10} + 2\\sqrt{5}}', n: ['\\sqrt{5}+1', '1+\\sqrt{5}'] }, 
 
          { m: '04题:若 7 + \\sqrt{11}和 5 - \\sqrt{11}的小数部分分别为 m和 n，则 \\frac{1}{m} + \\frac{1}{n}\\ 的值为\\_\\_\\_\\_。', n: ['\\frac{7\\sqrt{11}+23}{10}','\\frac{23+7\\sqrt{11}}{10}' ]}, 
          { m: '05题:若 在如图方格中，若要使横、竖、斜对角的三个实数相乘都得到同样的结果，则两个空格的实数之积为\\_\\_\\_\\_。\\\\ \\begin{array}{|c|c|c|} \\hline  3\\sqrt{2}&2&\\sqrt{3}\\\\  \\hline 1&&6\\\\ \\hline   &3&\\sqrt{2} \\\\   \\hline\\end{array}', n: '6\\sqrt{2}' }, 
 
         { m: '06题:已知 x = \\sqrt[3]{4(\\sqrt{5}+1)} - \\sqrt[3]{4(\\sqrt{5}-1)}，则 x^3 + 12x =\\_\\_\\_\\_。', n: '8' }, 
+        { m: '07题:x = \\frac{\\sqrt{n+1} - \\sqrt{n}}{\\sqrt{n+1} + \\sqrt{n}}, \\quad y = \\frac{\\sqrt{n+1} + \\sqrt{n}}{\\sqrt{n+1} - \\sqrt{n}},\\\\并且19x^2 + 123xy + 19y^2 = 1985.\\\\求正整数 n  的值。', n: '2' }, 
 
 
+        { m: '08题:已知:\\sqrt{120\\sqrt{6} + 540\\sqrt{10} + 144\\sqrt{15} + 2118}\\\\可以写成: a\\sqrt{2} + b\\sqrt{3} + c\\sqrt{5} (其中a,b,c为正整数) 的形式,求 abc 的值。', n: '1080' }, 
+        { m: '09题:已知:a - b = 2 + \\sqrt{3}  和 b - c = 2 - \\sqrt{3} ，\\\\求 a^2 + b^2 + c^2 - ab - ac - bc 的值。', n: '15' }, 
+        { m: '10题:已知: p = \\sqrt{4 + \\sqrt{7} }- \\sqrt{4 - \\sqrt{7}}  、  q = \\sqrt{4 + \\sqrt{7}} + \\sqrt{4 - \\sqrt{7}} ，\\\\求  \\frac{p}{q} + \\frac{q}{p}  的值。', n: ['8\\frac{\\sqrt{7}}{7}', '\\frac{8\\sqrt{7}}{7}']}, 
 
+
+        { m: '11题:一个重要的公式：\\frac{1}{(n+1)\\sqrt{n} + n\\sqrt{n+1}} = \\frac{1}{\\sqrt{n}} - \\frac{1}{\\sqrt{n+1}}。\\\\ 某个正整数K满足\\frac{1}{2\\sqrt{1} + 1\\sqrt{2}} + \\frac{1}{3\\sqrt{2} + 2\\sqrt{3}} + \\frac{1}{4\\sqrt{3} + 3\\sqrt{4}} + \\cdots + \\frac{1}{(k+1)\\sqrt{k} + k\\sqrt{k+1}} = \\frac{2}{3}。\\\\求K的值。', n: '8' }, 
+        { m: '12题:计算:\\sqrt{1 + \\frac{1}{1^2}+ \\frac{1}{2^2}} + \\sqrt{1 + \\frac{1}{2^2} + \\frac{1}{3^2}} + \\cdots + \\sqrt{1 + \\frac{1}{9^2} + \\frac{1}{10^2}}=?', n:  ['9.9', '9\\frac{9}{10}', '\\frac{99}{10}']  }, 
+        { m: '13题:解方程:\\sqrt{20-x}-\\sqrt{4-x}=2,', n: ['-5', 'x=-5']}, 
+        { m: '14题:解方程:\\sqrt[3]{45 + x} + \\sqrt[3]{16 - x} = 1,x=?', n: ['80,-109', '80;-109','-109,80', '-109;80']}, 
 
 
 
