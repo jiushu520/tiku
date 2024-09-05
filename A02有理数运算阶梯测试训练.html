@@ -151,7 +151,7 @@
         let incorrectCount = 0;
         let currentDifficulty = 1;
 
-        const difficultyNames = ["级别 1", "级别 2", "级别 3", "级别 4", "级别 5", "级别 6","级别 7","级别 8","挑战自招" ];
+        const difficultyNames = ["01加减", "02分配律", "03乘法", "04同类项", "05同类项分配律", "06乘方","07绝对值倒数分数","08混合","09综合","10挑战自招" ];
 
         document.addEventListener("DOMContentLoaded", () => {
             generateDifficultyButtons();
@@ -185,8 +185,9 @@
                 case 5: return generateLevel5Question();
                 case 6: return generateLevel6Question();
                 case 7: return generateLevel7Question();
-               case 8: return generateLevel8Question();
-               case 9: return generateLevel9Question();
+                case 8: return generateLevel8Question();
+                case 9: return generateLevel9Question();
+                case 10: return generateLevel10Question();
 
                 default: return "";
             }
@@ -336,8 +337,8 @@ function generateLevel6Question() {
 }
 
 
-
 let currentQuestionIndex = 0; // 添加一个全局变量来跟踪当前题目索引
+
 function generateLevel7Question() {
     const Questions = [
 { question: "\\huge -7-|-6+1|× \\frac{1}{0.125}", answers: ["-47"] },
@@ -543,110 +544,132 @@ function generateLevel7Question() {
 { question: "\\huge (-3)⁴+|3-8|÷0.2", answers: ["106", "+106"] },
 
 
-    {
-        question: "\\huge \\left(\\dfrac{1}{2} - \\dfrac{1}{3} + \\dfrac{3}{4}\\right) \\times (-60)",
-        answer: "5"
-    },
-    {
-        question: "\\huge \\left(\\dfrac{-1}{12} + \\dfrac{1}{3} + \\dfrac{1}{2}\\right) \\div \\left(\\dfrac{-1}{24}\\right)",
-        answer: "6"
-    },
-    {
-        question: "(-24) \\times \\left(\\dfrac{1}{3} + \\dfrac{1}{4} - \\dfrac{1}{8}\\right)",
-        answer: "-11"
-    },
-    {
-        question: "\\huge \\left(\\dfrac{-3}{4} - \\dfrac{5}{9} + \\dfrac{7}{12}\\right) \\div \\left(\\dfrac{-1}{36}\\right)",
-        answer: "26"
-    },
-    {
-        question: "\\huge \\left(\\dfrac{2}{9} - \\dfrac{1}{4} + \\dfrac{1}{18}\\right) \\div \\left(\\dfrac{-1}{36}\\right)",
-        answer: "1"
-    },
-    {
-        question: "\\huge \\left(\\dfrac{4}{9} + \\dfrac{5}{6} - \\dfrac{5}{12}\\right) \\times (-36)",
-        answer: "1"
-    },
-    {
-        question: "\\huge \\left(\\dfrac{-1}{2} + \\dfrac{2}{3} - \\dfrac{1}{4}\\right) \\times | -24 |",
-        answer: "-2"
-    },
-    {
-        question: "\\huge \\left(\\dfrac{1}{4} + \\dfrac{5}{9} + \\dfrac{7}{12}\\right) \\times (-72)",
-        answer: "-20"
-    },
-
-    {
-        question: "\\huge -2.5 \\div \\left|-\\frac{5}{8}\\right| \\times \\left(-\\frac{1}{4}\\right)",
-        "answer": "1"
-    },
-    {
-        question: "\\huge -4 \\times \\frac{1}{2} \\div \\left(-\\frac{1}{2}\\right) \\times 2",
-        "answer": "8"
-    },
-    {
-        question: "\\huge \\frac{5}{7} \\times \\left(-4 \\frac{2}{3}\\right) \\div \\left(1 \\frac{2}{3}\\right)",
-        "answer": "-2"
-    },
-    {
-        question: "\\huge \\left(-\\frac{3}{4}\\right) \\times \\left(-\\frac{1}{2}\\right) \\div \\left(-2 \\frac{1}{4}\\right)",
-        "answer": "-\\frac{1}{6}"
-    },
-    {
-        question: "\\huge \\left(-3\\right) \\times 6 \\div \\left(-2\\right) \\times \\frac{1}{2}",
-        "answer": "9"
-    },
-    {
-        question: "\\huge 3 \\times \\left(-\\frac{5}{6}\\right) \\div \\left(-1\\frac{3}{4}\\right)",
-        "answer": "\\frac{10}{7}"
-    },
-    {
-        question: "\\huge \\left|-\\frac{2}{3}\\right| \\div \\left(-\\frac{1}{3} \\times \\frac{2}{3}\\right)",
-        "answer": "-3"
-    },
-    {
-        question: "\\huge \\left(-81\\right) \\div \\left|2\\frac{1}{4}\\right| \\times \\left(-\\frac{4}{9}\\right) \\div \\left(-8\\right)",
-        "answer": "-2"
-    },
+  
 
 
 
 
-    {
-       question: "\\huge \\left( \\frac{1}{4} + \\frac{1}{6} - \\frac{1}{12} \\right) \\times (-12) - \\left( -\\frac{3}{4} \\times 14 + \\left( -\\frac{3}{4} \\right) \\times (-10) \\right)",
-        answer: "14"
-    },
-    {
-       question: "\\huge -1^4 + 16 \\div (-2)^3 \\times | -3 - 1 |",
-        answer: "-9"
-    },
-    {
-       question: "\\huge -5 \\frac{3}{4} + \\left( + 2 \\frac{3}{7} \\right) + \\left( -\\frac{1}{4} \\right) - \\left( -\\frac{4}{7} \\right)",
-        answer: "-4"
-    },
-    {
-       question: "\\huge -3^2 + 1 \\div 4 \\times \\frac{1}{4} - \\left| -\\frac{1}{4} \\right| \\times (-0.5)^2",
-        answer: "-\\frac{1}{4}"
-    },
-    {
-       question: "\\huge (-85) \\times (-25) \\times (-4)",
-        answer: "-8500"
-    },
-    {
-       question: "\\huge -2 \\frac{1}{5} \\times 2 \\frac{3}{11} \\div \\left( -2 \\frac{1}{2} \\right)",
-        answer: "2"
-    },
-    {
-       question: "\\huge \\left( -\\frac{1}{24} \\right) \\div \\left( \\frac{3}{4} - \\frac{7}{8} + \\frac{7}{12} \\right)",
-        answer: "-\\frac{1}{35}"
-    },
-    {
-       question: "\\huge \\left( \\frac{7}{9} - \\frac{5}{6} + \\frac{3}{4} - \\frac{7}{18} \\right) \\times 36",
-        answer: "11"
-    },
+        // 可以添加更多题目
+    ];
+
+   // 随机选择一个题目
+    const randomIndex = Math.floor(Math.random() * Questions.length);
+    const selectedQuestion = Questions[randomIndex];
+
+    correctAnswer = selectedQuestion.answers;
+
+    let questionHtml = `\\(\\begin{gather} ${selectedQuestion.question}=?  \\end{gather}\\)`;
+    if (selectedQuestion.img) {
+        questionHtml += `<br><img src="${selectedQuestion.img}" alt="问题图片" style="max-width: 100%; height: auto;">`;
+    }
+
+    // 增加索引,为下一题做准备
+    currentQuestionIndex = (currentQuestionIndex + 1) % Questions.length;
+
+    return questionHtml;
+
+}
 
 
 
+
+
+function generateLevel8Question() {
+    const Questions = [
+
+{ question: "\\huge \\left(\\dfrac{1}{2} - \\dfrac{1}{3} + \\dfrac{3}{4}\\right) \\times (-60)", answers: ["5"] },
+{
+    question: "\\huge \\left(\\dfrac{-1}{12} + \\dfrac{1}{3} + \\dfrac{1}{2}\\right) \\div \\left(\\dfrac{-1}{24}\\right)",
+    answers: ["6"]
+},
+{
+    question: "(-24) \\times \\left(\\dfrac{1}{3} + \\dfrac{1}{4} - \\dfrac{1}{8}\\right)",
+    answers: ["-11"]
+},
+{
+    question: "\\huge \\left(\\dfrac{-3}{4} - \\dfrac{5}{9} + \\dfrac{7}{12}\\right) \\div \\left(\\dfrac{-1}{36}\\right)",
+    answers: ["26"]
+},
+{
+    question: "\\huge \\left(\\dfrac{2}{9} - \\dfrac{1}{4} + \\dfrac{1}{18}\\right) \\div \\left(\\dfrac{-1}{36}\\right)",
+    answers: ["1"]
+},
+{
+    question: "\\huge \\left(\\dfrac{4}{9} + \\dfrac{5}{6} - \\dfrac{5}{12}\\right) \\times (-36)",
+    answers: ["1"]
+},
+{
+    question: "\\huge \\left(\\dfrac{-1}{2} + \\dfrac{2}{3} - \\dfrac{1}{4}\\right) \\times | -24 |",
+    answers: ["-2"]
+},
+{
+    question: "\\huge \\left(\\dfrac{1}{4} + \\dfrac{5}{9} + \\dfrac{7}{12}\\right) \\times (-72)",
+    answers: ["-20"]
+},
+{
+    question: "\\huge -2.5 \\div \\left|-\\frac{5}{8}\\right| \\times \\left(-\\frac{1}{4}\\right)",
+    answers: ["1"]
+},
+{
+    question: "\\huge -4 \\times \\frac{1}{2} \\div \\left(-\\frac{1}{2}\\right) \\times 2",
+    answers: ["8"]
+},
+{
+    question: "\\huge \\frac{5}{7} \\times \\left(-4 \\frac{2}{3}\\right) \\div \\left(1 \\frac{2}{3}\\right)",
+    answers: ["-2"]
+},
+{
+    question: "\\huge \\left(-\\frac{3}{4}\\right) \\times \\left(-\\frac{1}{2}\\right) \\div \\left(-2 \\frac{1}{4}\\right)",
+    answers: ["-\\frac{1}{6}"]
+},
+{
+    question: "\\huge \\left(-3\\right) \\times 6 \\div \\left(-2\\right) \\times \\frac{1}{2}",
+    answers: ["9"]
+},
+{
+    question: "\\huge 3 \\times \\left(-\\frac{5}{6}\\right) \\div \\left(-1\\frac{3}{4}\\right)",
+    answers: ["\\frac{10}{7}"]
+},
+{
+    question: "\\huge \\left|-\\frac{2}{3}\\right| \\div \\left(-\\frac{1}{3} \\times \\frac{2}{3}\\right)",
+    answers: ["-3"]
+},
+{
+    question: "\\huge \\left(-81\\right) \\div \\left|2\\frac{1}{4}\\right| \\times \\left(-\\frac{4}{9}\\right) \\div \\left(-8\\right)",
+    answers: ["-2"]
+},
+{
+   question: "\\huge \\left( \\frac{1}{4} + \\frac{1}{6} - \\frac{1}{12} \\right) \\times (-12) - \\left( -\\frac{3}{4} \\times 14 + \\left( -\\frac{3}{4} \\right) \\times (-10) \\right)",
+   answers: ["14"]
+},
+{
+   question: "\\huge -1^4 + 16 \\div (-2)^3 \\times | -3 - 1 |",
+   answers: ["-9"]
+},
+{
+   question: "\\huge -5 \\frac{3}{4} + \\left( + 2 \\frac{3}{7} \\right) + \\left( -\\frac{1}{4} \\right) - \\left( -\\frac{4}{7} \\right)",
+   answers: ["-4"]
+},
+{
+   question: "\\huge -3^2 + 1 \\div 4 \\times \\frac{1}{4} - \\left| -\\frac{1}{4} \\right| \\times (-0.5)^2",
+   answers: ["-\\frac{1}{4}"]
+},
+{
+   question: "\\huge (-85) \\times (-25) \\times (-4)",
+   answers: ["-8500"]
+},
+{
+   question: "\\huge -2 \\frac{1}{5} \\times 2 \\frac{3}{11} \\div \\left( -2 \\frac{1}{2} \\right)",
+   answers: ["2"]
+},
+{
+   question: "\\huge \\left( -\\frac{1}{24} \\right) \\div \\left( \\frac{3}{4} - \\frac{7}{8} + \\frac{7}{12} \\right)",
+   answers: ["-\\frac{1}{35}"]
+},
+{
+   question: "\\huge \\left( \\frac{7}{9} - \\frac{5}{6} + \\frac{3}{4} - \\frac{7}{18} \\right) \\times 36",
+   answers: ["11"]
+}
 
 
 
@@ -687,10 +710,7 @@ function generateLevel7Question() {
 
 
 
-
-
-
-        function generateLevel8Question() {
+        function generateLevel9Question() {
             const levelFunctions = [
                 generateLevel1Question,
                 generateLevel2Question,
@@ -699,6 +719,7 @@ function generateLevel7Question() {
                 generateLevel5Question,
                 generateLevel6Question,
                generateLevel7Question,
+               generateLevel8Question,
 
             ];
 
@@ -713,7 +734,7 @@ function generateLevel7Question() {
 
 
 
-function generateLevel9Question() {
+function generateLevel10Question() {
     const Questions = [
 { question: " \\begin{array}{l}&(1)、如图，正三角形的边长为1，点C与原点重合，\\\\&现将正三角形向右翻转2023次，\\\\&求点B在数轴上对应的数字\\end{array}" ,   img: "https://img.jyeoo.net/quiz/images/svg/202403/285/458742e5.png",answers: ["2023"] },
 { question: "\\begin{array}{l} (2)、如果在数轴上表示a,b两个实数的点的位置如图所示，\\\\   那么|a-b|+|a+b|化简的结果为\\textup{(    )}      \\end{array}",img: "https://img.jyeoo.net/quiz/images/201201/70/831967e5.png", answers: ["-2a"] },
