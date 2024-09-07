@@ -151,7 +151,7 @@
         let incorrectCount = 0;
         let currentDifficulty = 1;
 
-        const difficultyNames = ["01加减", "02分配律", "03乘法", "04同类项", "05同类项分配律", "06乘方","07绝对值倒数分数","08混合","09综合","10挑战自招" ];
+        const difficultyNames = ["01加减", "02分配律", "03乘法", "04同类项", "05同类项分配律", "06乘方","07绝对值倒数分数","08分配律","09混合","10综合","11挑战自招" ];
 
         document.addEventListener("DOMContentLoaded", () => {
             generateDifficultyButtons();
@@ -188,6 +188,7 @@
                 case 8: return generateLevel8Question();
                 case 9: return generateLevel9Question();
                 case 10: return generateLevel10Question();
+                 case 11: return generateLevel11Question();
 
                 default: return "";
             }
@@ -571,10 +572,130 @@ function generateLevel7Question() {
 }
 
 
-
-
-
 function generateLevel8Question() {
+    const Questions = [
+
+
+
+    {
+        question: "\\left( \\frac{1}{3} - \\frac{1}{4} + \\frac{1}{6} - \\frac{1}{8} \\right) ÷ \\left( -\\frac{1}{2} \\right)^4",
+        answers: [
+            "2",
+            "+2"
+        ]
+    },
+ 
+
+
+ 
+   
+    
+  
+
+
+
+
+
+    {
+        question: " \\left(\\dfrac{1}{2} - \\dfrac{1}{3} + \\dfrac{3}{4}\\right) \\times (-60)",
+        answers: [
+            "-55"
+        ]
+    },
+    {
+        question: " \\left(\\dfrac{-1}{12} + \\dfrac{1}{3} + \\dfrac{1}{2}\\right) \\div \\left(\\dfrac{-1}{24}\\right)",
+        answers: [
+            "-18"
+        ]
+    },
+    {
+        question: "(-24) \\times \\left(\\dfrac{1}{3} + \\dfrac{1}{4} - \\dfrac{1}{8}\\right)",
+        answers: [
+            "-11"
+        ]
+    },
+    {
+        question: " \\left(\\dfrac{-3}{4} - \\dfrac{5}{9} + \\dfrac{7}{12}\\right) \\div \\left(\\dfrac{-1}{36}\\right)",
+        answers: [
+            "26"
+        ]
+    },
+    {
+        question: " \\left(\\dfrac{2}{9} - \\dfrac{1}{4} + \\dfrac{1}{18}\\right) \\div \\left(\\dfrac{-1}{36}\\right)",
+        answers: [
+            "-1"
+        ]
+    },
+    {
+        question: " \\left(\\dfrac{4}{9} + \\dfrac{5}{6} - \\dfrac{5}{12}\\right) \\times (-36)",
+        answers: [
+            "-31"
+        ]
+    },
+    {
+        question: " \\left(\\dfrac{-1}{2} + \\dfrac{2}{3} - \\dfrac{1}{4}\\right) \\times | -24 |",
+        answers: [
+            "-2"
+        ]
+    },
+    {
+        question: " \\left(\\dfrac{1}{4} + \\dfrac{5}{9} + \\dfrac{7}{12}\\right) \\times (-72)",
+        answers: [
+            "-100"
+        ]
+    },
+    
+       
+    {
+        question: " \\left( \\frac{1}{4} + \\frac{1}{6} - \\frac{1}{12} \\right) \\times (-12) - \\left( -\\frac{3}{4} \\times 14 + \\left( -\\frac{3}{4} \\right) \\times (-10) \\right)",
+        answers: [
+            "-1"
+        ]
+    },
+
+    
+    {
+        question: " \\left( \\frac{7}{9} - \\frac{5}{6} + \\frac{3}{4} - \\frac{7}{18} \\right) \\times 36",
+        answers: [
+            "11"
+        ]
+    },
+
+
+
+
+
+        // 可以添加更多题目
+    ];
+
+   // 随机选择一个题目
+    const randomIndex = Math.floor(Math.random() * Questions.length);
+    const selectedQuestion = Questions[randomIndex];
+
+    correctAnswer = selectedQuestion.answers;
+
+    let questionHtml = `\\(\\begin{gather} ${selectedQuestion.question}=?  \\end{gather}\\)`;
+    if (selectedQuestion.img) {
+        questionHtml += `<br><img src="${selectedQuestion.img}" alt="问题图片" style="max-width: 100%; height: auto;">`;
+    }
+
+    // 增加索引,为下一题做准备
+    currentQuestionIndex = (currentQuestionIndex + 1) % Questions.length;
+
+    return questionHtml;
+
+}
+
+
+
+
+
+
+
+
+
+
+function generateLevel9Question() {
     const Questions = [
 
 
@@ -661,12 +782,6 @@ function generateLevel8Question() {
             "-\\frac{1}{2}",
             "\\frac{-1}{2}",
 
-        ]
-    },
-    {
-        question: "(-2 \\frac{1}{2}) + \\frac{5}{6} - 0.5 - (-1 \\frac{1}{6})",
-        answers: [
-            "-1"
         ]
     },
 
@@ -858,7 +973,7 @@ function generateLevel8Question() {
 
 
 
-        function generateLevel9Question() {
+        function generateLevel10Question() {
             const levelFunctions = [
                 generateLevel1Question,
                 generateLevel2Question,
@@ -882,7 +997,7 @@ function generateLevel8Question() {
 
 
 
-function generateLevel10Question() {
+function generateLevel11Question() {
     const Questions = [
 { question: " \\begin{array}{l}&(1)、如图，正三角形的边长为1，点C与原点重合，\\\\&现将正三角形向右翻转2023次，\\\\&求点B在数轴上对应的数字\\end{array}" ,   img: "https://img.jyeoo.net/quiz/images/svg/202403/285/458742e5.png",answers: ["2023"] },
 { question: "\\begin{array}{l} (2)、如果在数轴上表示a,b两个实数的点的位置如图所示，\\\\   那么|a-b|+|a+b|化简的结果为\\textup{(    )}      \\end{array}",img: "https://img.jyeoo.net/quiz/images/201201/70/831967e5.png", answers: ["-2a"] },
