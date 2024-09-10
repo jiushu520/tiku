@@ -377,11 +377,11 @@ function generateLevel7bQuestion() {
 function generateLevel7cQuestion() {
      let a = (Math.floor(Math.random() * 8) + 1) * (Math.random() > 0.5 ? 1 : -1);
     let b = (Math.floor(Math.random() * 8) + 1) * (a > 0 ? -1 : 1);
-    let c = (Math.floor(Math.random() * 8) +Math.abs(a-b))+Math.min (a,b);
+    let c = (Math.floor(Math.random() * Math.abs(a - b)) + Math.min(a, b));
 
     let atext = a>0? `+${a}`:`${a}`;
     let btext = b>0? `+${b}`:`${b}`;
-    let ctext = c>0? `+${c}`:`${c}`;
+    let ctext = c === 0 ? `` : (c > 0 ? `+${c}` : `${c}`);
 
     let d =  Math.max(a,b,c)-Math.min(a,b,c);
 
@@ -402,8 +402,8 @@ function generateLevel7cQuestion() {
 
         function generateLevel7Question() {
             const levelFunctions = [
-                generateLevel7aQuestion,
-                generateLevel7bQuestion,
+                generateLevel7cQuestion,
+                generateLevel7cQuestion,
                 generateLevel7cQuestion,
 
 
