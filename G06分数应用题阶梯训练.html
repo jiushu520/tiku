@@ -231,7 +231,7 @@
         let incorrectCount = 0;
         let currentDifficulty = 1;
 
-         const difficultyNames = ["01分数基础", "02抓住单位１", "03人工智能", "04归一", "05化分为总","06综合随机"];
+         const difficultyNames = ["01分数基础", "02抓住单位１", "03人工智能", "04归一", "05化分为总","06还原问题","07综合随机"];
 
         document.addEventListener("DOMContentLoaded", () => {
             generateDifficultyButtons();
@@ -319,6 +319,7 @@ function setDifficulty(level) {
                 case 4: return generateLevel4Question();
                 case 5: return generateLevel5Question();
                 case 6: return generateLevel6Question();
+                case 7: return generateLevel7Question();
                   
                 default: return "";
             }
@@ -526,6 +527,41 @@ function generateLevel5Question() {
 
 
 
+function generateLevel6Question() {
+  
+    let a =  (Math.floor(Math.random() * 6) + 2);
+    let b = a-1; 
+    let gcdValue = gcd(a, b);
+    let did = Math.max(a, b) / gcdValue; // 分母
+    let div = Math.min(a, b) / gcdValue; // 分子
+    let c = (Math.floor(Math.random() * 3) + 2); // 每次余量
+    let t =  (Math.floor(Math.random() * 4) + 3); // 天数
+     let remaining = 0;
+            for (let i = 0; i < t-1; i++) {
+                remaining = (remaining + c) * a;
+            }
+            let f = (remaining + c) * a;
+
+    // 生成问题文本
+    let textq = `\\begin{array}{cc}   
+                悟空在玖数学堂练习人工智能的数学基础题目;\\\\  
+                第1天做了\\frac{${div}}{${did}},还${c}道;\\\\
+                第2天做了余下的\\frac{${div}}{${did}},还${c}道;\\\\
+               
+                \\cdots  \\\\
+                第${t}天做了余下的\\frac{${div}}{${did}},还${c}道,刚好做完;\\\\
+                请问原来一共需要做多少道人工智能的数学基础的题目?   ${f}       
+               \\end{array}`;
+    
+    lcorrectAnswer = [`${f}`];
+    
+    return `\\( ${textq}  \\)`;
+}
+
+
+
+
+
 
 
 
@@ -539,13 +575,14 @@ function generateLevel5Question() {
 
 
         
-        function generateLevel6Question() {
+        function generateLevel7Question() {
             const levelFunctions = [
                 generateLevel1Question,
                 generateLevel2Question,
                 generateLevel3Question,
                 generateLevel4Question,
                 generateLevel5Question,
+                generateLevel6Question,
               
             
 
