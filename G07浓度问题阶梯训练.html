@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
@@ -83,6 +83,7 @@
             margin-top: 20px;
             border-collapse: collapse;
             table-layout: auto;
+            margin: 0 auto; /* 使表格水平居中 */
         }
 
         th,
@@ -104,12 +105,19 @@
             color: red;
         }
 
+        .rendered-answer-container {
+            display: flex;
+            justify-content: center; /* 水平居中 */
+            width: 100%;
+        }
+
         #rendered-answer {
             margin-top: 10px;
             font-size: 16px;
             border: 1px solid #ccc;
             padding: 10px;
             width: 200px;
+            text-align: center; /* 内容居中 */
         }
 
         .mathjax-answer {
@@ -179,431 +187,376 @@
 
 <body>
     <div class="game-container">
-        <h1>玖数学测训系统</h1>
-        <h3>G07浓度问题阶梯训练</h3>
-        <div class="difficulty-buttons" id="difficultyButtons"></div>
-        <div id="question"></div><br>
+        <header>
+            <h1>玖数学测训系统</h1>
+            <h3>G07浓度问题阶梯训练</h3>
+        </header>
+        <section>
+            <div class="difficulty-buttons" id="difficultyButtons" role="group" aria-label="难度选择"></div>
+            <div id="question" aria-live="polite"></div><br>
 
-        <input type="text" id="answer" placeholder="输入你的答案" oninput="updatePreview()">
-        <div id="rendered-answer"></div><br>
-        <button onclick="checkAnswer()">提交答案</button><br>
+            <input type="text" id="answer" placeholder="输入你的答案" aria-label="答案输入">
+            <div class="rendered-answer-container">
+                <div id="rendered-answer"></div>
+            </div><br>
+            <button id="submitAnswer">提交答案</button><br>
 
+            <div class="switch-container">
+                <label for="videoToggle">视频开关</label>
+                <label class="switch">
+                    <input type="checkbox" id="videoToggle" aria-label="视频开关">
+                    <span class="slider"></span>
+                </label>
+            </div><br>
 
-    <div class="switch-container">
-        <label for="videoToggle">视频开关</label>
-            <label class="switch">
-                <input type="checkbox" id="videoToggle">
-                <span class="slider"></span>
-            </label>
-        </div><br>
+            <div id="videoContainer" style="display: none;">
+                <video id="instructionalVideo" width="640" height="360" controls>
+                    <source src="" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
 
-  
-
-        <div id="videoContainer" style="display: none;">
-            <video id="instructionalVideo" width="640" height="360" controls>
-                <source src="" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-
-  
-
-
-        <div id="result"></div>
-        <div id="score">正确: 0 | 错误: 0</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>题目</th>
-                    <th>级别</th>
-                    <th>你的答案</th>
-                    <th>正确答案</th>
-                    <th>结果</th>
-                </tr>
-            </thead>
-            <tbody id="history"></tbody>
-        </table>
+            <div id="result" aria-live="assertive"></div>
+            <div id="score">正确: 0 | 错误: 0</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>题目</th>
+                        <th>级别</th>
+                        <th>你的答案</th>
+                        <th>正确答案</th>
+                        <th>结果</th>
+                        <th>权重</th>
+                    </tr>
+                </thead>
+                <tbody id="history"></tbody>
+            </table>
+        </section>
     </div>
 
     <script>
-        let correctAnswer;
-        let correctCount = 0;
-        let incorrectCount = 0;
-        let currentDifficulty = 1;
-
-         const difficultyNames = ["01求浓度", "02求糖", "03加糖", "04加水", "05混合","06十字交叉","07综合随机"];
-
-        document.addEventListener("DOMContentLoaded", () => {
-            generateDifficultyButtons();
-            setDifficulty(1);
-
-            // 添加视频开关事件监听
-            const videoToggle = document.getElementById('videoToggle');
-            videoToggle.addEventListener('change', function () {
-                const videoContainer = document.getElementById('videoContainer');
-                if (this.checked) {
-                    videoContainer.style.display = 'block';
-                } else {
-                    videoContainer.style.display = 'none';
-                }
-            });
-        });
-
-        function generateDifficultyButtons() {
-            const difficultyButtonsContainer = document.getElementById('difficultyButtons');
-            difficultyNames.forEach((name, index) => {
-                const button = document.createElement('button');
-                button.textContent = name;
-                button.id = `level${index + 1}`;
-                button.onclick = () => setDifficulty(index + 1);
-                difficultyButtonsContainer.appendChild(button);
-            });
-        }
-
-const videoConfig = {
-    1: "",  // 
-
-
-    
-};
-
-
-function setDifficulty(level) {
-    currentDifficulty = level;
-    document.querySelectorAll('.difficulty-buttons button').forEach(btn => btn.classList.remove('active'));
-    document.getElementById(`level${level}`).classList.add('active');
-
-    const videoContainer = document.getElementById('videoContainer');
-    const videoToggleContainer = document.querySelector('.switch-container');
-
-    if (videoConfig[level]) {
-        videoContainer.innerHTML = videoConfig[level];
-        videoToggleContainer.style.display = 'inline-flex'; // 显示视频开关
-        // 自动开启视频
-        document.getElementById('videoToggle').checked = true;
-        videoContainer.style.display = 'block';
-    } else {
-        videoContainer.innerHTML = "";
-        videoToggleContainer.style.display = 'none'; // 隐藏视频开关
-        document.getElementById('videoToggle').checked = false;
-        videoContainer.style.display = 'none';
-    }
-
-    newQuestion();
-}
-
-
-
-
-        function separateSquareRoot(n) {
-            let a = 1;
-            let b = n;
-
-            for (let i = 2; i * i <= n; i++) {
-                while (b % (i * i) === 0) {
-                    a *= i;
-                    b /= i * i;
-                }
-            }
-
-            return { a: a, b: b };
-        }
-
-
-
-  function generateQuestion() {
-            switch(currentDifficulty) {
-                case 1: return generateLevel1Question();
-                case 2: return generateLevel2Question();
-                case 3: return generateLevel3Question();
-                case 4: return generateLevel4Question();
-                case 5: return generateLevel5Question();
-                case 6: return generateLevel6Question();
-                case 7: return generateLevel7Question();
-                  
-                default: return "";
-            }
-        }
-
-// 先定义GCD函数，帮助求LCM
-function gcd(a, b) {
-    if (b === 0) {
-        return a;
-    }
-    return gcd(b, a % b);
-}
-
-// 计算两个数的最小公倍数
-function lcm(a, b) {
-    return Math.abs(a * b) / gcd(a, b);
-}
-
-
-
-
-   function generateLevel1Question() {
-   let values = [100, 50, 25, 20];
-   let a = values[Math.floor(Math.random() * values.length)];//得出溶液的量
-  let b = Math.floor(Math.random() * (a - 1)) + 1; // 得出溶质的量
-  
-   let c = Math.floor(100*b/a);
-  
-    let textq =  `\\begin{array}{cc}             
-                ${b}克糖加入${a-b}克水中，浓度是\\_\\text{%?}\\\\          
-                          
-               \\end{array}`;
-    correctAnswer = [`${c}`]  
-    return `\\( ${textq}  \\)`;
-
-}
-     
-
- 
-        
-
-
-
-
-function generateLevel2Question() {
-  let values = [100, 50, 25, 20];
-   let a = values[Math.floor(Math.random() * values.length)];//得出溶液的量
-  let b = Math.floor(Math.random() * (a - 1)) + 1; // 得出溶质的量
-  
-   let c = Math.floor(100*b/a);
-  
-    let textq =  `\\begin{array}{cc}             
-                浓度为${c}\\text{%}糖水${a}克,含有多少克糖\\text{?}\\\\          
-                          
-               \\end{array}`;
-    correctAnswer = [`${b}`]  
-    return `\\( ${textq}  \\)`;
-}
-
-
-
-function generateLevel3Question() {
-   let values = [100, 50, 25, 20];
-   let a = values[Math.floor(Math.random() * values.length)];//得出溶液的量
-   let b = Math.floor(Math.random() * (a - 1)) + 1; // 得出溶质的量
-  
-    let c = Math.floor(100*b/a);//原来的深度
-    let d =a* Math.floor(Math.random() * 2+1)* 2;//后来的溶液
-    let  e=d-a;//后来加入的溶质
-    let textq =  `\\begin{array}{cc}             
-                浓度为${c}\\text{%}糖水${a}克,\\\\
-                加入多少克糖之后,\\\\
-                浓度为${100*(e+b)/d}\\text{%}。\\\\              
-                 
-               \\end{array}`;
-    correctAnswer = [`${e}`]  
-    return `\\( ${textq}  \\)`;
-}
-
-
-
-
-function generateLevel4Question() {
-    let values = [100, 50, 25, 20];
-   let a = values[Math.floor(Math.random() * values.length)];//得出溶液的量
-   let b = Math.floor(Math.random() * (a - 1)) + 1; // 得出溶质的量
-  
-    let c = Math.floor(100*b/a);//原来的深度
-    let d =a* Math.floor(Math.random() * 2+1)* 2;//后来的溶液
-    let  e=d-a;//后来加入的水
-    let textq =  `\\begin{array}{cc}             
-                浓度为${c}\\text{%}糖水${a}克,\\\\
-                
-                稀释浓度为${100*b/d}\\text{%}。\\\\   
-                需要加入多少克水？\\\\           
-               
-               \\end{array}`;
-    correctAnswer = [`${e}`]  
-    return `\\( ${textq}  \\)`;
-}
-
-
-
-
-
-
-
-
-
-
-function generateLevel5Question() {
-   let a = Math.floor(Math.random() * 9)+1 ;//
-   let b = (Math.floor(Math.random() * 8)+a)%9+1 ;//可以得出两个不同的随机数
-   let c = (a+b)*(Math.floor(Math.random() * 4)+1);//混合后的溶液
-   let d = 10*(Math.floor(Math.random() * 4)+1);//基础浓度
-    let aw =a*c/(a+b);//a的重量
-    let bw =b*c/(a+b);//a的重量
-
-
-   let textq =  `\\begin{array}{cc}             
-                ${aw}千克浓度为${b+d}\\text{%}糖水A,\\\\             
-                ${bw}千克浓度为${-a+d}\\text{%}糖水B。\\\\   
-                混合之后的浓度是\\_\\text{%？}\\\\                    
-               \\end{array}`;
-    correctAnswer = [`${d}`]  
-    return `\\( ${textq}  \\)`;
-
-}
-
-
-
-
-
-
-
-
-function generateLevel6Question() {
-  
-    let a = Math.floor(Math.random() * 9)+1 ;//
-   let b = (Math.floor(Math.random() * 8)+a)%9+1 ;//可以得出两个不同的随机数
-   let c = (a+b)*(Math.floor(Math.random() * 4)+1);//混合后的溶液
-   let d = 10*(Math.floor(Math.random() * 4)+1);//基础浓度
-    let aw =a*c/(a+b);//a的重量
-    let bw =b*c/(a+b);//b的重量
-
-
-   let textq =  `\\begin{array}{cc}             
-                浓度为${b+d}\\text{%}糖水A,\\\\             
-                浓度为${-a+d}\\text{%}糖水B。\\\\   
-                混合之后的浓度是 ${d}\\text{%}总重${c}千克。\\\\     
-                那么原有糖水A多少千克？\\\\          
-               \\end{array}`;
-    correctAnswer = [`${aw}`]  
-    return `\\( ${textq}  \\)`;
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-        function generateLevel7Question() {
-            const levelFunctions = [
-                generateLevel1Question,
-                generateLevel2Question,
-                generateLevel3Question,
-                generateLevel4Question,
-                generateLevel5Question,
-                generateLevel6Question,
-              
-            
-
-             
-            ];
-
-            const randomIndex = Math.floor(Math.random() * levelFunctions.length);
-            const selectedFunction = levelFunctions[randomIndex];
-
-            return selectedFunction();
-        }
-
-
-
-        function newQuestion() {
-            const question = generateQuestion();
-            document.getElementById('question').innerHTML = question;
-            MathJax.typesetPromise([document.getElementById('question')]).catch((err) => console.log(err));
-            document.getElementById('answer').value = '';
-            document.getElementById('result').innerHTML = '';
-            document.getElementById('rendered-answer').style.display = 'none';
-        }
-
-
-
-        function toHalfWidth(str) {
-            return str.replace(/[\uFF01-\uFF5E]/g, function (char) {
-                return String.fromCharCode(char.charCodeAt(0) - 0xFEE0);
-            }).replace(/\u3000/g, ' ');
-        }
-
-        function updatePreview() {
-            const input = document.getElementById('answer').value;
-            const renderedAnswer = document.getElementById('rendered-answer');
-            renderedAnswer.style.display = 'block';
-            renderedAnswer.innerHTML = '\\(' + input + '\\)';
-            MathJax.typesetPromise([renderedAnswer]).catch((err) => console.log(err));
-        }
-
-
-
-        function checkAnswer() {
-            const userAnswer = document.getElementById('answer').value.trim();
-
-            if (userAnswer === '') {
-                document.getElementById('result').innerHTML = '请输入答案！';
-                document.getElementById('result').className = 'incorrect';
-                return; // 直接返回，不更新历史记录或生成新题目
-            }
-
-            const normalizedUserAnswer = toHalfWidth(userAnswer.replace(/\s/g, '').toLowerCase());
-            const isCorrect = correctAnswer.some(answer => normalizedUserAnswer === toHalfWidth(answer.replace(/\s/g, '').toLowerCase()));
-
-            if (isCorrect) {
-                document.getElementById('result').innerHTML = '正确!';
-                document.getElementById('result').className = 'correct';
-                correctCount++;
-            } else {
-                document.getElementById('result').innerHTML = '错误。正确答案是: ' + correctAnswer.join(' 或 ');
-                document.getElementById('result').className = 'incorrect';
-                incorrectCount++;
-            }
-
-            updateScore();
-            updateHistory(isCorrect);
-
-            MathJax.typesetPromise().catch((err) => console.log(err));
-
-            if (userAnswer !== '') {
-                newQuestion();
-            }
-        }
-
-
-
-
-
-        function updateScore() {
-            document.getElementById('score').innerHTML = `正确: ${correctCount} | 错误: ${incorrectCount}`;
-        }
-
-function updateHistory(isCorrect) {
-            const historyTable = document.getElementById('history');
-            const newRow = historyTable.insertRow(0);
-            newRow.insertCell(0).innerHTML = document.getElementById('question').innerHTML;
-            newRow.insertCell(1).innerHTML = difficultyNames[currentDifficulty - 1];
-            newRow.insertCell(2).innerHTML = '\\(' + document.getElementById('answer').value + '\\)';
-            newRow.insertCell(3).innerHTML = '\\(' + correctAnswer.join('\\) 或 \\(') + '\\)';
-            newRow.insertCell(4).innerHTML = isCorrect ? '正确' : '错误';
-            newRow.className = isCorrect ? 'correct' : 'incorrect';
-
-            MathJax.typesetPromise([newRow]).catch((err) => console.log(err));
-        }
-
+   (() => {
+    let correctAnswer = [];
+    let correctCount = 0;
+    let incorrectCount = 0;
+    let currentDifficulty = 1;
+    let lastQuestionType = '';
+    let currentQuestionLevel = 1; // 新增变量，用于追踪实际问题级别
+    const difficultyNames = ["01求浓度", "02求糖", "03加糖", "04加水", "05混合", "06十字交叉", "07综合随机"];
+
+    const questionWeights = {
+        level1: 1,
+        level2: 1,
+        level3: 1,
+        level4: 1,
+        level5: 1,
+        level6: 1
+    };
+
+    const questionGenerators = {
+        1: generateLevel1Question,
+        2: generateLevel2Question,
+        3: generateLevel3Question,
+        4: generateLevel4Question,
+        5: generateLevel5Question,
+        6: generateLevel6Question,
+        7: generateLevel7Question
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+        generateDifficultyButtons();
+        loadScore();
+        setDifficulty(1);
+        document.getElementById('submitAnswer').addEventListener('click', checkAnswer);
+        document.getElementById('videoToggle').addEventListener('change', toggleVideo);
+        document.getElementById('answer').addEventListener('input', updatePreview);
         document.getElementById('answer').addEventListener('keyup', function (event) {
             if (event.key === 'Enter') {
                 checkAnswer();
             }
         });
+    });
 
-        newQuestion();
+    function generateDifficultyButtons() {
+        const container = document.getElementById('difficultyButtons');
+        difficultyNames.forEach((name, index) => {
+            const button = document.createElement('button');
+            button.textContent = name;
+            button.id = `level${index + 1}`;
+            button.setAttribute('aria-pressed', 'false');
+            button.addEventListener('click', () => setDifficulty(index + 1));
+            container.appendChild(button);
+        });
+    }
 
+    function setDifficulty(level) {
+        currentDifficulty = level;
+        document.querySelectorAll('.difficulty-buttons button').forEach(btn => {
+            btn.classList.toggle('active', btn.id === `level${level}`);
+            btn.setAttribute('aria-pressed', btn.id === `level${level}`);
+        });
+        generateNewQuestion();
+    }
+
+    function generateNewQuestion() {
+        const question = questionGenerators[currentDifficulty]();
+        const questionElement = document.getElementById('question');
+        questionElement.innerHTML = question;
+        renderMath(questionElement);
+        document.getElementById('answer').value = '';
+        document.getElementById('result').textContent = '';
+        document.getElementById('rendered-answer').style.display = 'none';
+    }
+
+    function generateLevel7Question() {
+        const selectedLevel = weightedRandomSelection();
+        lastQuestionType = difficultyNames[selectedLevel - 1];
+        currentQuestionLevel = selectedLevel; // 设置实际题目级别
+        return questionGenerators[selectedLevel]();
+    }
+
+    function weightedRandomSelection() {
+        const levels = [1, 2, 3, 4, 5, 6]; // 排除 7 级别本身
+        const weights = levels.map(level => questionWeights[`level${level}`]);
+
+        const totalWeight = weights.reduce((acc, weight) => acc + weight, 0);
+        let random = Math.random() * totalWeight;
+
+        for (let i = 0; i < levels.length; i++) {
+            if (random < weights[i]) {
+                return levels[i];
+            }
+            random -= weights[i];
+        }
+
+        return levels[levels.length - 1]; // 防止浮点数误差
+    }
+
+            function generateLevel1Question() {
+                let values = [100, 50, 25, 20];
+                let a = values[Math.floor(Math.random() * values.length)];
+                let b = Math.floor(Math.random() * (a - 1)) + 1;
+                let c = Math.floor(100 * b / a);
+
+                let textq = `\\begin{array}{cc}             
+                        ${b}克糖加入${a - b}克水中，浓度是\\_\\text{%?}\\\\          
+                        \\end{array}`;
+                correctAnswer = [`${c}`];
+                return `\\( ${textq}  \\)`;
+            }
+
+            function generateLevel2Question() {
+                let values = [100, 50, 25, 20];
+                let a = values[Math.floor(Math.random() * values.length)];
+                let b = Math.floor(Math.random() * (a - 1)) + 1;
+                let c = Math.floor(100 * b / a);
+
+                let textq = `\\begin{array}{cc}             
+                        浓度为${c}\\text{%}糖水${a}克,含有多少克糖\\text{?}\\\\          
+                        \\end{array}`;
+                correctAnswer = [`${b}`];
+                return `\\( ${textq}  \\)`;
+            }
+
+            function generateLevel3Question() {
+                let values = [100, 50, 25, 20];
+                let a = values[Math.floor(Math.random() * values.length)]; // 得出溶液的量
+                let b = Math.floor(Math.random() * (a - 1)) + 1; // 得出溶质的量
+
+                let c = Math.floor(100 * b / a); // 原来的深度
+                let d = a * (Math.floor(Math.random() * 2 + 1) * 2); // 后来的溶液
+                let e = d - a; // 后来加入的溶质
+
+                let newConcentration = Math.floor(100 * (e + b) / d);
+
+                let textq = `\\begin{array}{cc}             
+                    浓度为${c}\\text{%}糖水${a}克,\\\\
+                    加入多少克糖之后,\\\\
+                    浓度为${newConcentration}\\text{%}。\\\\              
+                   \\end{array}`;
+                correctAnswer = [`${e}`];
+                return `\\( ${textq}  \\)`;
+            }
+
+            function generateLevel4Question() {
+                let values = [100, 50, 25, 20];
+                let a = values[Math.floor(Math.random() * values.length)]; // 得出溶液的量
+                let b = Math.floor(Math.random() * (a - 1)) + 1; // 得出溶质的量
+
+                let c = Math.floor(100 * b / a); // 原来的深度
+                let d = a * (Math.floor(Math.random() * 2 + 1) * 2); // 后来的溶液
+                let e = d - a; // 后来加入的水
+
+                let newConcentration = Math.floor(100 * b / d);
+                let textq = `\\begin{array}{cc}             
+                    浓度为${c}\\text{%}糖水${a}克,\\\\
+                    稀释浓度为${newConcentration}\\text{%}。\\\\   
+                    需要加入多少克水？\\\\           
+                   \\end{array}`;
+                correctAnswer = [`${e}`];
+                return `\\( ${textq}  \\)`;
+            }
+
+            function generateLevel5Question() {
+                let a = Math.floor(Math.random() * 9) + 1; // 
+                let b = (Math.floor(Math.random() * 8) + a) % 9 + 1; // 可以得出两个不同的随机数
+                let c = (a + b) * (Math.floor(Math.random() * 4) + 1); // 混合后的溶液
+                let d = 10 * (Math.floor(Math.random() * 4) + 1); // 基础浓度
+                let aw = a * c / (a + b); // a的重量
+                let bw = b * c / (a + b); // b的重量
+
+                let textq = `\\begin{array}{cc}             
+                    ${aw.toFixed(1)}千克浓度为${b + d}\\text{%}糖水A,\\\\             
+                    ${bw.toFixed(1)}千克浓度为${d - a}\\text{%}糖水B。\\\\   
+                    混合之后的浓度是\\_\\text{%？}\\\\                    
+                   \\end{array}`;
+                correctAnswer = [`${d}`];
+                return `\\( ${textq}  \\)`;
+            }
+
+            function generateLevel6Question() {
+                let a = Math.floor(Math.random() * 9) + 1; //
+                let b = (Math.floor(Math.random() * 8) + a) % 9 + 1; // 可以得出两个不同的随机数
+                let c = (a + b) * (Math.floor(Math.random() * 4) + 1); // 混合后的溶液
+                let d = 10 * (Math.floor(Math.random() * 4) + 1); // 基础浓度
+                let aw = a * c / (a + b); // a的重量
+                let bw = b * c / (a + b); // b的重量
+
+                let textq = `\\begin{array}{cc}             
+                    浓度为${b + d}\\text{%}糖水A,\\\\             
+                    浓度为${d - a}\\text{%}糖水B。\\\\   
+                    混合之后的浓度是 ${d}\\text{%}总重${c}千克。\\\\     
+                    那么原有糖水A多少千克？\\\\          
+                   \\end{array}`;
+                correctAnswer = [`${aw}`];
+                return `\\( ${textq}  \\)`;
+            }
+
+           function updatePreview() {
+        const input = document.getElementById('answer').value;
+        const rendered = document.getElementById('rendered-answer');
+        if (input.trim() === '') {
+            rendered.style.display = 'none';
+            rendered.innerHTML = '';
+            return;
+        }
+        rendered.style.display = 'block';
+        rendered.textContent = input; // 避免XSS
+        renderMath(rendered);
+    }
+
+    function checkAnswer() {
+        const userAnswer = document.getElementById('answer').value.trim();
+        const resultElement = document.getElementById('result');
+
+        if (userAnswer === '') {
+            resultElement.textContent = '请输入答案！';
+            resultElement.className = 'incorrect';
+            return;
+        }
+
+        const isCorrect = correctAnswer.includes(userAnswer);
+
+        if (isCorrect) {
+            resultElement.textContent = '正确!';
+            resultElement.className = 'correct';
+            correctCount++;
+        } else {
+            resultElement.textContent = `错误。正确答案是: ${correctAnswer.join(' 或 ')}`;
+            resultElement.className = 'incorrect';
+            incorrectCount++;
+        }
+
+        adjustWeights(isCorrect, getCurrentEffectiveLevel());
+        updateScore();
+        updateHistory(isCorrect);
+        saveScore();
+        generateNewQuestion();
+    }
+
+    function adjustWeights(isCorrect, level) {
+        const key = `level${level}`;
+        const adjustment = 0.1;
+        if (isCorrect) {
+            questionWeights[key] = Math.max(0.5, questionWeights[key] - adjustment);
+        } else {
+            questionWeights[key] += adjustment;
+        }
+    }
+
+    function updateScore() {
+        document.getElementById('score').textContent = `正确: ${correctCount} | 错误: ${incorrectCount}`;
+    }
+
+    function updateHistory(isCorrect) {
+        const history = document.getElementById('history');
+        const row = history.insertRow(0);
+
+        const displayLevel = currentDifficulty === 7 ? `07综合随机 (${lastQuestionType})` : difficultyNames[currentDifficulty - 1];
+
+        row.insertCell(0).innerHTML = document.getElementById('question').innerHTML;
+        row.insertCell(1).textContent = displayLevel;
+        row.insertCell(2).innerHTML = '\\(' + escapeHtml(document.getElementById('answer').value) + '\\)';
+        row.insertCell(3).innerHTML = '\\(' + correctAnswer.join('\\) 或 \\(') + '\\)';
+        row.insertCell(4).textContent = isCorrect ? '正确' : '错误';
+        row.insertCell(5).textContent = `权重: ${questionWeights[`level${getCurrentEffectiveLevel()}`].toFixed(1)}`;
+
+        row.className = isCorrect ? 'correct' : 'incorrect';
+        renderMath(row);
+    }
+
+    function renderMath(element) {
+        MathJax.typesetPromise([element]).catch((err) => console.log(err));
+    }
+
+    function escapeHtml(text) {
+        const map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        };
+        return text.replace(/[&<>"']/g, function (m) { return map[m]; });
+    }
+
+    function toggleVideo() {
+        const videoContainer = document.getElementById('videoContainer');
+        const video = document.getElementById('instructionalVideo');
+        if (document.getElementById('videoToggle').checked) {
+            videoContainer.style.display = 'block';
+            video.src = 'your-video-url.mp4'; // 设置视频源
+        } else {
+            videoContainer.style.display = 'none';
+            video.pause();
+            video.src = '';
+        }
+    }
+
+    function saveScore() {
+        const score = { correct: correctCount, incorrect: incorrectCount };
+        localStorage.setItem('score', JSON.stringify(score));
+    }
+
+    function loadScore() {
+        const score = JSON.parse(localStorage.getItem('score'));
+        if (score) {
+            correctCount = score.correct;
+            incorrectCount = score.incorrect;
+            updateScore();
+        }
+    }
+
+    function getCurrentEffectiveLevel() {
+        // 如果当前模式是级别7，返回实际题目级别
+        if (currentDifficulty === 7) {
+            return currentQuestionLevel;
+        }
+        // 否则返回当前难度级别
+        return currentDifficulty;
+    }
+
+})();
     </script>
 </body>
 
