@@ -27,13 +27,20 @@
             display: flex;
             flex-grow: 1;
             height: calc(100vh - 50px); /* 减去顶部高度 */
+            transition: margin-left 0.3s;
         }
         .left {
             flex: 1.2;
             overflow-y: auto;
+            transition: transform 0.3s ease-in-out;
+        }
+        /* 当左侧菜单隐藏时，向左移动 */
+        .left.hidden {
+            transform: translateX(-100%);
         }
         .center {
             flex: 4;
+            position: relative; /* 为悬浮按钮定位做准备 */
             transition: flex 0.3s;
             overflow: hidden; /* 防止内容溢出 */
         }
@@ -77,16 +84,59 @@
             overflow: hidden;
             background-color: #e0f7fa;
         }
+        
+        /* 新增的悬浮按钮样式 */
+        .toggle-menu-btn {
+            position: absolute;
+            top: 10px;
+            left: 1px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid #e0f7fa;
+            border-radius: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+        .toggle-menu-btn:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* 当左侧菜单隐藏时，调整主内容区域 */
+        .main.menu-hidden .left {
+            flex: 0;
+            max-width: 0;
+            overflow: hidden;
+        }
+        .main.menu-hidden .center {
+            flex: 1;
+        }
+
+        /* 响应式设计调整（可选） */
+        @media (max-width: 768px) {
+            .left {
+                position: absolute;
+                z-index: 1000;
+                background-color: #fff;
+                height: 100%;
+                width: 250px;
+                box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+            }
+            .left.hidden {
+                transform: translateX(-100%);
+            }
+            .main.menu-hidden .center {
+                flex: 1;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="main">
+    <div class="main" id="main">
         <div class="left" id="menu">
             <input type="text" id="search" placeholder="搜索目录..." onkeyup="filterMenu()">
 
-            
-
-            <button class="collapsible">基础运算</button>
+           <button class="collapsible">基础运算</button>
             <div class="content">
            <a href="javascript:void(0);" class="menu-item" onclick="showContent('A01分数运算阶梯测试训练.html')">A01分数运算阶梯测试训练</a><br>
            <a href="javascript:void(0);" class="menu-item" onclick="showContent('A02有理数运算阶梯测试训练.html')">A02有理数运算阶梯测试训练</a><br>
@@ -277,23 +327,21 @@
         </div>  
 
 
-
-
-
-     </div>
-
-
-
-
+        </div>
 
         <div class="center" id="content">
             <iframe src="https://shimo.im/docs/gO3odYvGvRfzMZqD" frameborder="0"></iframe>
-        </div>
 
+            <!-- 新增的悬浮按钮 -->
+            <div class="toggle-menu-btn" onclick="toggleMenu()">目录</div>
+        </div>
     </div>
     <script>
         function showContent(url) {
-            document.getElementById('content').innerHTML = `<iframe src="${url}" frameborder="0"></iframe>`;
+            document.getElementById('content').innerHTML = `
+                <iframe src="${url}" frameborder="0"></iframe>
+                <div class="toggle-menu-btn" onclick="toggleMenu()">目录</div>
+            `;
         }
 
         function filterMenu() {
@@ -325,6 +373,19 @@
                 const content = this.nextElementSibling;
                 content.style.display = content.style.display === 'block' ? 'none' : 'block';
             });
+        });
+
+        // 新增的函数：切换左侧菜单的显示与隐藏
+        function toggleMenu() {
+            const main = document.getElementById('main');
+            const menu = document.getElementById('menu');
+            main.classList.toggle('menu-hidden');
+            menu.classList.toggle('hidden');
+        }
+
+        // 确保在showContent函数中绑定悬浮按钮的点击事件
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // 如果有需要，可以在这里初始化
         });
     </script>
 </body>
