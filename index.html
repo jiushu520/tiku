@@ -150,8 +150,8 @@
     <div class="main" id="main">
         <div class="left" id="menu">
             <input type="text" id="search" placeholder="搜索目录..." onkeyup="filterMenu()">
-            <!-- 菜单内容保持原样 -->
- <button class="collapsible">基础运算</button>
+            <!-- 这里可以保留你现有的菜单内容 -->
+<button class="collapsible">基础运算</button>
             <div class="content">
 
 
@@ -359,16 +359,21 @@
         </div>  
 
 
-        </div>
 
+
+        </div>
 
         <div class="center" id="content">
             <div class="top-content">
                 <iframe src="https://shimo.im/docs/gO3odYvGvRfzMZqD" frameborder="0"></iframe>
             </div>
             <div class="canvas-switch">
-                <label for="canvasSwitch">加载画布页面</label>
+                <label for="canvasSwitch">画布</label>
                 <input type="checkbox" id="canvasSwitch" onchange="toggleCanvas()">
+  
+                <label for="canvasHeight">高度(px):</label>
+                <input type="range" id="canvasHeight" value="300" min="0" max="1000" oninput="setCanvasHeight()">
+                <span id="heightValue">300</span> px
             </div>
             <div class="bottom-content" id="canvasContainer">
                 <iframe src="" frameborder="0" id="canvasIframe"></iframe>
@@ -426,12 +431,19 @@
             const canvasIframe = document.getElementById('canvasIframe');
 
             if (isChecked) {
-                canvasContainer.style.height = '500px'; // 可以根据需要调整高度
+                setCanvasHeight();  // 调用函数设置高度
                 canvasIframe.src = '画布.html';
             } else {
                 canvasContainer.style.height = '0';
                 canvasIframe.src = '';
             }
+        }
+
+        function setCanvasHeight() {
+            const canvasContainer = document.getElementById('canvasContainer');
+            const height = document.getElementById('canvasHeight').value; // 获取滑动条的值
+            canvasContainer.style.height = height + 'px';  // 设置高度
+            document.getElementById('heightValue').textContent = height;  // 动态更新显示的高度值
         }
     </script>
 </body>
