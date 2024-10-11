@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>G01应用题鸡兔同笼阶梯训练 </title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+   
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         body {
@@ -261,8 +261,10 @@
         }
 
 const videoConfig = {
-    1: "",  // 
-
+    1: "<iframe src='https://player.bilibili.com/player.html?bvid=BV19e411S77j&high_quality=1&danmaku=0' width='640' height='360' allowfullscreen allow='autoplay; fullscreen' frameborder='0'></iframe>",  // 
+    2: "<iframe src='https://player.bilibili.com/player.html?bvid=BV1yP4y1w7hh&high_quality=1&danmaku=0' width='640' height='360' allowfullscreen allow='autoplay; fullscreen' frameborder='0'></iframe>",
+    3: "<iframe src='https://player.bilibili.com/player.html?bvid=BV1yP4y1w7hh&high_quality=1&danmaku=0' width='640' height='360' allowfullscreen allow='autoplay; fullscreen' frameborder='0'></iframe>",
+    4: "<iframe src='https://player.bilibili.com/player.html?bvid=BV12U4y1Z7tQ&high_quality=1&danmaku=0' width='640' height='360' allowfullscreen allow='autoplay; fullscreen' frameborder='0'></iframe>",
 
     
 };
@@ -477,7 +479,7 @@ function generateLevel5Question() {
     let textq = `\\[\\huge 
         \\begin{array}{cc} 
         天命人在玖数学堂打怪，\\\\
-要打${a}下； 打中一次有${m}分；  打错一次有${n}分；\\\\
+        要打${a}下； 打中一次有${m}分；  打错一次有${n}分；\\\\
         最后得分${f}分；请问打中次，打错几次？\\\\
 
         \\end{array}
@@ -493,7 +495,7 @@ function generateLevel5Question() {
        悟空的六根聚齐，\\\\
        \\huge 大圣也许就会回归......
       \\end{array}       
- \\]          输入格式：a,b或a;b `;
+ \\]          \\[输入格式：a,b或a;b \\]  `;
 
     correctAnswer = [`${r},${c}`, `${r};${c}`];
 
