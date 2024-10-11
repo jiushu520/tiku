@@ -353,7 +353,11 @@
             <a href="javascript:void(0);" class="menu-item" onclick="showContent('./pdf/欧阳铭铭.pdf')">欧阳铭铭</a><br>
 
 
+        </div>  
 
+    <button class="collapsible">工具</button>
+            <div class="content"> 
+            <a href="javascript:void(0);" class="menu-item" onclick="showContent('https://www.geogebra.org/classic')">ggb</a><br>
 
 
         </div>  
@@ -361,11 +365,27 @@
 
 
 
+
+
+
+
+
         </div>
 
+
+
         <div class="center" id="content">
-            <div class="top-content">
+     
+       
+            <div class="toggle-menu-btn" onclick="toggleMenu()">目录</div>
+
+       <div class="top-content">
                 <iframe src="https://shimo.im/docs/gO3odYvGvRfzMZqD" frameborder="0"></iframe>
+            </div>
+
+
+     <div class="bottom-content" id="canvasContainer">
+                <iframe src="" frameborder="0" id="canvasIframe"></iframe>
             </div>
             <div class="canvas-switch">
                 <label for="canvasSwitch">画布</label>
@@ -375,10 +395,10 @@
                 <input type="range" id="canvasHeight" value="300" min="0" max="1000" oninput="setCanvasHeight()">
                 <span id="heightValue">300</span> px
             </div>
-            <div class="bottom-content" id="canvasContainer">
-                <iframe src="" frameborder="0" id="canvasIframe"></iframe>
-            </div>
-            <div class="toggle-menu-btn" onclick="toggleMenu()">目录</div>
+
+
+
+
         </div>
     </div>
 
