@@ -231,7 +231,7 @@
         let incorrectCount = 0;
         let currentDifficulty = 1;
 
-         const difficultyNames = ["行列式", "点乘内积", "叉乘外积", "正切",  "天命人的正切", "空间法向量", "矩阵变换",  "综合测试"];
+         const difficultyNames = ["行列式", "点乘内积", "叉乘外积", "正切",  "天命人的正切","复数乘法" , "空间法向量", "矩阵变换",  "综合测试"];
 
         document.addEventListener("DOMContentLoaded", () => {
             generateDifficultyButtons();
@@ -267,6 +267,7 @@ const videoConfig = {
     3: "<iframe src='https://player.bilibili.com/player.html?bvid=BV1yP4y1w7hh&high_quality=1&danmaku=0' width='640' height='360' allowfullscreen allow='autoplay; fullscreen' frameborder='0'></iframe>",
     4: "<iframe src='https://player.bilibili.com/player.html?bvid=BV12U4y1Z7tQ&high_quality=1&danmaku=0' width='640' height='360' allowfullscreen allow='autoplay; fullscreen' frameborder='0'></iframe>",
     5: "<iframe src='https://player.bilibili.com/player.html?bvid=BV12U4y1Z7tQ&high_quality=1&danmaku=0' width='640' height='360' allowfullscreen allow='autoplay; fullscreen' frameborder='0'></iframe>",
+    6: "<iframe src='https://player.bilibili.com/player.html?bvid=BV1ix4y1t7Hy&high_quality=1&danmaku=0' width='640' height='360' allowfullscreen allow='autoplay; fullscreen' frameborder='0'></iframe>",
 
     
 };
@@ -325,6 +326,7 @@ function setDifficulty(level) {
                 case 6: return generateLevel6Question();
                 case 7: return generateLevel7Question();
                 case 8: return generateLevel8Question();
+                case 9: return generateLevel8Question();
         
                 default: return "";
             }
@@ -497,8 +499,69 @@ let textq = `\\[\\huge
 }
 
 
-
 function generateLevel6Question() {
+    // Generate random integers between -7 and 7, excluding zero
+    function getRandomNonZeroInt() {
+        let num;
+        do {
+            num = Math.floor(Math.random() * 15) - 7; // Generates numbers from -7 to 7
+        } while (num === 0);
+        return num;
+    }
+
+    // Generate random values for a, b, c, and d
+    let a = getRandomNonZeroInt();
+    let b = getRandomNonZeroInt();
+    let c = getRandomNonZeroInt();
+    let d = getRandomNonZeroInt();
+
+    // Prepare display strings for b and d with correct signs
+    let bDisplay = b >= 0 ? `+${b}i` : `${b}i`;
+    let dDisplay = d >= 0 ? `+${d}i` : `${d}i`;
+
+    // Form the complex numbers (a + bi) and (c + di), with parentheses
+    let complex1 = `(${a}${bDisplay})`;
+    let complex2 = `(${c}${dDisplay})`;
+
+    // Calculate the product of the two complex numbers
+    // (a + bi)(c + di) = (ac - bd) + (ad + bc)i
+    let realProduct = a * c - b * d;
+    let imagProduct = a * d + b * c;
+
+    // Prepare display string for the imaginary part of the product
+   let imagProductDisplay = imagProduct === 0 ? '' : (imagProduct >= 0 ? `+${imagProduct}i` : `${imagProduct}i`);
+
+
+    // Prepare the correct answer
+    correctAnswer = [`${realProduct}${imagProductDisplay}`];
+
+    // Construct the LaTeX-formatted question text
+    let textq = `\\[\\huge
+                 \\
+                 \\begin{array}{c}
+                 ${complex1} \\times ${complex2} = ? \\\\
+                \\end{array}
+                 \\
+                \\]`;
+
+    // Randomly select an image
+    let imageFile = Math.random() < 0.5 ? 'c0101.gif' : 'c0102.gif';
+
+    // Concatenate image HTML into the question text
+    textq += `<br/><img src="./images/${imageFile}" style="width:30%;"><br/>`;
+
+    // Return only the question text
+    return textq;
+}
+
+
+
+
+
+
+
+
+function generateLevel7Question() {
     let a1 = (Math.floor(Math.random() * 8) + 1)* (Math.random() > 0.5 ? 1 : -1);
     let a2=  (Math.floor(Math.random() * 8) + 1)* (Math.random() > 0.5 ? 1 : -1);
     let a3 =  (Math.floor(Math.random() * 8) + 1)* (Math.random() > 0.5 ? 1 : -1);
@@ -527,7 +590,7 @@ function generateLevel6Question() {
 }
 
 
-function generateLevel7Question() {
+function generateLevel8Question() {
     let a = Math.floor(Math.random() * 8) * (Math.random() > 0.5 ? 1 : -1);
     let b = Math.floor(Math.random() * 8) * (Math.random() > 0.5 ? 1 : -1);
     let c = Math.floor(Math.random() * 8) * (Math.random() > 0.5 ? 1 : -1);
@@ -589,7 +652,7 @@ function generateLevel7Question() {
 
 
         
-        function generateLevel8Question() {
+        function generateLevel9Question() {
             const levelFunctions = [
                 generateLevel1Question,
                 generateLevel2Question,
@@ -598,7 +661,7 @@ function generateLevel7Question() {
                 generateLevel5Question,
                 generateLevel6Question,
                 generateLevel7Question,
-
+                generateLevel8Question,
             ];
 
             const randomIndex = Math.floor(Math.random() * levelFunctions.length);
