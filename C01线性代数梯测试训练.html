@@ -498,44 +498,72 @@ let textq = `\\[\\huge
 
 }
 
-
 function generateLevel6Question() {
-    // Generate random integers between -7 and 7, excluding zero
+    // 生成-7到7之间的随机整数，排除零
     function getRandomNonZeroInt() {
         let num;
         do {
-            num = Math.floor(Math.random() * 15) - 7; // Generates numbers from -7 to 7
+            num = Math.floor(Math.random() * 15) - 7; // 生成-7到7的数字
         } while (num === 0);
         return num;
     }
 
-    // Generate random values for a, b, c, and d
+    // 生成a, b, c, d的随机值
     let a = getRandomNonZeroInt();
     let b = getRandomNonZeroInt();
     let c = getRandomNonZeroInt();
     let d = getRandomNonZeroInt();
 
-    // Prepare display strings for b and d with correct signs
-    let bDisplay = b >= 0 ? `+${b}i` : `${b}i`;
-    let dDisplay = d >= 0 ? `+${d}i` : `${d}i`;
+    // 为b和d准备正确的符号显示字符串
+    let bDisplay;
+    if (b === 1) {
+        bDisplay = '+i';
+    } else if (b === -1) {
+        bDisplay = '-i';
+    } else if (b > 0) {
+        bDisplay = `+${b}i`;
+    } else {
+        bDisplay = `${b}i`;
+    }
 
-    // Form the complex numbers (a + bi) and (c + di), with parentheses
+    let dDisplay;
+    if (d === 1) {
+        dDisplay = '+i';
+    } else if (d === -1) {
+        dDisplay = '-i';
+    } else if (d > 0) {
+        dDisplay = `+${d}i`;
+    } else {
+        dDisplay = `${d}i`;
+    }
+
+    // 形成复数(a + bi)和(c + di)，并加上括号
     let complex1 = `(${a}${bDisplay})`;
     let complex2 = `(${c}${dDisplay})`;
 
-    // Calculate the product of the two complex numbers
+    // 计算两个复数的乘积
     // (a + bi)(c + di) = (ac - bd) + (ad + bc)i
     let realProduct = a * c - b * d;
     let imagProduct = a * d + b * c;
 
-    // Prepare display string for the imaginary part of the product
-   let imagProductDisplay = imagProduct === 0 ? '' : (imagProduct >= 0 ? `+${imagProduct}i` : `${imagProduct}i`);
+    // 为乘积的虚部准备显示字符串
+    let imagProductDisplay;
+    if (imagProduct === 0) {
+        imagProductDisplay = '';
+    } else if (imagProduct === 1) {
+        imagProductDisplay = '+i';
+    } else if (imagProduct === -1) {
+        imagProductDisplay = '-i';
+    } else if (imagProduct > 0) {
+        imagProductDisplay = `+${imagProduct}i`;
+    } else {
+        imagProductDisplay = `${imagProduct}i`;
+    }
 
-
-    // Prepare the correct answer
+    // 准备正确答案
     correctAnswer = [`${realProduct}${imagProductDisplay}`];
 
-    // Construct the LaTeX-formatted question text
+    // 构建LaTeX格式的问题文本
     let textq = `\\[\\huge
                  \\
                  \\begin{array}{c}
@@ -544,13 +572,13 @@ function generateLevel6Question() {
                  \\
                 \\]`;
 
-    // Randomly select an image
+    // 随机选择一张图片
     let imageFile = Math.random() < 0.5 ? 'c0101.gif' : 'c0102.gif';
 
-    // Concatenate image HTML into the question text
+    // 将图片HTML添加到问题文本中
     textq += `<br/><img src="./images/${imageFile}" style="width:30%;"><br/>`;
 
-    // Return only the question text
+    // 仅返回问题文本
     return textq;
 }
 
