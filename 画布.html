@@ -51,10 +51,11 @@
         }
 canvas {
     border: 1px solid black;
-    background-color: transparent; /* 改为透明背景 */
+    background-color: white; /* 改成白色 */
     touch-action: none;
     box-sizing: border-box;
 }
+
 
         .tool-bar button, .tool-bar input[type="button"] {
             padding: 10px 15px;
@@ -387,16 +388,52 @@ canvas {
 
 const copyButton = document.getElementById('copyToClipboard');
 
-copyButton.addEventListener('click', async () => {
-    canvas.toBlob(blob => {
+copyButton.addEventListener('click', () => {
+    const tempCanvas = document.createElement('canvas');
+    tempCanvas.width = canvas.width;
+    tempCanvas.height = canvas.height;
+    const tempCtx = tempCanvas.getContext('2d');
+    
+    // 填充白色背景
+    tempCtx.fillStyle = "white";
+    tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+    
+    // 将原始内容绘制到临时画布上
+    tempCtx.drawImage(canvas, 0, 0);
+    
+    tempCanvas.toBlob(blob => {
         const item = new ClipboardItem({ "image/png": blob });
         navigator.clipboard.write([item]).then(() => {
-            alert("画布内容已复制到剪贴板！");
+         showTemporaryMessage("画布内容已复制到剪贴板！");
         }).catch(err => {
             console.error("复制失败：", err);
         });
     });
 });
+
+
+// 显示并自动隐藏的提示函数
+function showTemporaryMessage(message) {
+    const messageBox = document.createElement("div");
+    messageBox.textContent = message;
+    messageBox.style.position = "fixed";
+    messageBox.style.top = "20px";
+    messageBox.style.left = "50%";
+    messageBox.style.transform = "translateX(-50%)";
+    messageBox.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+    messageBox.style.color = "white";
+    messageBox.style.padding = "10px 20px";
+    messageBox.style.borderRadius = "5px";
+    messageBox.style.zIndex = "1000";
+
+    document.body.appendChild(messageBox);
+
+    // 2秒后自动删除提示框
+    setTimeout(() => {
+        document.body.removeChild(messageBox);
+    }, 2000);
+}
+
 
 
     </script>
