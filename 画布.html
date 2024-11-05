@@ -112,6 +112,7 @@
     <div class="container">
         <div class="tool-bar">
             <div class="tool-group">
+                 <button id="copyToClipboard">复制</button>
                 <button id="pen" class="active">画笔</button>
                 <button id="eraser">橡皮</button>
                 <button id="clear">清除</button>
@@ -383,6 +384,21 @@
             // 清空重做栈
             redoStack.length = 0;
         }
+
+const copyButton = document.getElementById('copyToClipboard');
+
+copyButton.addEventListener('click', async () => {
+    canvas.toBlob(blob => {
+        const item = new ClipboardItem({ "image/png": blob });
+        navigator.clipboard.write([item]).then(() => {
+            alert("画布内容已复制到剪贴板！");
+        }).catch(err => {
+            console.error("复制失败：", err);
+        });
+    });
+});
+
+
     </script>
 
 </body>
