@@ -14,48 +14,48 @@
         }
         .container {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            align-items: flex-start;
             padding: 20px; /* 添加内边距来替代Canvas的margin */
         }
         .tool-bar {
-            width: 100%;
+            width: 220px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+        }
+        .tool-group, .thickness-group {
             margin-bottom: 20px;
-        }
-        .tool-group {
-            margin-bottom: 10px;
             display: flex;
-            flex-direction: row;
-            align-items: center;
-        }
-        .color-thickness-group {
-            margin-bottom: 10px;
-            display: flex;
-            flex-direction: row;
+            flex-direction: column;
             align-items: center;
         }
         .tool-group button, .thickness-group input, .thickness-group span {
-            margin: 5px;
+            margin: 5px 0;
+        }
+        .color-group {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
         }
         .color-group button {
             margin: 5px;
         }
         .canvas-container {
+            flex-grow: 1;
             /* 添加以下样式，使canvas容器撑满剩余空间 */
             display: flex;
             justify-content: center;
             align-items: center;
         }
-        canvas {
-            border: 1px solid black;
-            background-color: white; /* 改成白色 */
-            touch-action: none;
-            box-sizing: border-box;
-        }
+canvas {
+    border: 1px solid black;
+    background-color: white; /* 改成白色 */
+    touch-action: none;
+    box-sizing: border-box;
+}
+
 
         .tool-bar button, .tool-bar input[type="button"] {
             padding: 10px 15px;
@@ -87,11 +87,6 @@
             margin: 10px;
             width: 100%;
         }
-        .thickness-group span {
-            display: inline-block;
-            width: 25px;
-            text-align: center;
-        }
         .custom-cursor-pen {
             cursor: url('data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMDAwMDAwIiBoZWlnaHQ9IjIwIiB3aWR0aD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNSAxMEwxNyAxMCw4IDIxTDEwIDUsMTUgMTUwLDE1IDE1VDEwVjEwWiIvPjwvc3ZnPg=='), auto;
         }
@@ -118,32 +113,30 @@
     <div class="container">
         <div class="tool-bar">
             <div class="tool-group">
-                <button id="copyToClipboard">复制</button>
+                 <button id="copyToClipboard">复制</button>
                 <button id="pen" class="active">画笔</button>
                 <button id="eraser">橡皮</button>
                 <button id="clear">清除</button>
                 <button id="undo">撤销</button>
                 <button id="redo">重做</button>
             </div>
-            <div class="color-thickness-group">
-                <div class="color-group">
-                    <button id="black" class="color-button selected-color" style="background-color: black; color: white;"></button>
-                    <button id="red" class="color-button" style="background-color: red;"></button>
-                    <button id="blue" class="color-button" style="background-color: blue; color: white;"></button>
-                    <button id="green" class="color-button" style="background-color: green; color: white;"></button>
-                    <button id="yellow" class="color-button" style="background-color: yellow;"></button>
-                    <button id="customColor" class="color-picker">
-                        <input type="color" id="customColorInput" title="选择颜色">
-                    </button>
-                </div>
-                <div class="thickness-group">
-                    <input type="range" id="thicknessSlider" class="slider" min="1" max="50" value="5">
-                    <span id="thicknessValue">5</span>
-                </div>
+            <div class="color-group">
+                <button id="black" class="color-button selected-color" style="background-color: black; color: white;"></button>
+                <button id="red" class="color-button" style="background-color: red;"></button>
+                <button id="blue" class="color-button" style="background-color: blue; color: white;"></button>
+                <button id="green" class="color-button" style="background-color: green; color: white;"></button>
+                <button id="yellow" class="color-button" style="background-color: yellow;"></button>
+                <button id="customColor" class="color-picker">
+                    <input type="color" id="customColorInput" title="选择颜色">
+                </button>
+            </div>
+            <div class="thickness-group">
+                <input type="range" id="thicknessSlider" class="slider" min="1" max="50" value="5">
+                <span id="thicknessValue">5</span>
             </div>
         </div>
         <div class="canvas-container">
-            <canvas id="drawingCanvas" width="640" height="360"></canvas>
+            <canvas id="drawingCanvas" width="600" height="500"></canvas>
         </div>
     </div>
    <script>
@@ -457,9 +450,6 @@ document.addEventListener('paste', async (event) => {
         console.error("粘贴图像失败：", error);
     }
 });
-
-
-
 
     </script>
 
