@@ -427,7 +427,29 @@ function showTemporaryMessage(message) {
     }, 2000);
 }
 
+document.addEventListener('paste', async (event) => {
+    try {
+        const clipboardItems = await navigator.clipboard.read();
 
+        for (const clipboardItem of clipboardItems) {
+            // 检查是否有类型为 'image/png' 或 'image/jpeg' 的内容
+            if (clipboardItem.types.includes('image/png') || clipboardItem.types.includes('image/jpeg')) {
+                const blob = await clipboardItem.getType(clipboardItem.types[0]);
+                const img = new Image();
+                img.src = URL.createObjectURL(blob);
+
+                img.onload = () => {
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    URL.revokeObjectURL(img.src); // 释放内存
+                };
+
+                break; // 找到图像后，退出循环
+            }
+        }
+    } catch (error) {
+        console.error("粘贴图像失败：", error);
+    }
+});
 
     </script>
 
