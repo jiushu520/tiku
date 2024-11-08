@@ -9,24 +9,32 @@
             font-family: Arial, sans-serif;
             user-select: none;
             margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .container {
             display: flex;
-            align-items: flex-start;
+            flex-direction: column; /* 更改布局为垂直方向 */
+            align-items: center;
             padding: 10px;
         }
         .tool-bar {
-            width: 70px; /* 调整工具栏宽度 */
+            width: 100%; /* 工具栏占满宽度 */
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-right: 10px;
+            justify-content: center;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border-bottom: 1px solid #ccc;
         }
         .tool-group, .color-group, .thickness-group {
             display: flex;
-            flex-direction: column;
+            flex-direction: row; /* 调整为水平排列 */
             align-items: center;
-            margin-bottom: 10px;
+            margin-right: 15px;
+        }
+        .tool-group button, .color-group button, .thickness-group input {
+            margin-right: 10px; /* 为每个工具按钮增加间距 */
         }
         .tool-bar button {
             padding: 5px;
@@ -35,7 +43,6 @@
             border: none;
             background-color: transparent;
             transition: background-color 0.3s;
-            margin-bottom: 5px;
         }
         .tool-bar button:hover {
             background-color: #e0e0e0;
@@ -52,50 +59,46 @@
             border: 2px solid transparent;
             padding: 0;
             cursor: pointer;
-            margin-bottom: 5px;
         }
         .color-button.selected-color {
             border: 2px solid #FFD700;
         }
- .slider {
-    width: 90px; /* 滑块长度 */
-    transform: rotate(-90deg);
-    margin-top: 30px; /* 向上增加 10px 间距 */
-    margin-bottom: 5px;
-}
-        .thickness-group {
-            flex-direction: column;
-            align-items: center;
-            position: relative;
+        .slider {
+            width: 90px; /* 滑块长度 */
+            transform: rotate(0deg); /* 水平方向滑块 */
         }
-        .thickness-value {
 
-            margin-top: 0px; /* 向上增加 0px 间距 */
-            font-size: 14px;
-        }
-        .custom-cursor-pen {
-            cursor: crosshair;
-        }
-        .custom-cursor-eraser {
-            cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAJFBMVEUAAAD7+/vw8PDr6+v5+fn4+Pj39/f6+vr8/Pz9/f3+/v7///9ASURBVHjafI1BCQAwDAJBF13b/MXFB7KB0poIbavI0YgQkaYiSPj4ALQBx9j7Ul14AAAAASUVORK5CYII='), auto;
-        }
+
+  .thickness-group {
+    display: flex;
+    flex-direction: row; /* 水平布局 */
+    align-items: center;
+    gap: 5px; /* 控制滑块与值之间的间距 */
+}
+
+.thickness-value {
+    font-size: 14px;
+    width: 40px; /* 固定宽度，确保数值变化不会引起移动 */
+    text-align: center; /* 居中显示数值 */
+}
+
         .canvas-container {
-            flex-grow: 1;
             display: flex;
-            justify-content: flex-start;
-            align-items: flex-start;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
         }
         canvas {
             border: 1px solid black;
             background-color: white;
             touch-action: none;
             box-sizing: border-box;
-            margin: 0;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- 工具栏在顶部 -->
         <div class="tool-bar">
             <div class="tool-group">
                 <button id="copyToClipboard" title="复制">📋</button>
@@ -105,34 +108,27 @@
                 <button id="undo" title="撤销">↩️</button>
                 <button id="redo" title="重做">↪️</button>
             </div>
-           
             <div class="color-group">
                 <button id="black" class="color-button selected-color" style="background-color: black;"></button>
                 <button id="red" class="color-button" style="background-color: red;"></button>
                 <button id="blue" class="color-button" style="background-color: blue;"></button>
                 <button id="green" class="color-button" style="background-color: green;"></button>
                 <button id="yellow" class="color-button" style="background-color: yellow;"></button>
-                <input type="color" id="customColorInput" title="选择颜色" style="width: 20px; height: 20px; padding: 0; margin: 5px 0; border: none;">
+                <input type="color" id="customColorInput" title="选择颜色" style="width: 20px; height: 20px; padding: 0; border: none;">
             </div>
-
-
-      <div class="thickness-group">
-                                <div class="thickness-value" id="thicknessValue">5 px</div>
-            </div>
- <!-- 将粗细调节组移到颜色组之前 -->
-            <div class="thickness-group">
-                <input type="range" id="thicknessSlider" class="slider" min="1" max="30" value="5">
-                            </div>
-  
-
-
+  <div class="thickness-group">
+    <input type="range" id="thicknessSlider" class="slider" min="1" max="30" value="5">
+    <div class="thickness-value" id="thicknessValue">5 px</div>
+</div>
 
         </div>
+        <!-- 画布在底部 -->
         <div class="canvas-container">
             <canvas id="drawingCanvas" width="600" height="500"></canvas>
         </div>
     </div>
     <script>
+        // JavaScript 保持不变
         const canvas = document.getElementById('drawingCanvas');
         const ctx = canvas.getContext('2d');
         const penButton = document.getElementById('pen');
@@ -146,7 +142,7 @@
         const thicknessValue = document.getElementById('thicknessValue');
 
         let drawing = false;
-        let mode = 'pen'; // 当前模式: 'pen' 或 'eraser'
+        let mode = 'pen';
         let currentColor = 'black';
         let currentThickness = 5;
 
@@ -182,7 +178,7 @@
             currentThickness = event.target.value;
             baseLineWidth.pen = currentThickness;
             baseLineWidth.eraser = currentThickness * 5;
-            thicknessValue.textContent = ${currentThickness} px;
+            thicknessValue.textContent = `${currentThickness} px`;
         });
 
         canvas.addEventListener('pointerdown', handlePointerDown);
